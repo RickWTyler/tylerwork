@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Break Companion | Tyler Ergonomics</title>
+<meta name="description" content="A free kitchen-timer for ergonomic work sessions. Configurable, activity-aware, works on any device. Built by Tyler Ergonomics — no signup, no email required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root, [data-mode="tyler"] {
+    --ink: #1a2a3a; --ink-lt: #1e3040;
+    --purple: #2e6da4; --purple-dk: #1f5490; --purple-lt: #a8c4e0;
+    --ivory: #f4f6f9; --cream: #e8eef5; --warm: #d4d8de;
+    --gold: #f68916; --gold-lt: #ffa84c;
+    --mid: #3a4e62; --soft: #6a8099;
+    --white: #ffffff;
+    --border: rgba(46, 109, 164, 0.15);
+    --border-strong: rgba(46, 109, 164, 0.25);
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --body: 'DM Sans', -apple-system, sans-serif;
+  }
+  [data-mode="lifeafter"] {
+    --ink: #1a0f3a; --ink-lt: #1e1240;
+    --purple: #6649a8; --purple-dk: #4b389b; --purple-lt: #c8b8e8;
+    --ivory: #f5f3fa; --cream: #ede8f8; --warm: #ddd5f0;
+    --mid: #4a3a6a; --soft: #8a7aaa;
+    --border: rgba(102, 73, 168, 0.15);
+    --border-strong: rgba(102, 73, 168, 0.25);
+  }
+
+  body {
+    font-family: var(--body); font-weight: 400; color: var(--ink);
+    background: var(--ivory); line-height: 1.6; font-size: 16px;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+  }
+
+  nav { background: var(--ink); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 64px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .nav-brand { display: flex; flex-direction: column; gap: 1px; }
+  .nav-logo { font-family: var(--display); font-size: 1.2rem; font-weight: 500; color: var(--gold-lt); letter-spacing: 0.04em; }
+  .nav-sub { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.35); }
+  .nav-right { display: flex; gap: 26px; align-items: center; }
+  .nav-link { color: rgba(255, 255, 255, 0.55); text-decoration: none; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; background: transparent; border: none; cursor: pointer; font-family: inherit; padding: 0; }
+  .nav-link.active, .nav-link:hover { color: var(--gold-lt); }
+  .nav-cta { background: var(--purple-dk); color: var(--white) !important; padding: 8px 18px; font-size: 12px; font-weight: 500; text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--purple); }
+
+  .team-pill-bar { background: var(--ink-lt); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 48px; display: none; align-items: center; gap: 12px; }
+  .team-pill-bar.active { display: flex; }
+  .team-pill-bar .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+  .team-pill-bar .label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+  .team-pill-bar .name { font-family: var(--display); font-style: italic; color: var(--gold-lt); font-size: 14px; }
+
+  .content-wrap { max-width: 980px; margin: 0 auto; padding: 0 48px; }
+  .main-col { padding: 56px 0 32px; }
+  .below-timers { padding: 24px 0 64px; }
+
+  /* SESSION STATE */
+  .session-state {
+    text-align: center; margin-bottom: 28px;
+    padding-bottom: 28px; border-bottom: 1px solid var(--border);
+  }
+  .session-state-eyebrow {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--purple); margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .session-state-eyebrow::before, .session-state-eyebrow::after {
+    content: ''; width: 18px; height: 1px; background: var(--gold);
+  }
+  .session-state-title {
+    font-family: var(--display); font-size: 1.4rem; font-weight: 500;
+    color: var(--ink); line-height: 1.35; margin: 0; max-width: 520px;
+    margin-left: auto; margin-right: auto;
+  }
+  .session-state-title em { font-style: italic; color: var(--purple-dk); }
+
+  /* TIMERS GRID */
+  .timers-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    margin-bottom: 36px; align-items: start;
+    max-width: 740px; margin-left: auto; margin-right: auto;
+  }
+  .timer-unit {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 32px 16px; background: var(--white);
+    border: 1px solid var(--border); transition: all 0.3s;
+  }
+  .timer-unit.active { border-color: var(--purple-dk); box-shadow: 0 2px 16px rgba(75, 56, 155, 0.1); }
+  .timer-unit.dim { background: rgba(255, 255, 255, 0.55); }
+
+  .timer-svg-wrap { position: relative; width: 280px; height: 280px; }
+  .timer-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .timer-bg-circle { fill: none; stroke: var(--warm); stroke-width: 2; }
+  .timer-progress-circle { fill: none; stroke: var(--purple-dk); stroke-width: 2; stroke-linecap: square; transition: stroke-dashoffset 1s linear, stroke 0.3s; }
+  .timer-progress-circle.warning, .timer-progress-circle.urgent { stroke: var(--gold); }
+  .timer-unit.dim .timer-progress-circle { stroke: var(--warm); opacity: 0.5; }
+  .timer-tick { stroke: var(--purple-lt); stroke-width: 1; opacity: 0.4; }
+  .timer-unit.dim .timer-tick { opacity: 0.2; }
+
+  .timer-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 20px; }
+  .timer-display { font-family: var(--display); font-weight: 500; font-size: 68px; line-height: 1; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .timer-unit.dim .timer-display { color: var(--soft); opacity: 0.65; }
+  .timer-display .colon { color: var(--gold); margin: 0 -1px; animation: blink 2s infinite; }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
+  .timer-unit:not(.active) .timer-display .colon { animation: none; opacity: 0.4; }
+
+  .timer-status {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--soft); margin-top: 14px; display: flex; align-items: center;
+    gap: 8px; font-weight: 500; text-align: center;
+  }
+  .timer-unit.dim .timer-status { opacity: 0.7; }
+  .status-dot { width: 5px; height: 5px; background: var(--gold); animation: pulse 2s infinite; flex-shrink: 0; }
+  .timer-unit:not(.active) .status-dot { background: var(--soft); animation: none; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .timer-label {
+    margin-top: 22px; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--purple); display: flex; align-items: center; gap: 10px;
+  }
+  .timer-label::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+  .timer-unit.dim .timer-label { color: var(--soft); }
+
+  /* ACTIVITY METER */
+  .activity-meter-wrap { text-align: center; margin-bottom: 18px; }
+  .activity-meter { display: none; align-items: center; gap: 10px; padding: 6px 12px; border: 1px solid var(--border); background: var(--white); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); }
+  .activity-meter.active { display: inline-flex; }
+  .activity-meter .meter-label { font-weight: 500; color: var(--purple); }
+  .activity-bars { display: flex; gap: 2px; }
+  .activity-bar { width: 3px; height: 9px; background: var(--warm); transition: background 0.3s; }
+  .activity-bar.on { background: var(--gold); }
+  .activity-state { color: var(--ink); font-weight: 500; letter-spacing: 0.1em; }
+  .activity-state.idle { color: var(--soft); }
+
+  /* SESSION META */
+  .session-meta { text-align: center; margin-bottom: 22px; display: flex; gap: 24px; justify-content: center; align-items: center; font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--soft); font-weight: 500; }
+  .session-meta-item { display: flex; align-items: center; gap: 6px; }
+  .session-meta-item strong { color: var(--ink); font-weight: 500; font-family: var(--display); font-size: 13px; letter-spacing: 0; font-style: italic; text-transform: none; }
+
+  /* CONTROLS */
+  .timer-controls { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; align-items: center; }
+
+  /* POPOVERS */
+  .discomfort-wrap, .break-picker-wrap { position: relative; }
+  .discomfort-popover, .break-picker-popover {
+    display: none; position: absolute; bottom: 100%; left: 50%;
+    transform: translateX(-50%) translateY(-12px);
+    background: var(--ink); padding: 20px 22px; min-width: 280px;
+    box-shadow: 0 12px 32px rgba(26,15,58,0.3); z-index: 50;
+  }
+  .discomfort-popover.show, .break-picker-popover.show { display: block; animation: pop 0.2s ease; }
+  @keyframes pop { from { opacity: 0; transform: translateX(-50%) translateY(0); } to { opacity: 1; transform: translateX(-50%) translateY(-12px); } }
+  .discomfort-popover::after, .break-picker-popover::after {
+    content: ''; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); border: 8px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .popover-eyebrow { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold-lt); margin-bottom: 12px; }
+  .popover-title { font-family: var(--display); font-style: italic; color: var(--white); font-size: 1.05rem; margin-bottom: 14px; line-height: 1.3; }
+  .popover-title em { color: var(--gold-lt); }
+  .discomfort-option, .break-picker-item {
+    display: block; width: 100%; background: transparent;
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.85);
+    padding: 12px 14px; font-size: 12px; letter-spacing: 0.04em;
+    cursor: pointer; transition: all 0.15s; font-family: inherit;
+    margin-bottom: 6px; text-align: left;
+  }
+  .discomfort-option:last-child, .break-picker-item:last-child { margin-bottom: 0; }
+  .discomfort-option:hover, .break-picker-item:hover { border-color: var(--gold); color: var(--gold-lt); background: rgba(246,137,22,0.08); }
+  .discomfort-option strong, .break-picker-item strong { display: block; font-size: 13px; color: white; margin-bottom: 3px; font-weight: 500; font-family: var(--body); }
+  .discomfort-option span, .break-picker-item span { display: block; font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+  /* BUTTONS */
+  .btn { font-family: inherit; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px 22px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+  .btn-primary { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+  .btn-primary:hover { background: var(--gold-lt); border-color: var(--gold-lt); }
+  .btn-primary.large { padding: 16px 30px; font-size: 13px; }
+  .btn-dark { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .btn-dark:hover { background: var(--ink-lt); }
+  .btn-outline { background: transparent; color: var(--ink); border-color: var(--border-strong); }
+  .btn-outline:hover { border-color: var(--purple-dk); color: var(--purple-dk); }
+  .btn-outline-light { background: transparent; color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.25); }
+  .btn-outline-light:hover { border-color: var(--gold-lt); color: var(--gold-lt); }
+  .btn-ghost { background: transparent; color: var(--soft); padding: 10px 16px; }
+  .btn-ghost:hover { color: var(--gold); }
+  .btn-discomfort { background: transparent; color: var(--purple-dk); border-color: var(--border-strong); padding: 10px 18px; }
+  .btn-discomfort:hover { border-color: var(--gold); color: var(--gold); }
+  .btn svg { width: 12px; height: 12px; }
+
+  /* INLINE BREAK CONTENT — replaces fullscreen overlay */
+  .break-content {
+    margin-bottom: 32px; padding: 32px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    animation: slideDown 0.3s ease;
+  }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .break-content-header { text-align: center; margin-bottom: 28px; }
+  .break-content-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--purple); margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .break-content-eyebrow::before, .break-content-eyebrow::after {
+    content: ''; width: 24px; height: 1px; background: var(--gold);
+  }
+  .break-content-title {
+    font-family: var(--display); font-size: 2rem; font-weight: 500;
+    color: var(--ink); line-height: 1.15; margin-bottom: 12px;
+  }
+  .break-content-title em { color: var(--purple-dk); font-style: italic; }
+  .break-content-desc {
+    font-size: 14.5px; color: var(--mid); font-weight: 300;
+    line-height: 1.75; max-width: 480px; margin: 0 auto;
+  }
+  .break-guidance {
+    background: var(--white); border: 1px solid var(--border);
+    padding: 26px 30px; margin-bottom: 20px;
+  }
+  .break-guidance-eyebrow {
+    font-size: 11px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.16em; color: var(--purple); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .break-guidance-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+  .break-guidance p {
+    font-family: var(--display); font-size: 1.2rem; font-weight: 400;
+    color: var(--ink); line-height: 1.6; margin: 0;
+  }
+  .break-cta {
+    background: var(--cream); border: 1px solid var(--border);
+    border-left: 3px solid var(--purple-dk);
+    padding: 18px 24px; margin-bottom: 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .break-cta .cta-text { flex: 1; }
+  .break-cta .cta-eyebrow {
+    font-size: 10px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--purple); margin-bottom: 4px;
+  }
+  .break-cta p { font-size: 12.5px; color: var(--mid); font-weight: 300; line-height: 1.55; margin: 0; }
+  .break-cta p em { font-style: italic; color: var(--purple-dk); }
+  .break-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 32px; }
+  .stat-cell { background: var(--white); padding: 22px 18px; text-align: center; }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); font-weight: 500; margin-bottom: 8px; }
+  .stat-value { font-family: var(--display); font-weight: 500; font-size: 2rem; color: var(--purple-dk); line-height: 1; margin-bottom: 4px; }
+  .stat-unit { font-family: var(--body); font-size: 0.75rem; color: var(--soft); font-weight: 300; margin-left: 3px; }
+  .stat-sub { font-size: 11px; color: var(--soft); font-weight: 300; line-height: 1.4; }
+
+  /* INLINE INFO LINK */
+  .inline-info-line { text-align: center; font-size: 12.5px; color: var(--soft); font-weight: 300; }
+  .inline-info-link { background: none; border: none; color: var(--purple-dk); font-family: inherit; font-size: inherit; cursor: pointer; padding: 0; font-weight: 500; transition: color 0.2s; }
+  .inline-info-link:hover { color: var(--gold); }
+
+  /* CARD ROW (formerly sidebar) — now below timers */
+  .card-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+    margin-bottom: 32px;
+  }
+  .card-row-card {
+    background: var(--white); border: 1px solid var(--border);
+    padding: 26px 24px; display: flex; flex-direction: column;
+  }
+  .card-row-card.dark { background: var(--ink); border-color: var(--ink); position: relative; overflow: hidden; }
+  .card-row-card.dark::before { content: ''; position: absolute; top: -50px; right: -50px; width: 160px; height: 160px; border-radius: 50%; border: 1px solid rgba(198,184,232,0.08); }
+  .card-row-card .card-eyebrow {
+    font-size: 10px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.14em; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-row-card.dark .card-eyebrow { color: var(--gold-lt); }
+  .card-row-card:not(.dark) .card-eyebrow { color: var(--purple); }
+  .card-row-card .card-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+  .card-row-card h4 {
+    font-family: var(--display); font-size: 1.15rem; line-height: 1.25;
+    margin-bottom: 10px; font-weight: 500; position: relative;
+  }
+  .card-row-card.dark h4 { color: var(--white); }
+  .card-row-card.dark h4 em { color: var(--gold-lt); font-style: italic; }
+  .card-row-card:not(.dark) h4 { color: var(--ink); }
+  .card-row-card:not(.dark) h4 em { color: var(--purple-dk); font-style: italic; }
+  .card-row-card p {
+    font-size: 13px; line-height: 1.6; font-weight: 300;
+    margin-bottom: 16px; flex-grow: 1; position: relative;
+  }
+  .card-row-card.dark p { color: rgba(255, 255, 255, 0.55); }
+  .card-row-card:not(.dark) p { color: var(--soft); }
+  .card-row-card .card-action {
+    margin-top: auto; position: relative;
+  }
+  .card-row-card .card-link {
+    font-size: 12.5px; font-weight: 500; color: var(--purple-dk);
+    background: transparent; border: none; cursor: pointer;
+    font-family: inherit; padding: 0; transition: color 0.2s; text-align: left;
+  }
+  .card-row-card .card-link:hover { color: var(--gold); }
+
+  /* CARD ROW (formerly sidebar) END */
+  .sidebar-card { background: var(--white); border: 1px solid var(--border); padding: 24px; margin-bottom: 18px; }
+  .sidebar-card h4 { font-family: var(--display); font-size: 1rem; color: var(--ink); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .sidebar-card p { font-size: 13px; margin-bottom: 12px; color: var(--soft); font-weight: 300; line-height: 1.65; }
+  .sidebar-card p:last-of-type { margin-bottom: 0; }
+  .sidebar-card p em { font-style: italic; color: var(--purple-dk); }
+  .cta-side { background: var(--ink); padding: 28px 24px; text-align: center; margin-bottom: 18px; position: relative; overflow: hidden; }
+  .cta-side::before { content: ''; position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; border-radius: 50%; border: 1px solid rgba(198, 184, 232, 0.08); }
+  .cta-side h4 { font-family: var(--display); font-size: 1.05rem; color: var(--white); margin-bottom: 10px; line-height: 1.3; position: relative; }
+  .cta-side h4 em { font-style: italic; color: var(--gold-lt); }
+  .cta-side p { font-size: 12.5px; color: rgba(255, 255, 255, 0.48); margin-bottom: 18px; font-weight: 300; line-height: 1.6; position: relative; }
+  .cta-btn { background: var(--gold); color: var(--ink); padding: 11px 20px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: block; transition: opacity 0.2s; border: none; font-family: inherit; cursor: pointer; width: 100%; text-align: center; }
+  .cta-btn:hover { opacity: 0.85; }
+  .sidebar-link { font-size: 12.5px; font-weight: 500; color: var(--purple-dk); text-decoration: none; background: transparent; border: none; cursor: pointer; font-family: inherit; padding: 0; }
+  .sidebar-link:hover { color: var(--gold); }
+  .sidebar-action-btn { background: transparent; border: 1px solid var(--border-strong); color: var(--ink); width: 100%; padding: 10px 14px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .sidebar-action-btn:hover { border-color: var(--purple-dk); color: var(--purple-dk); background: var(--cream); }
+
+  /* MODALS */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 15, 58, 0.5); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 24px; animation: fadeIn 0.2s ease; }
+  .modal-backdrop.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal { background: var(--ivory); border: 1px solid var(--border); padding: 0; max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; animation: rise 0.3s ease; }
+  @keyframes rise { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal.wide { max-width: 720px; }
+  .modal-top { background: var(--ink); padding: 32px 40px; color: var(--white); position: relative; overflow: hidden; }
+  .modal-top::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(198, 184, 232, 0.07); }
+  .modal-top .eyebrow { color: var(--gold-lt); margin-bottom: 12px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 12px; }
+  .modal-top .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); }
+  .modal-top h2 { font-family: var(--display); font-weight: 500; font-size: 1.75rem; line-height: 1.2; color: var(--white); margin-bottom: 8px; position: relative; }
+  .modal-top h2 em { color: var(--gold-lt); font-style: italic; }
+  .modal-top .subtitle { font-size: 13.5px; color: rgba(255, 255, 255, 0.55); font-weight: 300; line-height: 1.6; position: relative; }
+  .modal-close { position: absolute; top: 18px; right: 18px; background: rgba(255, 255, 255, 0.08); border: none; width: 32px; height: 32px; color: rgba(255, 255, 255, 0.6); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 2; }
+  .modal-close:hover { background: rgba(255, 255, 255, 0.15); color: var(--gold-lt); }
+  .modal-close svg { width: 14px; height: 14px; }
+  .modal-body { padding: 32px 40px; }
+
+  .about-section { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+  .about-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .about-section-eyebrow { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; color: var(--purple); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .about-section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+  .about-section h3 { font-family: var(--display); font-size: 1.4rem; font-weight: 500; color: var(--ink); margin-bottom: 14px; line-height: 1.25; }
+  .about-section h3 em { font-style: italic; color: var(--purple-dk); }
+  .about-section p { font-size: 14px; color: var(--mid); line-height: 1.75; font-weight: 300; margin-bottom: 14px; }
+  .about-section p:last-of-type { margin-bottom: 0; }
+  .about-section p em { font-style: italic; color: var(--purple-dk); }
+  .about-section p strong { color: var(--ink); font-weight: 500; }
+  .about-section ul { list-style: none; margin: 8px 0 14px; }
+  .about-section ul li { display: flex; gap: 12px; padding: 8px 0; font-size: 13.5px; color: var(--mid); font-weight: 300; line-height: 1.6; }
+  .about-section ul li::before { content: '•'; color: var(--gold); flex-shrink: 0; }
+  .about-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+  .setting-group { margin-bottom: 22px; }
+  .setting-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .setting-label .name { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .setting-label .value { font-family: var(--display); font-size: 1.1rem; color: var(--purple-dk); font-style: italic; font-variant-numeric: tabular-nums; }
+  .setting-description { font-size: 12.5px; color: var(--soft); font-weight: 300; margin-bottom: 12px; line-height: 1.55; }
+  .settings-section-head { font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; font-weight: 500; color: var(--purple); margin: 32px 0 16px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .settings-section-head::before { content: ''; width: 22px; height: 1px; background: var(--gold); }
+  .settings-section-head:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+  input[type="range"] { width: 100%; height: 2px; background: var(--warm); outline: none; -webkit-appearance: none; cursor: pointer; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--gold); cursor: pointer; border: 2px solid var(--ivory); box-shadow: 0 0 0 1px var(--purple-dk); }
+  input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; background: var(--gold); cursor: pointer; border: 2px solid var(--ivory); box-shadow: 0 0 0 1px var(--purple-dk); }
+  input[type="text"], input[type="email"], textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border-strong); background: var(--white); font-family: inherit; font-size: 14px; color: var(--ink); font-weight: 400; transition: border-color 0.2s; resize: vertical; }
+  textarea { min-height: 110px; line-height: 1.6; font-family: var(--body); }
+  input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+  input::placeholder, textarea::placeholder { color: var(--soft); font-weight: 300; }
+  .field-group { margin-bottom: 16px; }
+  .field-group label { display: block; font-size: 11px; font-weight: 500; margin-bottom: 6px; color: var(--purple); letter-spacing: 0.1em; text-transform: uppercase; }
+  .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); gap: 16px; }
+  .toggle-row:last-of-type { border-bottom: none; }
+  .toggle-row .row-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .toggle-row .row-desc { font-size: 12px; color: var(--soft); font-weight: 300; margin-top: 2px; line-height: 1.5; }
+  .switch { position: relative; width: 40px; height: 22px; background: var(--warm); cursor: pointer; transition: background 0.2s; flex-shrink: 0; border: 1px solid var(--border-strong); }
+  .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; background: var(--white); transition: transform 0.2s, background 0.2s; }
+  .switch.on { background: var(--purple-dk); border-color: var(--purple-dk); }
+  .switch.on::after { transform: translateX(18px); background: var(--gold); }
+  .modal-footer { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+
+  .team-result { background: var(--ink); padding: 22px 26px; margin-top: 22px; color: var(--white); position: relative; }
+  .team-result .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold-lt); margin-bottom: 10px; font-weight: 500; }
+  .team-result .url { font-family: 'SF Mono', 'Courier New', monospace; font-size: 12px; color: rgba(255, 255, 255, 0.85); line-height: 1.55; margin-bottom: 14px; word-break: break-all; padding: 10px 12px; background: rgba(0, 0, 0, 0.25); border-left: 2px solid var(--gold); }
+  .team-result-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .team-next-steps { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .team-next-steps-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold-lt); margin-bottom: 8px; font-weight: 500; }
+  .team-next-steps p:not(.team-next-steps-label) { font-size: 12.5px; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.65; margin: 0; }
+
+  .share-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 24px; padding: 4px; background: var(--cream); border: 1px solid var(--border); }
+  .share-tab { background: transparent; border: none; padding: 12px 14px; cursor: pointer; font-family: inherit; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; color: var(--soft); transition: all 0.2s; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-align: left; }
+  .share-tab.active { background: var(--white); color: var(--ink); box-shadow: 0 1px 3px rgba(26,15,58,0.08); }
+  .share-tab-label { font-size: 11px; letter-spacing: 0.1em; }
+  .share-tab-sub { font-size: 10px; color: var(--soft); text-transform: none; letter-spacing: 0.02em; font-weight: 400; }
+  .share-tab.active .share-tab-sub { color: var(--purple); }
+  .share-pane { display: none; }
+  .share-pane.active { display: block; }
+  .share-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  footer { background: var(--ink); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.06); flex-wrap: wrap; gap: 14px; }
+  .footer-brand { display: flex; flex-direction: column; gap: 2px; }
+  .footer-logo { font-family: var(--display); font-size: 1rem; color: var(--gold-lt); }
+  .footer-sub { font-size: 10.5px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+  footer span.copy { font-size: 11.5px; color: rgba(255, 255, 255, 0.25); }
+  footer a { font-size: 11.5px; color: rgba(255, 255, 255, 0.35); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--gold-lt); }
+
+  .hidden { display: none !important; }
+
+  .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--white); border-left: 3px solid var(--gold); padding: 14px 24px; font-size: 13px; letter-spacing: 0.04em; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 3000; display: flex; align-items: center; gap: 12px; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast svg { width: 14px; height: 14px; color: var(--gold-lt); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .content-wrap { padding: 0 24px; }
+    .main-col { padding: 40px 0 24px; }
+    .below-timers { padding: 16px 0 48px; }
+    .timers-grid { gap: 22px; max-width: 100%; }
+    .timer-svg-wrap { width: 220px; height: 220px; }
+    .timer-display { font-size: 54px; }
+    .card-row { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .break-content-title { font-size: 1.7rem; }
+    .break-cta { flex-direction: column; align-items: stretch; }
+    footer { padding: 20px 24px; }
+    .team-pill-bar { padding: 10px 24px; }
+  }
+  @media (max-width: 600px) {
+    nav { flex-wrap: wrap; height: auto; padding: 12px 20px; gap: 12px; }
+    .nav-right { flex-wrap: wrap; gap: 12px; }
+    .content-wrap { padding: 0 20px; }
+    .timers-grid { grid-template-columns: 1fr; gap: 18px; }
+    .timer-svg-wrap { width: 240px; height: 240px; }
+    .timer-display { font-size: 60px; }
+    .card-row { grid-template-columns: 1fr; }
+    .modal { width: 100%; }
+    .modal-top, .modal-body { padding: 24px 22px; }
+    .break-content-title { font-size: 1.5rem; }
+    .break-guidance, .break-cta { padding: 20px 22px; }
+  }
+</style>
+</head>
+<body data-mode="tyler">
+
+<h1 style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Tyler Ergonomics Break Companion &mdash; Free Ergonomic Work-Session Timer</h1>
+
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo" id="navLogo">Tyler Ergonomics</span>
+    <span class="nav-sub" id="navSub">Break Companion</span>
+  </div>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">Home</a>
+    <button class="nav-link" id="aboutNavLink">How this works</button>
+    <button class="nav-link" id="teamSetupNavLink">Team Setup</button>
+    <button class="nav-link" id="settingsNavLink">Settings</button>
+    <a href="te-06-insights.html" class="nav-link">Insights</a>
+    <a href="tel:8777523837" class="nav-cta">(877) 752-3837</a>
+  </div>
+</nav>
+
+<div class="team-pill-bar" id="teamPillBar">
+  <span class="dot"></span>
+  <span class="label">Configured for</span>
+  <span class="name" id="teamPillName"></span>
+</div>
+
+<div class="content-wrap">
+
+  <main class="main-col">
+
+    <div class="session-state">
+      <p class="session-state-eyebrow" id="sessionEyebrow">Ready</p>
+      <h2 class="session-state-title" id="sessionTitle">Press start when you're <em>ready to work.</em></h2>
+    </div>
+
+    <!-- SIDE-BY-SIDE TIMERS -->
+    <div class="timers-grid">
+
+      <div class="timer-unit dim" id="workTimerUnit">
+        <div class="timer-svg-wrap">
+          <svg class="timer-svg" viewBox="0 0 200 200">
+            <g id="workTickGroup"></g>
+            <circle class="timer-bg-circle" cx="100" cy="100" r="92"></circle>
+            <circle class="timer-progress-circle" id="workProgressCircle" cx="100" cy="100" r="92" stroke-dasharray="578.05" stroke-dashoffset="0"></circle>
+          </svg>
+          <div class="timer-inner">
+            <div class="timer-display"><span id="workMinutes">60</span><span class="colon">:</span><span id="workSeconds">00</span></div>
+            <div class="timer-status"><span class="status-dot"></span><span id="workStatusText">Ready</span></div>
+          </div>
+        </div>
+        <p class="timer-label">Work Session</p>
+      </div>
+
+      <div class="timer-unit dim" id="breakTimerUnit">
+        <div class="timer-svg-wrap">
+          <svg class="timer-svg" viewBox="0 0 200 200">
+            <g id="breakTickGroup"></g>
+            <circle class="timer-bg-circle" cx="100" cy="100" r="92"></circle>
+            <circle class="timer-progress-circle" id="breakProgressCircle" cx="100" cy="100" r="92" stroke-dasharray="578.05" stroke-dashoffset="0"></circle>
+          </svg>
+          <div class="timer-inner">
+            <div class="timer-display"><span id="breakMinutes">00</span><span class="colon">:</span><span id="breakSeconds">30</span></div>
+            <div class="timer-status"><span class="status-dot"></span><span id="breakStatusText">Quick Reset</span></div>
+          </div>
+        </div>
+        <p class="timer-label" id="breakTimerLabel">Next Break</p>
+      </div>
+
+    </div>
+
+    <div class="activity-meter-wrap">
+      <div class="activity-meter" id="activityMeter">
+        <span class="meter-label">Activity</span>
+        <div class="activity-bars" id="activityBars">
+          <div class="activity-bar"></div><div class="activity-bar"></div><div class="activity-bar"></div><div class="activity-bar"></div><div class="activity-bar"></div>
+        </div>
+        <span class="activity-state" id="activityState">Active</span>
+      </div>
+    </div>
+
+    <div class="session-meta" id="sessionMeta">
+      <div class="session-meta-item"><span>Sessions today</span> <strong id="sessionsToday">0</strong></div>
+      <div class="session-meta-item"><span>Total work</span> <strong id="totalWork">0 min</strong></div>
+    </div>
+
+    <!-- CONTROLS — state-dependent -->
+    <div class="timer-controls">
+      <button class="btn btn-primary large" id="startSessionBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Start work session
+      </button>
+      <div class="break-picker-wrap" id="breakPickerWrap">
+        <button class="btn btn-dark" id="breakPickerBtn">Take a break ▾</button>
+        <div class="break-picker-popover" id="breakPickerPopover">
+          <p class="popover-eyebrow">Quick break</p>
+          <p class="popover-title">What do you need <em>right now?</em></p>
+          <div id="breakPickerList"></div>
+        </div>
+      </div>
+      <button class="btn btn-primary hidden" id="pauseBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+        Pause
+      </button>
+      <div class="discomfort-wrap hidden" id="discomfortWrap">
+        <button class="btn btn-discomfort" id="discomfortBtn">Discomfort? Cut short →</button>
+        <div class="discomfort-popover" id="discomfortPopover">
+          <p class="popover-eyebrow">How are you feeling?</p>
+          <p class="popover-title">Listen to your body. <em>Cut the session short.</em></p>
+          <button class="discomfort-option" data-cut="5"><strong>Five minutes more</strong><span>Slight tension — wrap up and break</span></button>
+          <button class="discomfort-option" data-cut="1"><strong>One minute more</strong><span>Notable discomfort — quick stop</span></button>
+          <button class="discomfort-option" data-cut="0"><strong>Break now</strong><span>Real pain or strain — end immediately</span></button>
+        </div>
+      </div>
+      <button class="btn btn-outline hidden" id="endSessionBtn">End session</button>
+      <button class="btn btn-primary hidden" id="resumeBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        Resume
+      </button>
+      <button class="btn btn-primary hidden" id="completeBreakBtn">Complete break →</button>
+      <button class="btn btn-outline hidden" id="skipBreakBtn">Skip break</button>
+    </div>
+
+    <!-- INLINE BREAK CONTENT -->
+    <div class="break-content hidden" id="breakContent">
+      <div class="break-content-header">
+        <p class="break-content-eyebrow" id="breakContentEyebrow">Break Time</p>
+        <h2 class="break-content-title" id="breakContentTitle">Look away. <em>Reset.</em></h2>
+        <p class="break-content-desc" id="breakContentDesc"></p>
+      </div>
+      <div class="break-guidance">
+        <div class="break-guidance-eyebrow">How to break</div>
+        <p id="breakGuidanceText"></p>
+      </div>
+      <div class="break-cta">
+        <div class="cta-text">
+          <div class="cta-eyebrow" id="breakCtaEyebrow">Want specific movements?</div>
+          <p id="breakCtaText">For stretches <em>prescribed to your body</em> — book an assessment with Tyler Ergonomics.</p>
+        </div>
+        <a href="te-03-home-office.html" class="btn btn-primary" id="breakCtaBtn">Book →</a>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-label">Sessions Today</div>
+        <div class="stat-value"><span id="statSessions">0</span></div>
+        <div class="stat-sub" id="statSessionsSub">Completed</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-label">Total Work Today</div>
+        <div class="stat-value"><span id="statWorkH">0</span><span class="stat-unit">h </span><span id="statWorkM">0</span><span class="stat-unit">m</span></div>
+        <div class="stat-sub" id="statStreakSub">No streak yet</div>
+      </div>
+    </section>
+
+    <p class="inline-info-line">
+      This tool deliberately keeps break content generic. <button class="inline-info-link" id="aboutInlineLink">How this works →</button>
+    </p>
+
+  </main>
+
+  <section class="below-timers">
+    <div class="card-row">
+      <div class="card-row-card dark">
+        <p class="card-eyebrow">For individual workers</p>
+        <h4 id="sideCtaTitle">Need a <em>personalized</em> plan?</h4>
+        <p id="sideCtaDesc">Generic timers can't tell you what your body needs. Tyler Ergonomics builds personalized movement protocols based on your real workstation.</p>
+        <div class="card-action">
+          <a href="te-03-home-office.html" class="btn btn-primary" id="sideCtaBtn">Book an Assessment</a>
+        </div>
+      </div>
+      <div class="card-row-card">
+        <p class="card-eyebrow">Adjust the rhythm</p>
+        <h4>Tool <em>settings.</em></h4>
+        <p>Change session length, break cadence, activity-aware timing, and other preferences.</p>
+        <div class="card-action">
+          <button class="card-link" id="settingsSideBtn">Open Settings →</button>
+        </div>
+      </div>
+      <div class="card-row-card">
+        <p class="card-eyebrow" id="switchCardEyebrow">Cancer survivor support</p>
+        <h4 id="switchCardTitle">Recovering from <em>treatment?</em></h4>
+        <p id="switchCardDesc">Life|After® partners with Tyler Ergonomics for cancer survivor return-to-work support — with gentler session cadence.</p>
+        <div class="card-action">
+          <button class="card-link" id="switchModeLink">Switch to Life|After® mode →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-brand">
+    <span class="footer-logo" id="footerLogo">Tyler Ergonomics</span>
+    <span class="footer-sub" id="footerSub">Remote &amp; Virtual Ergonomic Assessments</span>
+  </div>
+  <span class="copy">© 2026 Tyler Ergonomics</span>
+  <a href="index.html">tylerwork.com</a>
+</footer>
+
+<!-- ABOUT MODAL -->
+<div class="modal-backdrop" id="aboutModal">
+  <div class="modal wide">
+    <div class="modal-top">
+      <button class="modal-close" id="closeAbout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <p class="eyebrow">How this works</p>
+      <h2>Why we built it this <em>way.</em></h2>
+      <p class="subtitle">A short tour of the philosophy and a few details worth knowing.</p>
+    </div>
+    <div class="modal-body">
+      <div class="about-section">
+        <p class="about-section-eyebrow">The philosophy</p>
+        <h3 id="aboutPhilosophyTitle">Why no <em>specific stretches.</em></h3>
+        <p>Every body is different. The wrong movement at the wrong moment can do more harm than good — sometimes it's the small thing that becomes the <em>last straw</em> in a slowly developing injury.</p>
+        <p>That's why the break content here is intentionally generic — look away, stand up, walk, hydrate. Universal, low-risk reminders. The <em>specifics</em> belong somewhere else.</p>
+        <p>Your home office assessment with Tyler Ergonomics provides:</p>
+        <ul>
+          <li>A personalized movement protocol built around your real workstation, posture patterns, and existing conditions.</li>
+          <li>Specific stretches tuned to what your body actually needs — not generic ones from a YouTube channel.</li>
+          <li>Guidance on which movements to do, in which order, at which times of day.</li>
+          <li>The clinical judgment a free tool can't replicate — and shouldn't pretend to.</li>
+        </ul>
+      </div>
+      <div class="about-section">
+        <p class="about-section-eyebrow">About session length</p>
+        <h3>Set it once. <em>By an evaluator.</em></h3>
+        <p>Ergonomic risk is <em>dose-dependent</em> — heavier or longer work intervals build more strain. A trained evaluator can prescribe the session length that fits your body, your job, and any current conditions.</p>
+        <p>The default is 60 minutes — appropriate for most healthy desk workers. If you've been prescribed a different cadence (45, 30, even 20 minutes for high-risk conditions), set it once in Settings.</p>
+        <p>If you feel discomfort during a session, <strong>shorten it</strong>. Use the "Cut short" button. The goal is to listen to your body, not push through.</p>
+      </div>
+      <div class="about-section">
+        <p class="about-section-eyebrow">About micro-breaks</p>
+        <h3>Why this isn't a <em>micro-break tool.</em></h3>
+        <p>Some break tools advertise "micro-breaks" — 8 to 15 second pauses triggered by keystroke and mouse activity. Those tools can be powerful for high-intensity computer use, but they only work properly when the software can see your input across every application — which requires a desktop installer, not a web tool.</p>
+        <p>For broader habit-building at the hourly level, this Break Companion does what it's built for. For real usage-based micro-break protocols, an <em>ergonomic assessment</em> is the place to start — we can recommend the right combination of tools and habits for how you actually work.</p>
+      </div>
+
+      <div class="about-section">
+        <p class="about-section-eyebrow">About activity-aware timing</p>
+        <h3>When the timer is <em>smarter.</em></h3>
+        <p>If you walk away mid-session and have "Activity-aware timing" on, the timer pauses automatically and resumes when you come back. That way your 60-minute session means 60 minutes of <em>actual work</em> — not wall-clock time that included a coffee run.</p>
+        <p><strong>What we can see:</strong> keystrokes, mouse movement, scroll, and clicks within this browser tab. We pause the timer when you go idle.</p>
+        <p><strong>What we can't see:</strong> activity in Word, Slack, Outlook, Zoom, or any other application. For full-workday tracking across every app, you'd need an installable program — or our home office assessment, which builds you a personalized break protocol based on your real workday patterns.</p>
+      </div>
+      <div class="about-section">
+        <p class="about-section-eyebrow">For HR &amp; Wellness Leads</p>
+        <h3>Roll this out to your <em>whole team.</em></h3>
+        <p>Set your organization's preferred session length and break cadence, then share a single link with every employee. Their app loads with your defaults pre-configured.</p>
+        <div class="about-actions">
+          <button class="btn btn-primary" id="aboutTeamBtn">Configure for your team →</button>
+        </div>
+      </div>
+      <div class="about-section">
+        <p class="about-section-eyebrow">Share it</p>
+        <h3>If it's working for you.</h3>
+        <p>Two ways to pass it along to someone who'd benefit.</p>
+        <div class="about-actions">
+          <button class="btn btn-outline" id="aboutShareHr">Send to your HR team →</button>
+          <button class="btn btn-outline" id="aboutShareFriend">Refer a friend →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE -->
+<div class="modal-backdrop" id="shareModal">
+  <div class="modal wide">
+    <div class="modal-top">
+      <button class="modal-close" id="closeShare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <p class="eyebrow">Spread the word</p>
+      <h2>Pass this <em>along.</em></h2>
+      <p class="subtitle">If this is helping you, chances are someone you know would benefit too.</p>
+    </div>
+    <div class="modal-body">
+      <div class="share-tabs">
+        <button class="share-tab active" data-share-tab="hr"><span class="share-tab-label">Send to HR</span><span class="share-tab-sub">For your team at work</span></button>
+        <button class="share-tab" data-share-tab="friend"><span class="share-tab-label">Refer a friend</span><span class="share-tab-sub">Anyone who'd appreciate it</span></button>
+      </div>
+      <div class="share-pane active" data-share-pane="hr">
+        <div class="field-group"><label for="hrToName">Their first name</label><input type="text" id="hrToName" placeholder="e.g. Sarah" autocomplete="off"></div>
+        <div class="field-group"><label for="hrYourName">Your first name</label><input type="text" id="hrYourName" placeholder="So they know who it's from" autocomplete="given-name"></div>
+        <div class="field-group"><label for="hrMessage">Message preview <span style="text-transform:none;letter-spacing:0;color:var(--soft);font-weight:300;">(edit anything below)</span></label><textarea id="hrMessage"></textarea></div>
+        <div class="share-actions">
+          <button class="btn btn-primary" id="hrSendEmail">Open in email →</button>
+          <button class="btn btn-outline" id="hrCopyLink">Copy share link</button>
+          <button class="btn btn-outline hidden" id="hrNativeShare">Share…</button>
+        </div>
+      </div>
+      <div class="share-pane" data-share-pane="friend">
+        <div class="field-group"><label for="friendToName">Friend's first name (optional)</label><input type="text" id="friendToName" placeholder="e.g. Mike" autocomplete="off"></div>
+        <div class="field-group"><label for="friendYourName">Your first name (optional)</label><input type="text" id="friendYourName" placeholder="" autocomplete="given-name"></div>
+        <div class="field-group"><label for="friendMessage">Message preview <span style="text-transform:none;letter-spacing:0;color:var(--soft);font-weight:300;">(edit anything below)</span></label><textarea id="friendMessage"></textarea></div>
+        <div class="share-actions">
+          <button class="btn btn-primary" id="friendSendEmail">Open in email →</button>
+          <button class="btn btn-outline" id="friendCopyLink">Copy share link</button>
+          <button class="btn btn-outline hidden" id="friendNativeShare">Share…</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="modal-backdrop" id="teamModal">
+  <div class="modal wide">
+    <div class="modal-top">
+      <button class="modal-close" id="closeTeam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <p class="eyebrow">For HR &amp; Wellness</p>
+      <h2>Configure for your <em>team.</em></h2>
+      <p class="subtitle">Set the cadence that fits your workforce, then copy the shareable link.</p>
+    </div>
+    <div class="modal-body">
+      <div class="field-group"><label for="teamName">Organization name</label><input type="text" id="teamName" placeholder="e.g. St. Tammany Parish School Board"></div>
+      <div class="setting-group">
+        <div class="setting-label"><span class="name">Work session length</span><span class="value"><span id="teamSessionVal">60</span> min</span></div>
+        <input type="range" id="teamSessionSlider" min="20" max="90" step="5" value="60">
+      </div>
+      <div class="setting-group">
+        <div class="setting-label"><span class="name">Break length</span><span class="value"><span id="teamBreakLengthVal">90</span> sec</span></div>
+        <input type="range" id="teamBreakLengthSlider" min="60" max="300" step="15" value="90">
+      </div>
+      <div class="team-result hidden" id="teamResult">
+        <div class="label">Your shareable team link</div>
+        <div class="url" id="teamUrl"></div>
+        <div class="team-result-actions">
+          <button class="btn btn-primary" id="copyTeamUrl">Copy link</button>
+          <button class="btn btn-outline-light" id="previewTeamUrl">Preview as employee</button>
+        </div>
+        <div class="team-next-steps" id="teamNextSteps">
+          <p class="team-next-steps-label">What to do next</p>
+          <p>Send this link to your team — paste it into an email, Slack message, or your HR portal. Anyone who opens it will see your organization's defaults applied automatically. No setup required on their end.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="closeTeam2">Close</button>
+        <button class="btn btn-primary" id="generateTeamUrl">Generate link</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="modal-backdrop" id="settingsModal">
+  <div class="modal">
+    <div class="modal-top">
+      <button class="modal-close" id="closeSettings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <p class="eyebrow">Preferences</p>
+      <h2>Settings</h2>
+      <p class="subtitle">Tune the cadence to match the rhythm prescribed in your assessment.</p>
+    </div>
+    <div class="modal-body">
+      <p class="settings-section-head">Work Session</p>
+      <div class="setting-group">
+        <div class="setting-label"><span class="name">Work session length</span><span class="value"><span id="sessionVal">60</span> min</span></div>
+        <div class="setting-description">How long each session runs before a break begins.</div>
+        <input type="range" id="sessionSlider" min="20" max="90" step="5" value="60">
+      </div>
+      <p class="settings-section-head">Break Length</p>
+      <div class="setting-group">
+        <div class="setting-label"><span class="name">Break duration</span><span class="value"><span id="breakLengthVal">90</span> sec</span></div>
+        <div class="setting-description">How long each break runs. Default is 90 seconds — aligned with general ergonomic guidance of 1–2 minutes of movement per hour.</div>
+        <input type="range" id="breakLengthSlider" min="60" max="300" step="15" value="90">
+      </div>
+      <p class="settings-section-head">Activity-Aware Timing</p>
+      <div class="toggle-row">
+        <div>
+          <div class="row-name">Enable activity-aware timing</div>
+          <div class="row-desc">Pause the timer when you're idle; resume when you return.</div>
+        </div>
+        <div class="switch" id="activityToggle"></div>
+      </div>
+      <div class="setting-group">
+        <div class="setting-label"><span class="name">Idle threshold</span><span class="value"><span id="idleVal">60</span> sec</span></div>
+        <div class="setting-description">How long without input before the timer pauses.</div>
+        <input type="range" id="idleSlider" min="30" max="300" step="30" value="60">
+      </div>
+      <p class="settings-section-head">Notifications &amp; Mode</p>
+      <div class="toggle-row">
+        <div><div class="row-name">Audio chime</div><div class="row-desc">Play a soft tone when a break begins</div></div>
+        <div class="switch on" id="soundToggle"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="row-name">Browser notifications</div><div class="row-desc">Show notifications when this tab isn't focused</div></div>
+        <div class="switch" id="notifToggle"></div>
+      </div>
+      <div class="toggle-row">
+        <div><div class="row-name">Life|After® mode</div><div class="row-desc">Gentler cadence for cancer survivor recovery</div></div>
+        <div class="switch" id="modeToggle"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="resetStatsBtn">Reset today's stats</button>
+        <button class="btn btn-primary" id="saveSettingsBtn">Save &amp; apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  <span id="toastText">Settings saved</span>
+</div>
+
+<script>
+const MODE_CONTENT = {
+  tyler: {
+    navLogo: 'Tyler Ergonomics', navSub: 'Break Companion',
+    footerLogo: 'Tyler Ergonomics', footerSub: 'Remote & Virtual Ergonomic Assessments',
+    sideCtaTitle: 'Need a <em>personalized</em> plan?',
+    sideCtaDesc: 'Generic timers can\'t tell you what your body needs. Tyler Ergonomics builds personalized movement protocols based on your real workstation.',
+    sideCtaBtn: 'Book an Assessment', sideCtaHref: 'te-03-home-office.html',
+    breakCtaEyebrow: 'Want specific movements?', breakCtaHref: 'te-03-home-office.html',
+    breakCtaText: 'For stretches <em>prescribed to your body</em> — book an assessment with Tyler Ergonomics.',
+    aboutPhilosophyTitle: 'Why no <em>specific stretches.</em>',
+    defaults: { session: 60, breakLength: 90 },
+    brand: 'Tyler Ergonomics',
+    switchCard: { title: 'Recovering from Cancer Treatment?', desc: 'Life|After® partners with Tyler Ergonomics for cancer survivor return-to-work support — with gentler session cadence.', linkText: 'Switch to Life|After® mode →' }
+  },
+  lifeafter: {
+    navLogo: 'Life|After®', navSub: 'Recovery Companion',
+    footerLogo: 'Life|After®', footerSub: 'Cancer Survivor Return-to-Work Management',
+    sideCtaTitle: 'Working with a <em>case manager?</em>',
+    sideCtaDesc: 'Your Life|After® case manager can prescribe the session length that fits your recovery. Default is 30 minutes, but every survivor is different.',
+    sideCtaBtn: 'Talk to a Case Manager', sideCtaHref: '../lifeafter/01-homepage.html',
+    breakCtaEyebrow: 'Building your return-to-work plan?', breakCtaHref: '../lifeafter/01-homepage.html',
+    breakCtaText: 'Your Life|After® case manager builds the individualized plan — including the right movements <em>for your recovery</em>.',
+    aboutPhilosophyTitle: 'Why no <em>specific movements.</em>',
+    defaults: { session: 30, breakLength: 90 },
+    brand: 'Life|After®',
+    switchCard: { title: 'Standard ergonomic version', desc: 'Tyler Ergonomics provides the same companion for general desk workers — 60-minute default sessions, standard cadence.', linkText: 'Switch to Tyler Ergonomics mode →' }
+  }
+};
+
+const BREAKS = [
+  { id: 'tyler-quick', type: 'standard', name: 'Quick break', duration: 90, modes: ['tyler'],
+    eyebrow: 'Break', titleStart: 'Step away.', titleEnd: 'Reset.',
+    desc: 'A short pause to break up screen time.',
+    longDesc: 'Just enough to interrupt the screen and reset your body.',
+    guidance: 'Stand up and look away from your screen. Find something at least 20 feet away and let your eyes relax. Move in whatever way feels good — roll your shoulders, walk in place, stretch your hands. The point is just to interrupt — not to follow a routine.' },
+  { id: 'tyler-longer', type: 'longer', name: 'Longer break', duration: 180, modes: ['tyler'],
+    eyebrow: 'Longer Break', titleStart: 'Step away.', titleEnd: 'Walk.',
+    desc: 'A fuller reset — walk, hydrate, change scenery.',
+    longDesc: 'The bigger reset. Move the blood, change the scenery.',
+    guidance: 'Get up and walk. Refill your water. Step outside if you can, or look out a window for a minute. Roll your neck and shoulders. When you come back, take a breath and check your posture before sitting down.' },
+  { id: 'la-quick', type: 'standard', name: 'Quick pause', duration: 90, modes: ['lifeafter'],
+    eyebrow: 'Pause', titleStart: 'Pause.', titleEnd: 'Notice.',
+    desc: 'A gentle moment to check in with your body and breath.',
+    longDesc: 'Just a moment to come back to your body.',
+    guidance: 'Pause whatever you\'re doing. Take a breath. Notice your body — where there\'s tension, where there\'s ease. Move only in ways that feel good today. There\'s nothing to fix. Just notice. Return when you\'re ready.' },
+  { id: 'la-longer', type: 'longer', name: 'Longer pause', duration: 180, modes: ['lifeafter'],
+    eyebrow: 'Longer Pause', titleStart: 'Rest.', titleEnd: 'Restore.',
+    desc: 'A longer pause to step away from work and rest.',
+    longDesc: 'Not lost time. Recovery is the work.',
+    guidance: 'Step away from your workstation. Hydrate. Sit somewhere comfortable, or lie down if you can. Don\'t force movement. Rest as long as you need. This is not lost time — it\'s part of your recovery.' }
+];
+
+// STATE
+let currentMode = 'tyler';
+let settings = { sessionLength: 60, breakLength: 90, soundOn: true, notificationsOn: false, activityAware: false, idleThreshold: 60 };
+let stats = { date: new Date().toDateString(), sessionsCompleted: 0, workMinutes: 0, breaksTaken: 0, streak: 0, lastActiveDate: null };
+let teamConfig = null;
+
+let sessionState = 'ready'; // ready | active | paused | idle | breaking
+let workTotalSec = 0, workRemainingSec = 0, workEarnedSec = 0;
+let breakTotalSec = 0, breakRemainingSec = 0;
+let workInterval = null, breakInterval = null, activityInterval = null;
+let nextBreakActivity = null;
+let currentBreakActivity = null; // the break currently being taken (when state === 'breaking')
+
+let lastActivityTime = Date.now(), activityEvents = [], activityScore = 0, currentlyIdle = false;
+
+// URL & PERSISTENCE
+function parseUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') === 'lifeafter') currentMode = 'lifeafter';
+  const teamName = params.get('team');
+  if (teamName) {
+    teamConfig = {
+      name: teamName,
+      session: parseInt(params.get('session')) || MODE_CONTENT[currentMode].defaults.session,
+      breakLength: parseInt(params.get('breakLength')) || MODE_CONTENT[currentMode].defaults.breakLength
+    };
+    settings.sessionLength = teamConfig.session;
+    settings.breakLength = teamConfig.breakLength;
+  }
+  // Auto-open team setup modal if ?setup=team is in URL
+  if (params.get('setup') === 'team') {
+    window.__autoOpenTeamSetup = true;
+  }
+}
+async function loadState() {
+  try { const s = await window.storage.get('settings_v13'); if (s && s.value && !teamConfig) settings = { ...settings, ...JSON.parse(s.value) }; } catch(e) {}
+  try {
+    const st = await window.storage.get('stats_v13');
+    if (st && st.value) {
+      const loaded = JSON.parse(st.value);
+      const today = new Date().toDateString();
+      if (loaded.date !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        const newStreak = loaded.date === yesterday && loaded.sessionsCompleted >= 1 ? (loaded.streak || 0) + 1 : 0;
+        stats = { date: today, sessionsCompleted: 0, workMinutes: 0, breaksTaken: 0, streak: newStreak, lastActiveDate: loaded.date };
+      } else stats = { ...stats, ...loaded };
+    }
+  } catch(e) {}
+  try { const m = await window.storage.get('current_mode_v13'); if (m && m.value && !new URLSearchParams(window.location.search).get('mode')) currentMode = m.value; } catch(e) {}
+}
+async function saveSettings() { try { await window.storage.set('settings_v13', JSON.stringify(settings)); } catch(e) {} }
+async function saveStats() { try { await window.storage.set('stats_v13', JSON.stringify(stats)); } catch(e) {} }
+async function saveMode() { try { await window.storage.set('current_mode_v13', currentMode); } catch(e) {} }
+
+function applyMode() {
+  document.body.setAttribute('data-mode', currentMode);
+  const c = MODE_CONTENT[currentMode];
+  document.getElementById('navLogo').textContent = c.navLogo;
+  document.getElementById('navSub').textContent = c.navSub;
+  document.getElementById('footerLogo').textContent = c.footerLogo;
+  document.getElementById('footerSub').innerHTML = c.footerSub;
+  document.getElementById('sideCtaTitle').innerHTML = c.sideCtaTitle;
+  document.getElementById('sideCtaDesc').textContent = c.sideCtaDesc;
+  const sideCtaBtn = document.getElementById('sideCtaBtn');
+  sideCtaBtn.textContent = c.sideCtaBtn;
+  sideCtaBtn.href = c.sideCtaHref;
+  const breakCtaBtn = document.getElementById('breakCtaBtn');
+  if (breakCtaBtn) breakCtaBtn.href = c.breakCtaHref;
+  document.getElementById('switchCardTitle').textContent = c.switchCard.title;
+  document.getElementById('switchCardDesc').textContent = c.switchCard.desc;
+  document.getElementById('switchModeLink').textContent = c.switchCard.linkText;
+  document.getElementById('aboutPhilosophyTitle').innerHTML = c.aboutPhilosophyTitle;
+  refreshShareMessages();
+  updateActivityUI();
+  updateUiForState();
+}
+
+// ACTIVITY
+function recordActivity() {
+  lastActivityTime = Date.now();
+  activityEvents.push(Date.now());
+  const cutoff = Date.now() - 60000;
+  activityEvents = activityEvents.filter(t => t > cutoff);
+  activityScore = activityEvents.length;
+  if (currentlyIdle) { currentlyIdle = false; updateActivityUI(); if (sessionState === 'idle') setSessionState('active'); }
+}
+function checkIdle() {
+  if (!settings.activityAware) return;
+  const idleSeconds = (Date.now() - lastActivityTime) / 1000;
+  const wasIdle = currentlyIdle;
+  currentlyIdle = idleSeconds > settings.idleThreshold;
+  if (wasIdle !== currentlyIdle) {
+    updateActivityUI();
+    if (currentlyIdle && sessionState === 'active') setSessionState('idle');
+    else if (!currentlyIdle && sessionState === 'idle') setSessionState('active');
+  }
+}
+function updateActivityUI() {
+  if (!settings.activityAware) { document.getElementById('activityMeter').classList.remove('active'); return; }
+  document.getElementById('activityMeter').classList.add('active');
+  let bars = 0;
+  if (activityScore > 0) bars = 1;
+  if (activityScore > 15) bars = 2;
+  if (activityScore > 40) bars = 3;
+  if (activityScore > 80) bars = 4;
+  if (activityScore > 150) bars = 5;
+  if (currentlyIdle) bars = 0;
+  document.querySelectorAll('#activityBars .activity-bar').forEach((b, i) => b.classList.toggle('on', i < bars));
+  const stateEl = document.getElementById('activityState');
+  if (currentlyIdle) { stateEl.textContent = 'Idle'; stateEl.classList.add('idle'); }
+  else { stateEl.classList.remove('idle'); stateEl.textContent = activityScore > 80 ? 'High' : activityScore > 15 ? 'Active' : 'Low'; }
+}
+function setupActivityListeners() {
+  ['keydown', 'mousedown', 'mousemove', 'wheel', 'touchstart'].forEach(e => window.addEventListener(e, recordActivity, { passive: true }));
+}
+
+// SESSION
+function setSessionState(newState) { sessionState = newState; updateUiForState(); }
+
+function updateUiForState() {
+  const startBtn = document.getElementById('startSessionBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const resumeBtn = document.getElementById('resumeBtn');
+  const endBtn = document.getElementById('endSessionBtn');
+  const completeBtn = document.getElementById('completeBreakBtn');
+  const skipBtn = document.getElementById('skipBreakBtn');
+  const discomfortWrap = document.getElementById('discomfortWrap');
+  const breakPickerWrap = document.getElementById('breakPickerWrap');
+  const breakContent = document.getElementById('breakContent');
+  const sessionMeta = document.getElementById('sessionMeta');
+  const workUnit = document.getElementById('workTimerUnit');
+  const breakUnit = document.getElementById('breakTimerUnit');
+  const workStatusText = document.getElementById('workStatusText');
+  const breakStatusText = document.getElementById('breakStatusText');
+  const breakTimerLabel = document.getElementById('breakTimerLabel');
+  const eyebrow = document.getElementById('sessionEyebrow');
+  const title = document.getElementById('sessionTitle');
+
+  // Reset all
+  [startBtn, pauseBtn, resumeBtn, endBtn, completeBtn, skipBtn, discomfortWrap, breakPickerWrap].forEach(el => el.classList.add('hidden'));
+  breakContent.classList.add('hidden');
+  workUnit.classList.remove('active', 'dim');
+  breakUnit.classList.remove('active', 'dim');
+
+  // Ensure we have a next break previewed
+  if (!nextBreakActivity) nextBreakActivity = pickNextBreak();
+
+  if (sessionState === 'ready') {
+    startBtn.classList.remove('hidden');
+    breakPickerWrap.classList.remove('hidden');
+    sessionMeta.classList.remove('hidden');
+    workUnit.classList.add('dim');
+    breakUnit.classList.add('dim');
+    workStatusText.textContent = 'Ready';
+    breakStatusText.textContent = nextBreakActivity.name;
+    breakTimerLabel.textContent = 'Next Break';
+    eyebrow.textContent = 'Ready';
+    title.innerHTML = currentMode === 'lifeafter'
+      ? `Begin when you're <em>ready.</em> Session: <em>${settings.sessionLength} minutes</em>.`
+      : `Press start when you're <em>ready to work.</em> Session: <em>${settings.sessionLength} minutes</em>.`;
+    workRemainingSec = settings.sessionLength * 60;
+    workTotalSec = workRemainingSec;
+    breakRemainingSec = nextBreakActivity.duration;
+    breakTotalSec = nextBreakActivity.duration;
+    updateWorkTimerDisplay();
+    updateBreakTimerDisplay();
+  } else if (sessionState === 'active') {
+    pauseBtn.classList.remove('hidden');
+    discomfortWrap.classList.remove('hidden');
+    endBtn.classList.remove('hidden');
+    sessionMeta.classList.remove('hidden');
+    workUnit.classList.add('active');
+    breakUnit.classList.add('dim');
+    workStatusText.textContent = settings.activityAware ? 'Active' : 'Counting down';
+    breakStatusText.textContent = nextBreakActivity.name;
+    breakTimerLabel.textContent = 'Next Break';
+    eyebrow.textContent = 'In Session';
+    title.innerHTML = 'Focused work in <em>progress.</em>';
+  } else if (sessionState === 'paused') {
+    resumeBtn.classList.remove('hidden');
+    endBtn.classList.remove('hidden');
+    sessionMeta.classList.remove('hidden');
+    workUnit.classList.add('dim');
+    breakUnit.classList.add('dim');
+    workStatusText.textContent = 'Paused';
+    breakStatusText.textContent = nextBreakActivity.name;
+    eyebrow.textContent = 'Paused';
+    title.innerHTML = 'Session <em>paused.</em>';
+  } else if (sessionState === 'idle') {
+    pauseBtn.classList.remove('hidden');
+    discomfortWrap.classList.remove('hidden');
+    endBtn.classList.remove('hidden');
+    sessionMeta.classList.remove('hidden');
+    workUnit.classList.add('dim');
+    breakUnit.classList.add('dim');
+    workStatusText.textContent = 'Idle — paused';
+    breakStatusText.textContent = nextBreakActivity.name;
+    eyebrow.textContent = 'Away From Desk';
+    title.innerHTML = 'Timer <em>paused</em> — come back when ready.';
+  } else if (sessionState === 'breaking') {
+    completeBtn.classList.remove('hidden');
+    skipBtn.classList.remove('hidden');
+    sessionMeta.classList.remove('hidden');
+    breakContent.classList.remove('hidden');
+    workUnit.classList.add('dim');
+    breakUnit.classList.add('active');
+    workStatusText.textContent = 'Next session';
+    breakStatusText.textContent = 'Break in progress';
+    breakTimerLabel.textContent = currentBreakActivity ? currentBreakActivity.eyebrow : 'Break';
+    eyebrow.textContent = currentBreakActivity ? currentBreakActivity.eyebrow : 'Break Time';
+    title.innerHTML = currentBreakActivity
+      ? `${currentBreakActivity.titleStart} <em>${currentBreakActivity.titleEnd}</em>`
+      : 'Take a <em>break.</em>';
+    // Refresh work timer to show next session length preview
+    workRemainingSec = settings.sessionLength * 60;
+    workTotalSec = workRemainingSec;
+    updateWorkTimerDisplay();
+  }
+}
+
+function startSession() {
+  workTotalSec = settings.sessionLength * 60;
+  workRemainingSec = workTotalSec;
+  workEarnedSec = 0;
+  nextBreakActivity = pickNextBreak();
+  setSessionState('active');
+  if (workInterval) clearInterval(workInterval);
+  workInterval = setInterval(tickWork, 1000);
+}
+function tickWork() {
+  if (sessionState !== 'active') return;
+  workRemainingSec--;
+  workEarnedSec++;
+  updateWorkTimerDisplay();
+  if (workRemainingSec <= 0) { clearInterval(workInterval); finishSession(true); }
+}
+function pauseSession() { if (sessionState === 'active' || sessionState === 'idle') setSessionState('paused'); }
+function resumeSession() { setSessionState('active'); }
+function endSessionEarly() { finishSession(false); }
+
+function finishSession(natural) {
+  if (workInterval) clearInterval(workInterval);
+  const minutesWorked = Math.round(workEarnedSec / 60);
+  if (minutesWorked > 0) { stats.workMinutes += minutesWorked; stats.sessionsCompleted++; }
+  saveStats();
+  updateStatsUI();
+  if (natural || workEarnedSec > 60) startBreak(nextBreakActivity);
+  else { setSessionState('ready'); showToast('Session ended'); }
+}
+
+function cutShort(minutesRemaining) {
+  if (minutesRemaining <= 0) finishSession(false);
+  else {
+    workRemainingSec = minutesRemaining * 60;
+    updateWorkTimerDisplay();
+    document.getElementById('discomfortPopover').classList.remove('show');
+    showToast(`Session shortened — ${minutesRemaining} min remaining, then break`);
+  }
+}
+
+function pickNextBreak() {
+  const available = BREAKS.filter(b => b.modes.includes(currentMode) && b.type === 'standard');
+  const base = available[0];
+  // Apply user-configured break length to the standard break
+  return { ...base, duration: settings.breakLength };
+}
+
+// BREAK
+function startBreak(activity) {
+  const a = activity || pickNextBreak();
+  currentBreakActivity = a;
+  breakTotalSec = a.duration;
+  breakRemainingSec = a.duration;
+  // Render break content
+  const c = MODE_CONTENT[currentMode];
+  document.getElementById('breakContentEyebrow').textContent = a.eyebrow;
+  document.getElementById('breakContentTitle').innerHTML = `${a.titleStart} <em>${a.titleEnd}</em>`;
+  document.getElementById('breakContentDesc').textContent = a.longDesc;
+  document.getElementById('breakGuidanceText').textContent = a.guidance;
+  document.getElementById('breakCtaEyebrow').textContent = c.breakCtaEyebrow;
+  document.getElementById('breakCtaText').innerHTML = c.breakCtaText;
+  setSessionState('breaking');
+  if (settings.soundOn) playChime();
+  if (settings.notificationsOn && Notification.permission === 'granted') new Notification('Time for a break', { body: a.name + ' — ' + a.desc });
+  if (breakInterval) clearInterval(breakInterval);
+  breakInterval = setInterval(tickBreak, 1000);
+}
+function tickBreak() {
+  if (sessionState !== 'breaking') return;
+  breakRemainingSec--;
+  updateBreakTimerDisplay();
+  if (breakRemainingSec <= 0) {
+    clearInterval(breakInterval);
+    if (settings.soundOn) playCompletion();
+    // Auto-trigger nothing - user manually completes
+  }
+}
+function finishBreak(completed) {
+  if (breakInterval) clearInterval(breakInterval);
+  if (completed) { stats.breaksTaken++; saveStats(); updateStatsUI(); showToast('Break logged — nice work'); }
+  currentBreakActivity = null;
+  nextBreakActivity = pickNextBreak();
+  setSessionState('ready');
+}
+
+// DISPLAYS
+function updateWorkTimerDisplay() {
+  const min = Math.floor(workRemainingSec / 60), sec = workRemainingSec % 60;
+  document.getElementById('workMinutes').textContent = String(min).padStart(2, '0');
+  document.getElementById('workSeconds').textContent = String(sec).padStart(2, '0');
+  const elapsed = workTotalSec - workRemainingSec;
+  const offset = workTotalSec > 0 ? (elapsed / workTotalSec) * 578.05 : 0;
+  const c = document.getElementById('workProgressCircle');
+  c.style.strokeDashoffset = sessionState === 'active' ? offset : 0;
+  c.classList.remove('warning', 'urgent');
+  if (sessionState === 'active' && workTotalSec > 0) {
+    const pct = workRemainingSec / workTotalSec;
+    if (pct < 0.1) c.classList.add('urgent');
+    else if (pct < 0.25) c.classList.add('warning');
+  }
+}
+function updateBreakTimerDisplay() {
+  const min = Math.floor(breakRemainingSec / 60), sec = breakRemainingSec % 60;
+  document.getElementById('breakMinutes').textContent = String(min).padStart(2, '0');
+  document.getElementById('breakSeconds').textContent = String(sec).padStart(2, '0');
+  const elapsed = breakTotalSec - breakRemainingSec;
+  const offset = breakTotalSec > 0 ? (elapsed / breakTotalSec) * 578.05 : 0;
+  const c = document.getElementById('breakProgressCircle');
+  c.style.strokeDashoffset = sessionState === 'breaking' ? offset : 0;
+  c.classList.remove('warning', 'urgent');
+  if (sessionState === 'breaking' && breakTotalSec > 0) {
+    const pct = breakRemainingSec / breakTotalSec;
+    if (pct < 0.1) c.classList.add('urgent');
+    else if (pct < 0.25) c.classList.add('warning');
+  }
+}
+
+function renderTickMarks() {
+  ['workTickGroup', 'breakTickGroup'].forEach(id => {
+    const g = document.getElementById(id);
+    g.innerHTML = '';
+    for (let i = 0; i < 12; i++) {
+      const a = (i * 30) * Math.PI / 180;
+      const x1 = 100 + Math.cos(a) * 96, y1 = 100 + Math.sin(a) * 96;
+      const x2 = 100 + Math.cos(a) * 100, y2 = 100 + Math.sin(a) * 100;
+      g.innerHTML += `<line class="timer-tick" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"></line>`;
+    }
+  });
+}
+
+// STATS
+function updateStatsUI() {
+  document.getElementById('statSessions').textContent = stats.sessionsCompleted;
+  document.getElementById('statSessionsSub').textContent = stats.sessionsCompleted === 0 ? 'None yet today' : `${stats.breaksTaken} break${stats.breaksTaken !== 1 ? 's' : ''} taken`;
+  document.getElementById('statWorkH').textContent = Math.floor(stats.workMinutes / 60);
+  document.getElementById('statWorkM').textContent = stats.workMinutes % 60;
+  document.getElementById('statStreakSub').textContent = stats.streak === 0 ? 'No streak yet' : `${stats.streak}-day streak`;
+  document.getElementById('sessionsToday').textContent = stats.sessionsCompleted;
+  document.getElementById('totalWork').textContent = stats.workMinutes < 60 ? `${stats.workMinutes} min` : `${Math.floor(stats.workMinutes / 60)}h ${stats.workMinutes % 60}m`;
+}
+
+// AUDIO
+let audioCtx = null;
+function getCtx() { if (!audioCtx) try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} return audioCtx; }
+function playChime() {
+  const ctx = getCtx(); if (!ctx) return;
+  [523.25, 659.25].forEach((f, i) => {
+    setTimeout(() => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0, ctx.currentTime);
+      g.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+      o.connect(g).connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + 1.3);
+    }, i * 220);
+  });
+}
+function playCompletion() {
+  const ctx = getCtx(); if (!ctx) return;
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = 'sine'; o.frequency.value = 783.99;
+  g.gain.setValueAtTime(0, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.05);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+  o.connect(g).connect(ctx.destination);
+  o.start(); o.stop(ctx.currentTime + 0.9);
+}
+
+// BREAK PICKER
+function renderBreakPicker() {
+  const list = document.getElementById('breakPickerList');
+  list.innerHTML = '';
+  const available = BREAKS.filter(b => b.modes.includes(currentMode));
+  available.forEach(b => {
+    // For 'standard' breaks, apply user's configured length
+    const duration = b.type === 'standard' ? settings.breakLength : b.duration;
+    const min = Math.floor(duration / 60), sec = duration % 60;
+    const durStr = min > 0 ? `${min} min${sec > 0 ? ' ' + sec + 's' : ''}` : `${sec} sec`;
+    const btn = document.createElement('button');
+    btn.className = 'break-picker-item';
+    btn.innerHTML = `<strong>${b.name}</strong><span>${b.desc} · ${durStr}</span>`;
+    btn.addEventListener('click', () => {
+      document.getElementById('breakPickerPopover').classList.remove('show');
+      startBreak({ ...b, duration: duration });
+    });
+    list.appendChild(btn);
+  });
+}
+
+// SHARE
+function getShareUrl() { return window.location.origin + window.location.pathname + (currentMode === 'lifeafter' ? '?mode=lifeafter' : ''); }
+function getHrMessage(toName, fromName) {
+  const greet = toName ? `Hi ${toName},` : 'Hi,';
+  const sign = fromName ? `\n\nThanks,\n${fromName}` : '';
+  const brand = MODE_CONTENT[currentMode].brand;
+  return `${greet}\n\nI've been using a free work-session timer from ${brand}. Simple kitchen-timer style — start a session when you sit down to focus, take a break when the timer ends. It doesn't prescribe specific stretches (that's what their assessments are for) — it just helps build the habit of breaking regularly.\n\nIt might be worth offering to our team. They have a way to configure the cadence with our preferred settings and share one link with every employee — no setup on anyone's end.\n\nTry it here: ${getShareUrl()}\n\nIf we'd want to roll it out more broadly, I'm happy to connect you with Rick Tyler at Tyler Ergonomics directly.${sign}`;
+}
+function getHrSubject() { return `A wellness tool worth a look — ${MODE_CONTENT[currentMode].brand}`; }
+function getFriendMessage(toName, fromName) {
+  const greet = toName ? `Hey ${toName} —` : 'Hey —';
+  const sign = fromName ? `\n\n${fromName}` : '';
+  return `${greet} thought of you. Found a free work-session timer — start a session when you sit down, take a break when it ends. Simple, nicely designed, no signup.\n\n${getShareUrl()}${sign}`;
+}
+function getFriendSubject() { return `Thought you'd like this`; }
+function refreshShareMessages() {
+  const hrTo = document.getElementById('hrToName').value.trim();
+  const hrFrom = document.getElementById('hrYourName').value.trim();
+  document.getElementById('hrMessage').value = getHrMessage(hrTo, hrFrom);
+  const fTo = document.getElementById('friendToName').value.trim();
+  const fFrom = document.getElementById('friendYourName').value.trim();
+  document.getElementById('friendMessage').value = getFriendMessage(fTo, fFrom);
+}
+function openShareModal(activeTab = 'hr') {
+  refreshShareMessages();
+  document.querySelectorAll('.share-tab').forEach(t => t.classList.toggle('active', t.dataset.shareTab === activeTab));
+  document.querySelectorAll('.share-pane').forEach(p => p.classList.toggle('active', p.dataset.sharePane === activeTab));
+  document.getElementById('shareModal').classList.add('active');
+}
+function closeShareModal() { document.getElementById('shareModal').classList.remove('active'); }
+function sendShareEmail(type) {
+  const subject = type === 'hr' ? getHrSubject() : getFriendSubject();
+  const body = type === 'hr' ? document.getElementById('hrMessage').value : document.getElementById('friendMessage').value;
+  window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+function copyShareLink() {
+  const url = getShareUrl();
+  navigator.clipboard.writeText(url).then(() => showToast('Link copied')).catch(() => {
+    const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('Link copied'); } catch(e) { showToast('Press Ctrl+C to copy'); }
+    document.body.removeChild(ta);
+  });
+}
+async function nativeShare(type) {
+  const url = getShareUrl();
+  const text = type === 'hr' ? document.getElementById('hrMessage').value : document.getElementById('friendMessage').value;
+  const title = type === 'hr' ? getHrSubject() : getFriendSubject();
+  try { await navigator.share({ title, text, url }); } catch(e) {}
+}
+function setupNativeShareButtons() {
+  if (navigator.share) {
+    document.getElementById('hrNativeShare').classList.remove('hidden');
+    document.getElementById('friendNativeShare').classList.remove('hidden');
+  }
+}
+
+// SETTINGS / TEAM / ABOUT
+function openSettings() {
+  document.getElementById('sessionSlider').value = settings.sessionLength;
+  document.getElementById('breakLengthSlider').value = settings.breakLength;
+  document.getElementById('sessionVal').textContent = settings.sessionLength;
+  document.getElementById('breakLengthVal').textContent = settings.breakLength;
+  document.getElementById('soundToggle').classList.toggle('on', settings.soundOn);
+  document.getElementById('notifToggle').classList.toggle('on', settings.notificationsOn);
+  document.getElementById('activityToggle').classList.toggle('on', settings.activityAware);
+  document.getElementById('modeToggle').classList.toggle('on', currentMode === 'lifeafter');
+  document.getElementById('idleSlider').value = settings.idleThreshold;
+  document.getElementById('idleVal').textContent = settings.idleThreshold;
+  document.getElementById('settingsModal').classList.add('active');
+}
+function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
+function openAbout() { document.getElementById('aboutModal').classList.add('active'); }
+function closeAbout() { document.getElementById('aboutModal').classList.remove('active'); }
+function openTeamModal() {
+  document.getElementById('teamName').value = teamConfig?.name || '';
+  document.getElementById('teamSessionSlider').value = settings.sessionLength;
+  document.getElementById('teamBreakLengthSlider').value = settings.breakLength;
+  document.getElementById('teamSessionVal').textContent = settings.sessionLength;
+  document.getElementById('teamBreakLengthVal').textContent = settings.breakLength;
+  document.getElementById('teamResult').classList.add('hidden');
+  document.getElementById('teamModal').classList.add('active');
+}
+function closeTeamModal() { document.getElementById('teamModal').classList.remove('active'); }
+function generateTeamUrl() {
+  const name = document.getElementById('teamName').value.trim();
+  if (!name) { showToast('Please enter your organization name'); return; }
+  const p = new URLSearchParams({
+    team: name,
+    session: document.getElementById('teamSessionSlider').value,
+    breakLength: document.getElementById('teamBreakLengthSlider').value,
+    mode: currentMode
+  });
+  document.getElementById('teamUrl').textContent = window.location.origin + window.location.pathname + '?' + p.toString();
+  document.getElementById('teamResult').classList.remove('hidden');
+}
+function copyTeamUrl() {
+  const url = document.getElementById('teamUrl').textContent;
+  navigator.clipboard.writeText(url).then(() => showToast('Link copied')).catch(() => {
+    const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('Link copied'); } catch(e) { showToast('Press Ctrl+C to copy'); }
+    document.body.removeChild(ta);
+  });
+}
+function applyTeamBanner() {
+  if (teamConfig) {
+    document.getElementById('teamPillName').textContent = teamConfig.name;
+    document.getElementById('teamPillBar').classList.add('active');
+  } else document.getElementById('teamPillBar').classList.remove('active');
+}
+
+let toastTimer = null;
+function showToast(text) {
+  document.getElementById('toastText').textContent = text;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function switchMode(m) {
+  if (m === currentMode) return;
+  currentMode = m;
+  const d = MODE_CONTENT[m].defaults;
+  if (!teamConfig) {
+    settings.sessionLength = d.session;
+    settings.breakLength = d.breakLength;
+    saveSettings();
+  }
+  saveMode();
+  nextBreakActivity = pickNextBreak();
+  applyMode();
+  setSessionState('ready');
+  updateStatsUI();
+  showToast(`Switched to ${MODE_CONTENT[m].navLogo}`);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  parseUrlParams();
+  await loadState();
+  renderTickMarks();
+  nextBreakActivity = pickNextBreak();
+  applyMode();
+  applyTeamBanner();
+  setupNativeShareButtons();
+  setupActivityListeners();
+  updateActivityUI();
+  updateStatsUI();
+  setSessionState('ready');
+
+  activityInterval = setInterval(checkIdle, 1000);
+
+  document.getElementById('startSessionBtn').addEventListener('click', startSession);
+  document.getElementById('pauseBtn').addEventListener('click', pauseSession);
+  document.getElementById('resumeBtn').addEventListener('click', resumeSession);
+  document.getElementById('endSessionBtn').addEventListener('click', endSessionEarly);
+  document.getElementById('completeBreakBtn').addEventListener('click', () => finishBreak(true));
+  document.getElementById('skipBreakBtn').addEventListener('click', () => finishBreak(false));
+
+  document.getElementById('discomfortBtn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('discomfortPopover').classList.toggle('show'); });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#discomfortWrap')) document.getElementById('discomfortPopover').classList.remove('show');
+    if (!e.target.closest('#breakPickerWrap')) document.getElementById('breakPickerPopover').classList.remove('show');
+  });
+  document.querySelectorAll('.discomfort-option').forEach(b => b.addEventListener('click', () => cutShort(parseInt(b.dataset.cut))));
+
+  document.getElementById('breakPickerBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    renderBreakPicker();
+    document.getElementById('breakPickerPopover').classList.toggle('show');
+  });
+
+  // About modal
+  document.getElementById('aboutNavLink').addEventListener('click', openAbout);
+  document.getElementById('aboutInlineLink').addEventListener('click', openAbout);
+  document.getElementById('teamSetupNavLink').addEventListener('click', openTeamModal);
+  document.getElementById('settingsNavLink').addEventListener('click', openSettings);
+  document.getElementById('closeAbout').addEventListener('click', closeAbout);
+  document.getElementById('aboutModal').addEventListener('click', (e) => { if (e.target.id === 'aboutModal') closeAbout(); });
+  document.getElementById('aboutTeamBtn').addEventListener('click', () => { closeAbout(); openTeamModal(); });
+  document.getElementById('aboutShareHr').addEventListener('click', () => { closeAbout(); openShareModal('hr'); });
+  document.getElementById('aboutShareFriend').addEventListener('click', () => { closeAbout(); openShareModal('friend'); });
+
+  // Auto-open team modal if ?setup=team was in URL
+  if (window.__autoOpenTeamSetup) {
+    setTimeout(() => openTeamModal(), 200);
+  }
+
+  // Settings
+  document.getElementById('settingsSideBtn').addEventListener('click', openSettings);
+  document.getElementById('closeSettings').addEventListener('click', closeSettings);
+  document.getElementById('settingsModal').addEventListener('click', (e) => { if (e.target.id === 'settingsModal') closeSettings(); });
+  ['session','breakLength','idle'].forEach(k => {
+    document.getElementById(k + 'Slider').addEventListener('input', (e) => { document.getElementById(k + 'Val').textContent = e.target.value; });
+  });
+  document.getElementById('soundToggle').addEventListener('click', (e) => e.currentTarget.classList.toggle('on'));
+  document.getElementById('activityToggle').addEventListener('click', (e) => e.currentTarget.classList.toggle('on'));
+  document.getElementById('notifToggle').addEventListener('click', async (e) => {
+    const on = !e.currentTarget.classList.contains('on');
+    if (on && 'Notification' in window) {
+      const p = await Notification.requestPermission();
+      if (p !== 'granted') { showToast('Notification permission denied'); return; }
+    }
+    e.currentTarget.classList.toggle('on');
+  });
+  document.getElementById('modeToggle').addEventListener('click', (e) => e.currentTarget.classList.toggle('on'));
+  document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+    settings.sessionLength = parseInt(document.getElementById('sessionSlider').value);
+    settings.breakLength = parseInt(document.getElementById('breakLengthSlider').value);
+    settings.soundOn = document.getElementById('soundToggle').classList.contains('on');
+    settings.notificationsOn = document.getElementById('notifToggle').classList.contains('on');
+    settings.activityAware = document.getElementById('activityToggle').classList.contains('on');
+    settings.idleThreshold = parseInt(document.getElementById('idleSlider').value);
+    const wantLifeafter = document.getElementById('modeToggle').classList.contains('on');
+    const newMode = wantLifeafter ? 'lifeafter' : 'tyler';
+    saveSettings();
+    closeSettings();
+    if (newMode !== currentMode) switchMode(newMode);
+    else {
+      nextBreakActivity = pickNextBreak();
+      if (sessionState === 'ready') setSessionState('ready');
+      updateActivityUI(); updateStatsUI();
+      showToast('Settings saved');
+    }
+  });
+  document.getElementById('resetStatsBtn').addEventListener('click', () => {
+    stats.sessionsCompleted = 0; stats.workMinutes = 0; stats.breaksTaken = 0;
+    saveStats(); updateStatsUI();
+    nextBreakActivity = pickNextBreak();
+    if (sessionState === 'ready') setSessionState('ready');
+    showToast('Today\'s stats reset');
+  });
+
+  // Team
+  document.getElementById('closeTeam').addEventListener('click', closeTeamModal);
+  document.getElementById('closeTeam2').addEventListener('click', closeTeamModal);
+  document.getElementById('teamModal').addEventListener('click', (e) => { if (e.target.id === 'teamModal') closeTeamModal(); });
+  ['Session','BreakLength'].forEach(k => {
+    document.getElementById('team' + k + 'Slider').addEventListener('input', (e) => { document.getElementById('team' + k + 'Val').textContent = e.target.value; });
+  });
+  document.getElementById('generateTeamUrl').addEventListener('click', generateTeamUrl);
+  document.getElementById('copyTeamUrl').addEventListener('click', copyTeamUrl);
+  document.getElementById('previewTeamUrl').addEventListener('click', () => window.open(document.getElementById('teamUrl').textContent, '_blank'));
+
+  // Share
+  document.getElementById('closeShare').addEventListener('click', closeShareModal);
+  document.getElementById('shareModal').addEventListener('click', (e) => { if (e.target.id === 'shareModal') closeShareModal(); });
+  document.querySelectorAll('.share-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      const target = t.dataset.shareTab;
+      document.querySelectorAll('.share-tab').forEach(x => x.classList.toggle('active', x === t));
+      document.querySelectorAll('.share-pane').forEach(p => p.classList.toggle('active', p.dataset.sharePane === target));
+    });
+  });
+  ['hrToName','hrYourName','friendToName','friendYourName'].forEach(id => {
+    document.getElementById(id).addEventListener('input', refreshShareMessages);
+  });
+  document.getElementById('hrSendEmail').addEventListener('click', () => sendShareEmail('hr'));
+  document.getElementById('friendSendEmail').addEventListener('click', () => sendShareEmail('friend'));
+  document.getElementById('hrCopyLink').addEventListener('click', copyShareLink);
+  document.getElementById('friendCopyLink').addEventListener('click', copyShareLink);
+  document.getElementById('hrNativeShare').addEventListener('click', () => nativeShare('hr'));
+  document.getElementById('friendNativeShare').addEventListener('click', () => nativeShare('friend'));
+
+  document.getElementById('switchModeLink').addEventListener('click', () => switchMode(currentMode === 'tyler' ? 'lifeafter' : 'tyler'));
+});
+</script>
+</body>
+</html>

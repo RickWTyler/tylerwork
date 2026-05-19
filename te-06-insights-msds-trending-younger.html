@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why MSDs Are Trending Younger | Tyler Ergonomics Insights</title>
+<meta name="description" content="Musculoskeletal disorder claims are showing up two decades earlier than they used to. The remote-work effect, five years in — and what employers should be doing about it before the bill comes due.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a2a3a;--ink-lt:#1e3040;--blue:#2e6da4;--blue-dk:#1f5490;--ivory:#f4f6f9;--cream:#e8eef5;--gold:#f68916;--gold-lt:#ffa84c;--warm:#d4d8de;--mid:#3a4e62;--soft:#6a8099;--white:#ffffff;--border:rgba(46,109,164,0.15)}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;font-weight:300}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:24px 48px;border-bottom:1px solid var(--border);background:var(--ink);position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;flex-direction:column;line-height:1.2}
+.nav-logo-main{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--gold-lt);letter-spacing:0.01em}
+.nav-logo-sub{font-size:10px;color:rgba(255,255,255,0.5);font-weight:400;letter-spacing:0.12em;text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;gap:36px;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:400;letter-spacing:0.02em;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a.current{color:var(--gold-lt)}
+.btn-gold{background:var(--gold);color:var(--ink);padding:10px 20px;border:none;border-radius:2px;font-size:13px;font-weight:500;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;letter-spacing:0.03em}
+.btn-primary{background:var(--blue);color:var(--white);padding:13px 26px;border:none;border-radius:2px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;letter-spacing:0.03em}
+
+/* ARTICLE HEADER */
+.article-header{padding:64px 48px 48px;background:var(--ivory);border-bottom:1px solid var(--border)}
+.article-header-inner{max-width:760px;margin:0 auto}
+.article-back{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);font-weight:500;text-decoration:none;margin-bottom:24px;display:inline-block}
+.article-back:hover{color:var(--blue-dk)}
+.article-meta-line{font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.article-header h1{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:500;color:var(--ink);line-height:1.15;margin-bottom:20px;letter-spacing:-0.01em}
+.article-header h1 em{color:var(--gold);font-style:italic}
+.article-dek{font-size:18px;color:var(--mid);line-height:1.7;font-weight:300;font-style:italic}
+
+/* ARTICLE BODY */
+.article-body{padding:64px 48px;background:var(--white)}
+.article-body-inner{max-width:680px;margin:0 auto;font-size:16.5px;color:var(--ink);line-height:1.85;font-weight:300}
+.article-body-inner p{margin-bottom:22px}
+.article-body-inner h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--ink);line-height:1.25;margin-top:48px;margin-bottom:20px;letter-spacing:-0.01em}
+.article-body-inner h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.3;margin-top:36px;margin-bottom:14px}
+.article-body-inner blockquote{border-left:3px solid var(--gold);padding:8px 0 8px 24px;margin:32px 0;font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--mid);line-height:1.55}
+.article-body-inner ul,.article-body-inner ol{margin-bottom:22px;padding-left:24px}
+.article-body-inner li{margin-bottom:8px;font-size:16px;line-height:1.75}
+.article-body-inner a{color:var(--blue-dk);text-decoration:underline}
+.article-body-inner strong{color:var(--ink);font-weight:500}
+
+/* LEDE WITH DROP CAP */
+.lede{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.55;color:var(--ink);margin-bottom:28px;font-weight:400}
+.lede::first-letter{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:500;float:left;line-height:0.9;margin:6px 12px 0 0;color:var(--gold)}
+
+/* STATS GRID */
+.data-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin:36px 0;border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.data-cell{background:var(--ivory);padding:32px 22px;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--gold);font-weight:500;display:block;line-height:1;letter-spacing:-0.01em}
+.stat-num .pct{font-size:28px;color:var(--gold-lt);margin-left:2px;font-weight:400}
+.stat-label{font-size:12.5px;color:var(--mid);font-weight:400;margin-top:12px;display:block;line-height:1.5}
+
+/* METHOD NOTE */
+.method-note{background:var(--cream);border-left:3px solid var(--blue);padding:22px 26px;margin:32px 0;border-radius:2px;font-size:14.5px;color:var(--mid);line-height:1.7}
+.method-note strong{display:block;color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;margin-bottom:6px}
+
+/* RECOMMENDATIONS LIST */
+.rec-list{list-style:none!important;padding:0!important;margin:24px 0 32px!important}
+.rec-list li{padding:22px 26px;border-left:3px solid var(--gold);background:var(--ivory);margin-bottom:12px;font-size:15.5px;line-height:1.7;color:var(--mid)}
+.rec-list li strong{display:block;color:var(--ink);font-weight:500;font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.3;margin-bottom:6px}
+
+/* TAKEAWAYS */
+.takeaways{background:var(--ink);color:var(--white);padding:36px 32px;margin:44px 0;border-radius:2px;border-left:4px solid var(--gold)}
+.takeaways h4{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-lt);font-weight:500;margin-bottom:18px;letter-spacing:-0.01em}
+.takeaways ul{list-style:none!important;padding:0!important;margin:0!important}
+.takeaways li{font-size:14.5px;color:rgba(255,255,255,0.85);line-height:1.7;padding:10px 0 10px 20px;position:relative;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:0!important;font-weight:300}
+.takeaways li:last-child{border-bottom:none}
+.takeaways li::before{content:'';position:absolute;left:0;top:18px;width:8px;height:1px;background:var(--gold)}
+
+/* DISCLAIMER */
+.article-disclaimer{font-size:12.5px;color:var(--soft);margin-top:48px;padding-top:24px;border-top:1px solid var(--border);line-height:1.7;font-weight:300;font-style:italic}
+
+/* AUTHOR FOOTER */
+.author-block{max-width:680px;margin:48px auto 0;padding-top:32px;border-top:1px solid var(--border);display:flex;gap:20px;align-items:flex-start}
+.author-initial{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;flex-shrink:0}
+.author-text p{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:6px}
+.author-text .author-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink);font-weight:500;margin-bottom:4px}
+
+/* CTA */
+.cta-section{background:var(--ink);padding:80px 48px;text-align:center;color:var(--white);position:relative;overflow:hidden}
+.cta-section::after{content:'';position:absolute;bottom:-150px;left:-150px;width:450px;height:450px;border-radius:50%;background:rgba(46,109,164,0.08)}
+.cta-section>*{position:relative;z-index:1}
+.cta-section .eyebrow{color:var(--gold-lt);font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:12px}
+.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500;color:var(--white);line-height:1.2;margin-bottom:18px;max-width:680px;margin-left:auto;margin-right:auto}
+.cta-section h2 em{color:var(--gold);font-style:italic}
+.cta-section p{font-size:16px;color:rgba(255,255,255,0.65);max-width:520px;margin:0 auto 32px;font-weight:300}
+
+/* FOOTER */
+footer{background:var(--ink);padding:64px 48px 32px;border-top:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.5)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-brand p{font-size:13px;line-height:1.7;font-weight:300;max-width:340px}
+.footer-logo-main{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--gold-lt);margin-bottom:14px}
+.footer-nav-group h5{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);margin-bottom:18px}
+.footer-nav-group ul{list-style:none}
+.footer-nav-group li{margin-bottom:10px}
+.footer-nav-group a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;transition:color 0.2s}
+.footer-nav-group a:hover{color:var(--gold-lt)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;letter-spacing:0.04em;max-width:1200px;margin:0 auto}
+
+/* ============================================
+   RESPONSIVE — TABLET & MOBILE
+   ============================================ */
+@media (max-width: 968px) {
+  nav { padding: 16px 20px; gap: 16px; }
+  .nav-logo-main { font-size: 18px; }
+  .nav-logo-sub { font-size: 9px; }
+  .nav-links { gap: 14px; flex-wrap: wrap; }
+  .nav-links a:not(.btn-gold) { font-size: 12.5px; }
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+  .article-header { padding: 48px 20px 32px; }
+  .article-header h1 { font-size: 36px; }
+  .article-body { padding: 48px 20px; }
+  .article-body-inner { font-size: 16px; }
+  .article-body-inner h2 { font-size: 26px; }
+  .data-stats { grid-template-columns: 1fr; }
+  .stat-num { font-size: 38px; }
+  .cta-section { padding: 60px 20px; }
+  .cta-section h2 { font-size: 32px; }
+  footer { padding: 48px 20px 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+@media (max-width: 640px) {
+  nav { padding: 14px 16px; }
+  .nav-links a:not(.btn-gold) { display: none; }
+  .nav-logo-main { font-size: 17px; }
+  .nav-logo-sub { display: none; }
+  .btn-gold { padding: 9px 16px; font-size: 12.5px; }
+  section { padding-left: 16px !important; padding-right: 16px !important; padding-top: 40px !important; padding-bottom: 40px !important; }
+  .article-header { padding: 40px 16px 32px !important; }
+  .article-header h1 { font-size: 32px !important; }
+  .article-dek { font-size: 15px; }
+  h2 { font-size: 26px !important; }
+  h3 { font-size: 19px !important; }
+  .article-body { padding: 32px 16px !important; }
+  .article-body-inner { font-size: 15.5px; line-height: 1.7; }
+  .article-body-inner h2 { font-size: 24px !important; margin-top: 32px !important; }
+  .article-body-inner h3 { font-size: 18px !important; }
+  .article-body-inner blockquote { font-size: 18px !important; padding: 4px 0 4px 18px !important; }
+  .article-body-inner li { font-size: 15px !important; }
+  .lede { font-size: 19px !important; }
+  .lede::first-letter { font-size: 56px !important; }
+  .footer-top { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .cta-section { padding: 48px 16px !important; }
+  .cta-section h2 { font-size: 26px !important; }
+  .takeaways { padding: 28px 22px !important; }
+  .takeaways h4 { font-size: 20px !important; }
+  .takeaways li { font-size: 13.5px !important; }
+  .rec-list li { padding: 18px 20px !important; font-size: 15px !important; }
+  .method-note { padding: 18px 22px !important; font-size: 14px !important; }
+}
+
+.nav-free-badge{display:inline-block;background:var(--gold);color:var(--ink);font-size:9px;font-weight:600;padding:2px 5px;margin-left:5px;letter-spacing:0.08em;text-transform:uppercase;border-radius:2px;vertical-align:middle;line-height:1}
+
+/* ============================================
+   MOBILE HAMBURGER MENU
+   ============================================ */
+.mobile-menu-toggle { display: none; background: transparent; border: none; color: #fff; cursor: pointer; padding: 6px; align-items: center; justify-content: center; }
+.mobile-menu-close { display: none; }
+
+@media (max-width: 640px) {
+  .mobile-menu-toggle { display: flex !important; order: 99; }
+  .mobile-menu-toggle svg { width: 26px; height: 26px; stroke: rgba(255,255,255,0.9); }
+  
+  /* Hide everything in nav-links by default on phone — overlay takes over */
+  .nav-links { display: none !important; }
+  
+  /* When mobile menu is open, transform nav-links into full-height slide-out panel */
+  .nav-links.mobile-open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 84% !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+    background: #1a2a3a !important;
+    padding: 68px 28px 32px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    z-index: 9999 !important;
+    overflow-y: auto !important;
+    box-shadow: -8px 0 30px rgba(0,0,0,0.3);
+  }
+  .nav-links.mobile-open li { list-style: none !important; }
+  .nav-links.mobile-open a {
+    display: block !important;
+    color: rgba(255,255,255,0.85) !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    background: transparent !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+  }
+  .nav-links.mobile-open a:hover, .nav-links.mobile-open a.current, .nav-links.mobile-open a.active { color: #ffa84c !important; }
+  .nav-links.mobile-open a.btn-gold, .nav-links.mobile-open a.nav-cta {
+    background: #f68916 !important;
+    color: #1a2a3a !important;
+    text-align: center;
+    padding: 14px 20px !important;
+    border-radius: 2px;
+    border-bottom: none !important;
+    margin-top: 20px;
+    font-weight: 500 !important;
+  }
+  .mobile-menu-close {
+    display: block !important;
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.9);
+    font-size: 32px;
+    cursor: pointer;
+    padding: 6px 12px;
+    line-height: 1;
+    z-index: 10000;
+  }
+  /* Dark backdrop behind the slide-out */
+  body.mobile-nav-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998;
+  }
+  body.mobile-nav-open { overflow: hidden; }
+}
+
+
+/* ============================================
+   UNIVERSAL MOBILE GRID COLLAPSE — prevent horizontal overflow on phone
+   ============================================ */
+@media (max-width: 968px) {
+  .industries-grid, .gallery-grid, .symptoms-grid, .who-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+  .stat-strip-inner, .process-steps, .data-stats, .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+  }
+}
+@media (max-width: 540px) {
+  .industries-grid, .gallery-grid, .symptoms-grid, .who-grid,
+  .stat-strip-inner, .process-steps, .data-stats, .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+}
+
+/* Belt-and-braces: prevent horizontal scroll at the page level */
+html, body { overflow-x: hidden; max-width: 100vw; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-main">Tyler Ergonomics</span>
+    <span class="nav-logo-sub">Work safer &middot; Work smarter &middot; Work better</span>
+  </div>
+  <div class="nav-links">
+    <a href="te-02-services.html">Services</a>
+    <a href="te-03-home-office.html">Home Office</a>
+    <a href="te-04-industries.html">Industries</a>
+    <a href="te-05-about.html">About</a>
+    <a href="te-06-insights.html" class="current">Insights</a>
+    <a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a>
+    <a href="te-02-services.html#contact" class="btn-gold">Get in touch</a>
+  </div>
+</nav>
+
+<!-- ARTICLE HEADER -->
+<div class="article-header">
+  <div class="article-header-inner">
+    <a href="te-06-insights.html" class="article-back">&larr; All insights</a>
+    <p class="article-meta-line">Field Report &middot; May 13, 2026 &middot; 7 min read</p>
+    <h1>Why MSDs Are Trending <em>Younger</em></h1>
+    <p class="article-dek">The remote-work effect, five years in &mdash; and what employers should be doing about it before the bill comes due.</p>
+  </div>
+</div>
+
+<!-- ARTICLE BODY -->
+<section class="article-body">
+  <div class="article-body-inner">
+
+    <p class="lede">For most of my career, musculoskeletal disorders followed a predictable demographic pattern. Workers developed neck, back, and shoulder problems gradually, usually showing up in claims data around their mid-40s. Cumulative trauma was, by definition, cumulative. It took time.</p>
+
+    <p>That curve is bending &mdash; and it&rsquo;s bending toward people in their 20s and early 30s.</p>
+
+    <p>Five years out from the work-from-home shift of 2020&ndash;2021, the data is starting to catch up with what claims and case-management teams have been seeing in the field: workers who once would have been low-risk for MSDs are now showing up with the kind of cervical, lumbar, and upper-extremity complaints we used to associate with workers two decades older.</p>
+
+    <h2>What the data shows</h2>
+
+    <p>The numbers are not subtle.</p>
+
+    <div class="data-stats">
+      <div class="data-cell">
+        <span class="stat-num">57<span class="pct">%</span></span>
+        <span class="stat-label">Self-reported MSD symptoms among remote workers vs. 43.9% among non-remote</span>
+      </div>
+      <div class="data-cell">
+        <span class="stat-num">~70<span class="pct">%</span></span>
+        <span class="stat-label">Workers reporting new or worsened musculoskeletal symptoms after moving to remote work</span>
+      </div>
+      <div class="data-cell">
+        <span class="stat-num">72<span class="pct">%</span></span>
+        <span class="stat-label">Prevalence of musculoskeletal complaints among office workers overall</span>
+      </div>
+    </div>
+
+    <p>A population study drawing on the Korean Working Conditions Survey &mdash; nearly 50,000 workers &mdash; found that remote workers had a notably higher prevalence of musculoskeletal complaints than those not working remotely: 57.0% versus 43.9%. The transition effect is even sharper. Pandemic-era research found that nearly 70% of participants who moved to remote work experienced new or worsened musculoskeletal symptoms, with the majority reporting pain in their necks, shoulders, and lower backs.</p>
+
+    <p>These are not edge cases. Even before the remote shift, musculoskeletal complaints were prevalent in up to 72% of office workers, with the most common reports being neck, low back, shoulder, elbow, and wrist pain. What&rsquo;s changed is the age at which these problems are presenting.</p>
+
+    <p>The most striking shift is in cervical pain. The patterns of device use that drive forward-head posture &mdash; hours spent looking down at smartphones beginning in adolescence &mdash; have been documented in younger populations for more than a decade. These workers aren&rsquo;t developing forward-head posture at the desk. They&rsquo;re arriving with it.</p>
+
+    <div class="method-note">
+      <strong>A note on the data</strong>
+      These prevalence figures come from self-reported symptom surveys &mdash; the standard tool in occupational epidemiology &mdash; not from physician- or PT-diagnosed cases. They&rsquo;re best read as a leading indicator. Clinical presentation and workers&rsquo; comp claims typically lag symptom complaints by several years, which is precisely the lag we&rsquo;re now closing.
+    </div>
+
+    <h2>Why the home office is different</h2>
+
+    <p>A well-designed corporate workstation is the product of decades of refinement. The chair is adjustable. The monitor sits at eye level. The keyboard and mouse are placed to keep the shoulders neutral. None of that is accidental &mdash; it&rsquo;s the result of accumulated ergonomic research, OSHA guidance, and risk-management spending by employers who learned, the hard way, what an untreated MSD costs.</p>
+
+    <blockquote>
+      The home office, in most cases, is whatever furniture was already in the house in March of 2020.
+    </blockquote>
+
+    <p>A 2025 longitudinal study of computer workers found that workers without a separate room at home had an increased risk of new or more severe pain. Kitchen tables. Couches. Bedrooms. Laptops on laps. The result is sustained, awkward posture for eight or more hours a day &mdash; and unlike at the office, no walk to the printer, no impromptu meeting across the building, no built-in reason to stand up.</p>
+
+    <p>There&rsquo;s a second factor that often gets overlooked: phones. The generation now in their 20s has been carrying a screen at chest level for fifteen years. Tech neck &mdash; the forward-head posture caused by looking down at devices &mdash; was already endemic before any of these workers held a real job. The remote workstation didn&rsquo;t create that problem. It compounded an existing one and gave it eight hours a day to entrench.</p>
+
+    <h2>The cumulative effect &mdash; five years in</h2>
+
+    <p>Here&rsquo;s what concerns me as someone who has spent more than 20 years conducting ergonomic assessments: most cumulative-trauma MSDs don&rsquo;t announce themselves. They build. A worker doesn&rsquo;t typically file a claim the day the pain starts. They adapt, accommodate, and self-medicate until something acute &mdash; recurring back spasms, a stubborn case of tennis elbow, a numb hand that won&rsquo;t go away &mdash; forces a clinical visit.</p>
+
+    <p>Five years is roughly the timeline at which we&rsquo;d expect to see the first real wave of those clinical presentations from the 2020 cohort. And the early indicators &mdash; rising physical therapy utilization, growing soft-tissue claim costs, and increasing chronic-pain treatment among workers in their late 20s and early 30s &mdash; are all moving in the wrong direction.</p>
+
+    <p>For employers, the implications are straightforward and uncomfortable:</p>
+
+    <ul>
+      <li>Workers&rsquo; comp severity per claim is climbing in age brackets where frequency used to be low.</li>
+      <li>Disability duration for soft-tissue cases tends to be longer than for acute injuries, because the underlying postural patterns aren&rsquo;t easily corrected.</li>
+      <li>The &ldquo;healthy young employee&rdquo; assumption built into most absence-management models no longer holds.</li>
+    </ul>
+
+    <h2>What employers should be doing now</h2>
+
+    <p>The good news is that the levers haven&rsquo;t changed &mdash; they just need to be pulled earlier in the worker&rsquo;s tenure, and they need to extend past the office walls.</p>
+
+    <ul class="rec-list">
+      <li>
+        <strong>Treat the home workstation as a workstation.</strong>
+        A one-time stipend in 2020 doesn&rsquo;t count. Conduct virtual ergonomic assessments. Provide chairs, monitor risers, and external keyboards as a matter of policy, not as a case-by-case accommodation. The math here isn&rsquo;t close &mdash; a $400 ergonomic intervention beats a $40,000 lost-time claim every day of the week.
+      </li>
+      <li>
+        <strong>Build movement into the workday.</strong>
+        Sustained static posture is the underlying mechanism for most of what we&rsquo;re seeing. Whether it&rsquo;s standing desks, scheduled micro-breaks, or simply normalizing walking meetings, the answer to MSDs in a remote workforce isn&rsquo;t a better chair &mdash; it&rsquo;s less time in any chair.
+      </li>
+      <li>
+        <strong>Catch symptoms before they become cases.</strong>
+        By the time a worker presents clinically, the cumulative damage has been accruing for years. Symptom screening, easy access to ergonomic reassessment at the first complaint, and remote posture coaching are not employee perks. They are the cheapest part of the MSD cost curve.
+      </li>
+    </ul>
+
+    <h2>If you&rsquo;re managing this yourself</h2>
+
+    <p>Self-employed workers, contractors, and anyone at a company that hasn&rsquo;t prioritized ergonomics face the same exposure with none of the institutional support. The principles don&rsquo;t change &mdash; the responsibility does.</p>
+
+    <h3>Treat your workstation as a workstation.</h3>
+    <p>The math is even clearer when you&rsquo;re paying for it yourself. A $400 ergonomic setup is a small fraction of what even a few weeks of reduced output will cost an independent earner. Prioritize the chair, monitor height, and a separate keyboard and mouse over almost anything else on your home-office list.</p>
+
+    <h3>Build movement into your day deliberately.</h3>
+    <p>Working alone strips out almost all of the natural movement breaks office life used to provide for free. A simple timer, a standing-desk option, or scheduling phone calls as walks restores some of that. Without those replacements, eight hours in one position is the default.</p>
+
+    <h3>Don&rsquo;t wait for the pain to become acute.</h3>
+    <p>A virtual ergonomic assessment at the first persistent complaint costs far less than the weeks of reduced output that come from working through a flare. Individual <a href="te-03-home-office.html">virtual home office evaluations</a> are widely available now and don&rsquo;t require an employer to arrange.</p>
+
+    <div class="takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>The demographic profile of MSD claims is shifting younger &mdash; cervical, lumbar, and upper-extremity complaints are presenting in workers two decades earlier than historical patterns predicted.</li>
+        <li>Remote work compounded a pre-existing trend rather than creating it; phones and tech-neck posture were already in play before the 2020 shift.</li>
+        <li>The five-year mark is when cumulative-trauma cases typically reach clinical threshold &mdash; meaning the cost wave is just now arriving.</li>
+        <li>The fix is not new science. It&rsquo;s earlier intervention, broader scope (home + office), and treating ergonomics as a workforce-health issue rather than an office-design one.</li>
+      </ul>
+    </div>
+
+    <h2>The bottom line</h2>
+
+    <p>The MSD profile of the American workforce is changing faster than most risk-management programs have adjusted for. The remote-work shift didn&rsquo;t cause this on its own, but it accelerated a trend already underway and dropped it into the laps of employers who, in many cases, no longer have direct visibility into where and how their people work.</p>
+
+    <p>Five years in, the bill is starting to come due. The employers who do best in the next five will be the ones who stop treating ergonomics as an office-design question and start treating it as a workforce-health question &mdash; wherever that workforce happens to be sitting.</p>
+
+    <p class="article-disclaimer">This article is for informational and educational purposes only. Tyler Ergonomics provides workstation ergonomic assessment and coaching services and does not provide medical advice. Individuals with concerns about their personal health should consult a qualified healthcare professional.</p>
+
+    <!-- AUTHOR BLOCK -->
+    <div class="author-block">
+      <div class="author-initial">RT</div>
+      <div class="author-text">
+        <p class="author-name">Rick Tyler</p>
+        <p>Founder, Tyler Ergonomics. Twenty-plus years of credentialed workplace ergonomics, return-to-work, and injury prevention practice. Founder of Life|After&reg;.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="eyebrow">Get started</p>
+  <h2>Worried about your workforce or your own workstation?<br><em>Let&rsquo;s talk.</em></h2>
+  <p>Every engagement starts with a conversation about what&rsquo;s actually happening &mdash; in the office, in the home, or both.</p>
+  <a href="te-02-services.html#contact" class="btn-primary">Request a consultation</a>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <p class="footer-logo-main">Tyler Ergonomics</p>
+      <p>Twenty-plus years of workplace ergonomics, productivity, and injury prevention practice across healthcare, oil &amp; gas, and a wide range of office-based employers.</p>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="te-03-home-office.html">Home Office Evaluation</a></li>
+        <li><a href="te-02-services.html">Workplace Assessment</a></li>
+        <li><a href="te-02-services.html">Return-to-Work Support</a></li>
+        <li><a href="te-02-services.html">Training, Education &amp; Speaking</a></li>
+        <li><a href="te-07-break-companion.html">Break Companion (Free)</a></li>
+      </ul>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="te-04-industries.html">Industries</a></li>
+        <li><a href="te-05-about.html">About</a></li>
+        <li><a href="te-06-insights.html">Insights</a></li>
+        <li><a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a></li>
+    </ul>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:8777523837">(877) 752-3837</a></li>
+        <li><a href="mailto:info@tylerwork.com">info@tylerwork.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Tyler Ergonomics. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.6)">(877) 752-3837 &nbsp;&middot;&nbsp; <strong>info@tylerwork.com</strong></span>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  const nav = document.querySelector('nav');
+  const navLinks = document.querySelector('.nav-links');
+  if (!nav || !navLinks) return;
+  
+  // Create hamburger button
+  const hamburger = document.createElement('button');
+  hamburger.className = 'mobile-menu-toggle';
+  hamburger.setAttribute('aria-label', 'Open menu');
+  hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+  nav.appendChild(hamburger);
+  
+  // Create close button inside nav-links (works for both ul and div parents)
+  const closer = document.createElement('button');
+  closer.className = 'mobile-menu-close';
+  closer.setAttribute('aria-label', 'Close menu');
+  closer.innerHTML = '&times;';
+  navLinks.insertBefore(closer, navLinks.firstChild);
+  
+  // Toggle behavior
+  hamburger.addEventListener('click', function() {
+    navLinks.classList.add('mobile-open');
+    document.body.classList.add('mobile-nav-open');
+  });
+  closer.addEventListener('click', function() {
+    navLinks.classList.remove('mobile-open');
+    document.body.classList.remove('mobile-nav-open');
+  });
+  // Note: don't close menu on link tap — let browser navigate naturally.
+  // On navigation, the new page loads fresh without .mobile-open class.
+  // (Same-page anchors will use the document click handler below to close.)
+  // Close on backdrop tap
+  document.addEventListener('click', function(e) {
+    if (document.body.classList.contains('mobile-nav-open') && 
+        !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      navLinks.classList.remove('mobile-open');
+      document.body.classList.remove('mobile-nav-open');
+    }
+  });
+})();
+</script>
+</body>
+</html>

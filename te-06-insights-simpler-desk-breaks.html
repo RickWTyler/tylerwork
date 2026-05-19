@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Simpler Approach to Desk Breaks | Tyler Ergonomics Insights</title>
+<meta name="description" content="Most desk workers know they should step away from the screen more often. The hard part is remembering. Our new Break Companion solves that &mdash; in the simplest way possible.">>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a2a3a;--ink-lt:#1e3040;--blue:#2e6da4;--blue-dk:#1f5490;--ivory:#f4f6f9;--cream:#e8eef5;--gold:#f68916;--gold-lt:#ffa84c;--warm:#d4d8de;--mid:#3a4e62;--soft:#6a8099;--white:#ffffff;--border:rgba(46,109,164,0.15)}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;font-weight:300}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;align-items:center;padding:24px 48px;border-bottom:1px solid var(--border);background:var(--ink);position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;flex-direction:column;line-height:1.2}
+.nav-logo-main{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--gold-lt);letter-spacing:0.01em}
+.nav-logo-sub{font-size:10px;color:rgba(255,255,255,0.5);font-weight:400;letter-spacing:0.12em;text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;gap:36px;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:400;letter-spacing:0.02em;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a.current{color:var(--gold-lt)}
+.nav-free-badge{display:inline-block;background:var(--gold);color:var(--ink);font-size:9px;font-weight:600;padding:2px 5px;margin-left:5px;letter-spacing:0.08em;text-transform:uppercase;border-radius:2px;vertical-align:middle;line-height:1}
+.btn-gold{background:var(--gold);color:var(--ink);padding:10px 20px;border:none;border-radius:2px;font-size:13px;font-weight:500;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;letter-spacing:0.03em}
+.btn-primary{background:var(--blue);color:var(--white);padding:13px 26px;border:none;border-radius:2px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;letter-spacing:0.03em}
+
+/* ARTICLE HEADER */
+.article-header{padding:64px 48px 48px;background:var(--ivory);border-bottom:1px solid var(--border)}
+.article-header-inner{max-width:760px;margin:0 auto}
+.article-back{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);font-weight:500;text-decoration:none;margin-bottom:24px;display:inline-block}
+.article-back:hover{color:var(--blue-dk)}
+.article-meta-line{font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.article-header h1{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:500;color:var(--ink);line-height:1.15;margin-bottom:20px;letter-spacing:-0.01em}
+.article-header h1 em{color:var(--gold);font-style:italic}
+.article-dek{font-size:18px;color:var(--mid);line-height:1.7;font-weight:300;font-style:italic}
+
+/* ARTICLE BODY */
+.article-body{padding:64px 48px;background:var(--white)}
+.article-body-inner{max-width:680px;margin:0 auto;font-size:16.5px;color:var(--ink);line-height:1.85;font-weight:300}
+.article-body-inner p{margin-bottom:22px}
+.article-body-inner h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:var(--ink);line-height:1.25;margin-top:48px;margin-bottom:20px;letter-spacing:-0.01em}
+.article-body-inner h2 em{font-style:italic;color:var(--gold)}
+.article-body-inner h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.3;margin-top:36px;margin-bottom:14px}
+.article-body-inner blockquote{border-left:3px solid var(--gold);padding:8px 0 8px 24px;margin:32px 0;font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--mid);line-height:1.55}
+.article-body-inner ul,.article-body-inner ol{margin-bottom:22px;padding-left:24px}
+.article-body-inner li{margin-bottom:8px;font-size:16px;line-height:1.75}
+.article-body-inner a{color:var(--blue-dk);text-decoration:underline}
+.article-body-inner strong{color:var(--ink);font-weight:500}
+.article-body-inner em{font-style:italic}
+
+/* LEAD PARAGRAPH */
+.lede{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.55;color:var(--ink);margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border);font-weight:400}
+.lede em{font-style:italic;color:var(--blue-dk)}
+
+/* STATS BLOCK */
+.stat-block{background:var(--ink);padding:44px 40px;margin:44px 0;border-left:4px solid var(--gold);border-radius:2px;position:relative}
+.stat-block-label{font-size:10px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.stat-block-label::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;color:var(--white);line-height:1;display:block;letter-spacing:-0.01em}
+.stat-num sup{font-size:18px;font-weight:400;color:var(--gold-lt);vertical-align:super;margin-left:2px}
+.stat-num.text{font-size:30px;font-style:italic;color:var(--gold-lt)}
+.stat-block .stat-label{font-size:12.5px;color:rgba(255,255,255,0.6);font-weight:300;margin-top:12px;line-height:1.5;display:block}
+
+/* PULL QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:8px 0 8px 28px;margin:36px 0}
+.pull-quote p{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;font-style:italic;color:var(--mid);margin:0;line-height:1.55}
+
+/* FEATURE CALLOUT */
+.feature-callout{background:var(--cream);border:1px solid var(--border);border-left:3px solid var(--blue-dk);padding:32px 32px;margin:40px 0;border-radius:2px}
+.feature-callout-label{font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue-dk);margin-bottom:12px}
+.feature-callout h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);margin-bottom:18px;line-height:1.3;font-weight:500;margin-top:0}
+.feature-callout h3 em{font-style:italic;color:var(--gold)}
+.feature-list{list-style:none!important;margin:0!important;padding:0!important}
+.feature-list li{display:flex;gap:14px;padding:12px 0;font-size:14.5px;color:var(--mid);font-weight:300;line-height:1.7;align-items:flex-start;margin-bottom:0!important}
+.feature-list li:not(:last-child){border-bottom:1px solid var(--border)}
+.feature-list li strong{display:inline;color:var(--ink);font-weight:500}
+.feature-list li a{color:var(--blue-dk);font-weight:500;text-decoration:underline}
+.feature-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;margin-top:9px;flex-shrink:0}
+
+/* TOOL CALLOUT — "Try it now" card */
+.tool-callout{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);padding:32px 36px;margin:36px 0;border-radius:2px}
+.tool-callout-eyebrow{font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue-dk);margin-bottom:10px}
+.tool-callout h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--ink);margin-bottom:10px;font-weight:500;line-height:1.3;margin-top:0}
+.tool-callout h3 em{font-style:italic;color:var(--gold)}
+.tool-callout p{font-size:14.5px;margin-bottom:20px;color:var(--mid);line-height:1.7}
+.tool-callout a.tool-btn{display:inline-block;background:var(--gold);color:var(--ink);padding:13px 24px;font-size:13px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;transition:background 0.2s;border-radius:2px;font-family:'DM Sans',sans-serif}
+.tool-callout a.tool-btn:hover{background:var(--gold-lt)}
+
+/* DISCLAIMER */
+.article-disclaimer{font-size:12.5px;color:var(--soft);margin-top:48px;padding-top:24px;border-top:1px solid var(--border);line-height:1.7;font-weight:300;font-style:italic}
+
+/* AUTHOR FOOTER */
+.author-block{max-width:680px;margin:48px auto 0;padding-top:32px;border-top:1px solid var(--border);display:flex;gap:20px;align-items:flex-start}
+.author-initial{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;flex-shrink:0}
+.author-text p{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:6px}
+.author-text .author-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink);font-weight:500;margin-bottom:4px}
+
+/* CTA */
+.cta-section{background:var(--ink);padding:80px 48px;text-align:center;color:var(--white);position:relative;overflow:hidden}
+.cta-section::after{content:'';position:absolute;bottom:-150px;left:-150px;width:450px;height:450px;border-radius:50%;background:rgba(46,109,164,0.08)}
+.cta-section>*{position:relative;z-index:1}
+.cta-section .eyebrow{color:var(--gold-lt);font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:12px}
+.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:500;color:var(--white);line-height:1.2;margin-bottom:18px;max-width:680px;margin-left:auto;margin-right:auto}
+.cta-section h2 em{color:var(--gold);font-style:italic}
+.cta-section p{font-size:16px;color:rgba(255,255,255,0.65);max-width:520px;margin:0 auto 32px;font-weight:300}
+.cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-outline-gold{background:transparent;color:var(--gold-lt);padding:13px 24px;border:1px solid var(--gold-lt);border-radius:2px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;letter-spacing:0.03em}
+
+/* FOOTER */
+footer{background:var(--ink);padding:64px 48px 32px;border-top:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.5)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-brand p{font-size:13px;line-height:1.7;font-weight:300;max-width:340px}
+.footer-logo-main{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--gold-lt);margin-bottom:14px}
+.footer-nav-group h5{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);margin-bottom:18px}
+.footer-nav-group ul{list-style:none}
+.footer-nav-group li{margin-bottom:10px}
+.footer-nav-group a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;transition:color 0.2s}
+.footer-nav-group a:hover{color:var(--gold-lt)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;letter-spacing:0.04em;max-width:1200px;margin:0 auto}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 968px) {
+  nav { padding: 16px 20px; gap: 16px; }
+  .nav-logo-main { font-size: 18px; }
+  .nav-logo-sub { font-size: 9px; }
+  .nav-links { gap: 14px; flex-wrap: wrap; }
+  .nav-links a:not(.btn-gold) { font-size: 12.5px; }
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+  .article-header { padding: 48px 20px 32px; }
+  .article-header h1 { font-size: 36px; }
+  .article-body { padding: 48px 20px; }
+  .article-body-inner { font-size: 16px; }
+  .article-body-inner h2 { font-size: 26px; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-num { font-size: 36px; }
+  .stat-block { padding: 32px 24px; }
+  .cta-section { padding: 60px 20px; }
+  .cta-section h2 { font-size: 32px; }
+  footer { padding: 48px 20px 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+@media (max-width: 640px) {
+  nav { padding: 14px 16px; }
+  .nav-links a:not(.btn-gold) { display: none; }
+  .nav-logo-main { font-size: 17px; }
+  .nav-logo-sub { display: none; }
+  .btn-gold { padding: 9px 16px; font-size: 12.5px; }
+  section { padding-left: 16px !important; padding-right: 16px !important; padding-top: 40px !important; padding-bottom: 40px !important; }
+  .article-header { padding: 40px 16px 32px !important; }
+  .article-header h1 { font-size: 32px !important; }
+  .article-dek { font-size: 15px; }
+  .article-body { padding: 32px 16px !important; }
+  .article-body-inner { font-size: 15.5px; line-height: 1.7; }
+  .article-body-inner h2 { font-size: 24px !important; margin-top: 32px !important; }
+  .article-body-inner h3 { font-size: 18px !important; }
+  .pull-quote p { font-size: 18px !important; }
+  .lede { font-size: 19px !important; }
+  .stat-block { padding: 28px 20px !important; }
+  .stat-num { font-size: 32px !important; }
+  .feature-callout { padding: 24px 22px !important; }
+  .tool-callout { padding: 24px 22px !important; }
+  .footer-top { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .cta-section { padding: 48px 16px !important; }
+  .cta-section h2 { font-size: 26px !important; }
+  .cta-buttons { flex-direction: column; }
+}
+
+/* ============================================
+   MOBILE HAMBURGER MENU
+   ============================================ */
+.mobile-menu-toggle { display: none; background: transparent; border: none; color: #fff; cursor: pointer; padding: 6px; align-items: center; justify-content: center; }
+.mobile-menu-close { display: none; }
+
+@media (max-width: 640px) {
+  .mobile-menu-toggle { display: flex !important; order: 99; }
+  .mobile-menu-toggle svg { width: 26px; height: 26px; stroke: rgba(255,255,255,0.9); }
+  
+  /* Hide everything in nav-links by default on phone — overlay takes over */
+  .nav-links { display: none !important; }
+  
+  /* When mobile menu is open, transform nav-links into full-height slide-out panel */
+  .nav-links.mobile-open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 84% !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+    background: #1a2a3a !important;
+    padding: 68px 28px 32px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    z-index: 9999 !important;
+    overflow-y: auto !important;
+    box-shadow: -8px 0 30px rgba(0,0,0,0.3);
+  }
+  .nav-links.mobile-open li { list-style: none !important; }
+  .nav-links.mobile-open a {
+    display: block !important;
+    color: rgba(255,255,255,0.85) !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    background: transparent !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+  }
+  .nav-links.mobile-open a:hover, .nav-links.mobile-open a.current, .nav-links.mobile-open a.active { color: #ffa84c !important; }
+  .nav-links.mobile-open a.btn-gold, .nav-links.mobile-open a.nav-cta {
+    background: #f68916 !important;
+    color: #1a2a3a !important;
+    text-align: center;
+    padding: 14px 20px !important;
+    border-radius: 2px;
+    border-bottom: none !important;
+    margin-top: 20px;
+    font-weight: 500 !important;
+  }
+  .mobile-menu-close {
+    display: block !important;
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.9);
+    font-size: 32px;
+    cursor: pointer;
+    padding: 6px 12px;
+    line-height: 1;
+    z-index: 10000;
+  }
+  /* Dark backdrop behind the slide-out */
+  body.mobile-nav-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998;
+  }
+  body.mobile-nav-open { overflow: hidden; }
+}
+
+
+/* ============================================
+   UNIVERSAL MOBILE GRID COLLAPSE — prevent horizontal overflow on phone
+   ============================================ */
+@media (max-width: 968px) {
+  .industries-grid, .gallery-grid, .symptoms-grid, .who-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+  .stat-strip-inner, .process-steps, .data-stats, .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+  }
+}
+@media (max-width: 540px) {
+  .industries-grid, .gallery-grid, .symptoms-grid, .who-grid,
+  .stat-strip-inner, .process-steps, .data-stats, .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+}
+
+/* Belt-and-braces: prevent horizontal scroll at the page level */
+html, body { overflow-x: hidden; max-width: 100vw; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-main">Tyler Ergonomics</span>
+    <span class="nav-logo-sub">Work safer &middot; Work smarter &middot; Work better</span>
+  </div>
+  <div class="nav-links">
+    <a href="te-02-services.html">Services</a>
+    <a href="te-03-home-office.html">Home Office</a>
+    <a href="te-04-industries.html">Industries</a>
+    <a href="te-05-about.html">About</a>
+    <a href="te-06-insights.html" class="current">Insights</a>
+    <a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a>
+    <a href="te-02-services.html#contact" class="btn-gold">Get in touch</a>
+  </div>
+</nav>
+
+<!-- ARTICLE HEADER -->
+<div class="article-header">
+  <div class="article-header-inner">
+    <a href="te-06-insights.html" class="article-back">&larr; All insights</a>
+    <p class="article-meta-line">Tools &amp; Practice &middot; May 13, 2026 &middot; 4 min read</p>
+    <h1>A <em>Simpler</em> Approach<br>to Desk Breaks</h1>
+    <p class="article-dek">A free kitchen-timer for ergonomic work sessions &mdash; built for the broadest audience, with a clear path to personalization when you want more.</p>
+  </div>
+</div>
+
+<!-- ARTICLE BODY -->
+<section class="article-body">
+  <div class="article-body-inner">
+
+    <p class="lede">Most desk workers know they should step away from the screen more often. The harder part &mdash; by a wide margin &mdash; is <em>remembering</em>. That&rsquo;s the problem our new Break Companion was built to solve, in the simplest way we could think of.</p>
+
+    <p>It&rsquo;s a free, web-based tool that lives right here on the Tyler Ergonomics site. The model is borrowed from the kitchen: press start when you sit down to focus, and the timer runs until it&rsquo;s time to break. Two clocks sit side by side &mdash; work session on the left, upcoming break on the right &mdash; so you can always see where you are in the rhythm of the day. When the break begins, the screen offers a simple universal prompt: look away, stand up, walk, hydrate. Nothing more elaborate than that.</p>
+
+    <h2>The Hardest Part Is <em>Remembering</em></h2>
+
+    <p>Most office workers don&rsquo;t break enough not because they don&rsquo;t know how to stretch, but because the mind absorbs into the screen and an hour passes without a single change in posture. A timer fixes that &mdash; quietly, in the background, without judgment. That&rsquo;s the job of this tool, and it&rsquo;s the only job we asked it to do.</p>
+
+    <div class="pull-quote">
+      <p>&ldquo;The hardest part of taking breaks isn&rsquo;t the stretches. It&rsquo;s remembering to step away.&rdquo;</p>
+    </div>
+
+    <h2>About the <em>Cadence</em></h2>
+
+    <p>Musculoskeletal disorders &mdash; the back pain, neck strain, wrist tendinopathy, and shoulder problems that account for a significant share of office workplace claims &mdash; typically don&rsquo;t arrive as single events. They develop through cumulative load: thousands of small exposures across thousands of hours of desk work, until what was once a minor irritation becomes something that lingers.</p>
+
+    <p>This is why timing matters. Two hours of uninterrupted desk work creates measurably more strain than the same two hours broken into sessions. The broader ergonomics field has converged on a fairly consistent set of recommendations:</p>
+
+    <div class="stat-block">
+      <p class="stat-block-label">Broadly Accepted Ergonomic Guidance</p>
+      <div class="stats-grid">
+        <div>
+          <span class="stat-num">1&ndash;2<sup>min</sup></span>
+          <span class="stat-label">Movement every hour &mdash; widely recommended for breaking up sedentary desk work</span>
+        </div>
+        <div>
+          <span class="stat-num">30&ndash;60<sup>min</sup></span>
+          <span class="stat-label">A conservative range for uninterrupted desk work in most protocols</span>
+        </div>
+        <div>
+          <span class="stat-num text">Cumulative</span>
+          <span class="stat-label">How most desk-related MSDs develop &mdash; across thousands of small exposures, not single events</span>
+        </div>
+      </div>
+    </div>
+
+    <p>What&rsquo;s right for any individual depends on the actual work being done and the body doing it. Heavy typing builds different load than phone calls or video meetings. Existing conditions &mdash; a stiff lower back, a sensitive wrist, a healing shoulder &mdash; change the calculus further. That&rsquo;s why this tool&rsquo;s session length is configurable from 20 to 90 minutes, with a default of 60 that fits most healthy desk workers.</p>
+
+    <h2>What the Tool <em>Does</em></h2>
+
+    <div class="feature-callout">
+      <p class="feature-callout-label">Built for one job, done well</p>
+      <h3>A few <em>simple</em> features.</h3>
+      <ul class="feature-list">
+        <li><span class="feature-dot"></span><div><strong>Kitchen-timer work sessions.</strong> Start the timer when you sit down to focus. Take a break when it ends. Two clocks side by side keep the whole rhythm visible.</div></li>
+        <li><span class="feature-dot"></span><div><strong>A &ldquo;Cut short&rdquo; option for discomfort.</strong> Three graduated choices &mdash; five minutes more, one minute more, break now &mdash; so you can respond to your body&rsquo;s signals before they escalate.</div></li>
+        <li><span class="feature-dot"></span><div><strong>Activity-aware timing (optional).</strong> Pauses the timer when you step away, so a 60-minute session means 60 minutes of actual work &mdash; not wall-clock time that included a coffee run.</div></li>
+        <li><span class="feature-dot"></span><div><strong>Universal break prompts.</strong> Look away. Stand up. Walk. Hydrate. Simple, safe, and easy to do on any day in any condition.</div></li>
+        <li><span class="feature-dot"></span><div><strong>Team configuration.</strong> HR and wellness leads can preconfigure a session length and break length, then share one link with the whole organization &mdash; no setup on anyone&rsquo;s end. <a href="te-07-break-companion.html?setup=team">Set up your team &rarr;</a></div></li>
+      </ul>
+    </div>
+
+    <div class="tool-callout">
+      <p class="tool-callout-eyebrow">Try it now &mdash; free, no signup</p>
+      <h3>Break <em>Companion</em></h3>
+      <p>A kitchen-timer for ergonomic work sessions. Configurable, activity-aware, works on any device.</p>
+      <a href="te-07-break-companion.html" class="tool-btn">Open the tool &rarr;</a>
+    </div>
+
+    <h2>If You Want <em>More</em></h2>
+
+    <p>This tool is intentionally built for the broadest possible audience &mdash; healthy desk workers who want a simple way to build a steady break habit. It will help most people who use it, and it asks for nothing in return.</p>
+
+    <p>If you want more than a timer &mdash; a movement protocol built for your specific workstation, posture patterns, and any conditions you bring to your desk &mdash; that&rsquo;s what a full <a href="te-03-home-office.html">ergonomic assessment</a> is for. A Tyler Ergonomics assessment is fully remote and virtual, covers your setup and your habits, and gives you guidance designed around how <em>you</em> work. After 20-plus years of performing ergonomic evaluations, what I can tell you with certainty is that the people who feel best at the end of a workday almost always have a setup, a posture, and a rhythm that fits them specifically.</p>
+
+    <p>The tool is a good place to start. When you&rsquo;re ready for more, we&rsquo;re here.</p>
+
+    <p class="article-disclaimer">This article is for informational purposes only and does not constitute medical advice. Tyler Ergonomics provides remote and virtual ergonomic assessments. References to movement cadence and session length reflect broadly accepted guidance in the occupational health and ergonomics field. Individuals with existing or developing musculoskeletal conditions should consult a qualified professional before adopting any new movement practice.</p>
+
+    <!-- AUTHOR BLOCK -->
+    <div class="author-block">
+      <div class="author-initial">RT</div>
+      <div class="author-text">
+        <p class="author-name">Rick Tyler</p>
+        <p>Founder, Tyler Ergonomics. Twenty-plus years of credentialed workplace ergonomics, return-to-work, and injury prevention practice. Founder of Life|After&reg;.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="eyebrow">For individuals &amp; organizations</p>
+  <h2>Ready for a setup that&rsquo;s<br><em>built for you?</em></h2>
+  <p>Tyler Ergonomics provides remote, virtual home office assessments &mdash; covering your workstation, your posture, and a personalized movement protocol you can actually follow.</p>
+  <div class="cta-buttons">
+    <a href="te-03-home-office.html" class="btn-gold">Schedule an Assessment</a>
+    <a href="tel:8777523837" class="btn-outline-gold">(877) 752-3837</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <p class="footer-logo-main">Tyler Ergonomics</p>
+      <p>Twenty-plus years of workplace ergonomics, productivity, and injury prevention practice across healthcare, oil &amp; gas, and a wide range of office-based employers.</p>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="te-03-home-office.html">Home Office Evaluation</a></li>
+        <li><a href="te-02-services.html">Workplace Assessment</a></li>
+        <li><a href="te-02-services.html">Return-to-Work Support</a></li>
+        <li><a href="te-02-services.html">Training, Education &amp; Speaking</a></li>
+        <li><a href="te-07-break-companion.html">Break Companion (Free)</a></li>
+      </ul>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="te-04-industries.html">Industries</a></li>
+        <li><a href="te-05-about.html">About</a></li>
+        <li><a href="te-06-insights.html">Insights</a></li>
+    </ul>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:8777523837">(877) 752-3837</a></li>
+        <li><a href="mailto:info@tylerwork.com">info@tylerwork.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Tyler Ergonomics. All rights reserved.</span>
+    <span style="color:rgba(255,255,255,0.6)">(877) 752-3837 &nbsp;&middot;&nbsp; <strong>info@tylerwork.com</strong></span>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  const nav = document.querySelector('nav');
+  const navLinks = document.querySelector('.nav-links');
+  if (!nav || !navLinks) return;
+  
+  // Create hamburger button
+  const hamburger = document.createElement('button');
+  hamburger.className = 'mobile-menu-toggle';
+  hamburger.setAttribute('aria-label', 'Open menu');
+  hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+  nav.appendChild(hamburger);
+  
+  // Create close button inside nav-links (works for both ul and div parents)
+  const closer = document.createElement('button');
+  closer.className = 'mobile-menu-close';
+  closer.setAttribute('aria-label', 'Close menu');
+  closer.innerHTML = '&times;';
+  navLinks.insertBefore(closer, navLinks.firstChild);
+  
+  // Toggle behavior
+  hamburger.addEventListener('click', function() {
+    navLinks.classList.add('mobile-open');
+    document.body.classList.add('mobile-nav-open');
+  });
+  closer.addEventListener('click', function() {
+    navLinks.classList.remove('mobile-open');
+    document.body.classList.remove('mobile-nav-open');
+  });
+  // Note: don't close menu on link tap — let browser navigate naturally.
+  // On navigation, the new page loads fresh without .mobile-open class.
+  // (Same-page anchors will use the document click handler below to close.)
+  // Close on backdrop tap
+  document.addEventListener('click', function(e) {
+    if (document.body.classList.contains('mobile-nav-open') && 
+        !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      navLinks.classList.remove('mobile-open');
+      document.body.classList.remove('mobile-nav-open');
+    }
+  });
+})();
+</script>
+</body>
+</html>

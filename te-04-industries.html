@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industries — Tyler Ergonomics</title>
+<meta name="description" content="Tyler Ergonomics serves healthcare, oil &amp; gas, universities, K-12, government, insurance carriers, technology, and many other office-based industries. Twenty-plus years of cross-sector ergonomic practice.">>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a2a3a;--ink-lt:#1e3040;--blue:#2e6da4;--blue-dk:#1f5490;--blue-lt:#bdd4ea;--ivory:#f4f6f9;--cream:#e8eef5;--warm:#d4dde8;--gold:#f68916;--gold-lt:#ffa84c;--mid:#3a4e62;--soft:#6a8099;--white:#ffffff;--border:rgba(46,109,164,0.15)}
+body{font-family:'DM Sans',sans-serif;font-weight:400;color:var(--ink);background:var(--ivory);line-height:1.6;font-size:16px}
+nav{background:var(--ink);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:68px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;flex-direction:column;text-decoration:none;gap:2px}
+.nav-logo-main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold-lt);letter-spacing:0.02em;line-height:1}
+.nav-logo-sub{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35)}
+.nav-links{display:flex;gap:28px;align-items:center;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.58);text-decoration:none;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-lt)}
+.nav-cta{background:var(--blue-dk)!important;color:var(--white)!important;padding:8px 20px;border-radius:2px;opacity:1!important}
+.nav-cta:hover{background:var(--gold)!important}
+.nav-lifeafter{border:1px solid rgba(255,255,255,0.15)!important;padding:7px 16px!important;font-size:11px!important}
+.nav-lifeafter:hover{border-color:var(--gold-lt)!important;color:var(--gold-lt)!important;background:none!important}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px}
+.section-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.btn-primary{background:var(--blue-dk);color:var(--white);padding:14px 28px;border:none;border-radius:2px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block;letter-spacing:0.03em;transition:background 0.2s;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:var(--gold)}
+.page-header{background:var(--ink);padding:72px 48px 64px;position:relative;overflow:hidden}
+.page-header::before{content:'';position:absolute;top:-100px;right:-80px;width:440px;height:440px;border-radius:50%;border:1px solid rgba(46,109,164,0.1)}
+.page-header h1{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:500;color:var(--white);line-height:1.1;max-width:700px;margin-bottom:20px}
+.page-header h1 em{font-style:italic;color:var(--gold-lt)}
+.page-header-sub{font-size:16px;color:rgba(255,255,255,0.52);max-width:580px;line-height:1.8;font-weight:300}
+
+/* INDUSTRIES GALLERY */
+.gallery-section{background:var(--white);padding:80px 48px}
+.gallery-header{text-align:center;margin-bottom:52px;max-width:680px;margin-left:auto;margin-right:auto}
+.gallery-header h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:14px}
+.gallery-header p{font-size:15px;color:var(--soft);line-height:1.75;font-weight:300}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);max-width:1200px;margin:0 auto}
+.gallery-card{background:var(--ivory);padding:32px 28px;display:flex;flex-direction:column;gap:10px}
+.gallery-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.25;margin-bottom:4px}
+.gallery-card p{font-size:14px;color:var(--soft);line-height:1.7;font-weight:300;margin:0}
+
+/* ANCHOR DEPTH */
+.anchor-section{background:var(--ivory);padding:80px 48px}
+.anchor-header{text-align:center;margin-bottom:48px;max-width:640px;margin-left:auto;margin-right:auto}
+.anchor-header h2{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:12px}
+.anchor-header p{font-size:15px;color:var(--soft);line-height:1.75;font-weight:300}
+.anchor-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1100px;margin:0 auto}
+.anchor-card{background:var(--white);border-top:3px solid var(--gold);border-radius:2px;padding:36px 32px;display:flex;flex-direction:column;gap:14px}
+.anchor-card-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);margin-bottom:2px}
+.anchor-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:4px}
+.anchor-card p{font-size:14.5px;color:var(--mid);line-height:1.75;font-weight:300;margin-bottom:8px}
+.anchor-tags{display:flex;gap:6px;flex-wrap:wrap}
+.anchor-tag{font-size:11px;color:var(--blue);background:var(--cream);padding:4px 11px;border-radius:2px;font-weight:500}
+
+/* CTA */
+.cta-section{background:var(--ink);padding:72px 48px;text-align:center}
+.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:var(--white);margin-bottom:14px;line-height:1.2}
+.cta-section p{font-size:15px;color:rgba(255,255,255,0.48);max-width:500px;margin:0 auto 32px;line-height:1.75;font-weight:300}
+.cta-actions{display:flex;gap:14px;justify-content:center}
+
+footer{background:var(--ink);padding:40px 48px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.footer-brand .footer-logo-main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold-lt);margin-bottom:6px}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,0.35);font-weight:300;max-width:260px;line-height:1.65}
+.footer-nav-group h5{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px}
+.footer-nav-group ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-nav-group a{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;font-weight:300}
+.footer-nav-group a:hover{color:var(--gold-lt)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.22)}
+.footer-contact{font-size:13px;color:rgba(255,255,255,0.4)}
+.footer-contact strong{color:var(--gold-lt);font-weight:400}
+
+
+/* ============================================
+   RESPONSIVE — TABLET & MOBILE
+   ============================================ */
+
+/* TABLET (under 1024px) */
+@media (max-width: 1024px) {
+  .footer-top { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+}
+
+/* TABLET TO SMALL DESKTOP (under 968px) */
+@media (max-width: 968px) {
+  nav { padding: 16px 20px; gap: 16px; }
+  .nav-logo-main { font-size: 18px; }
+  .nav-logo-sub { font-size: 9px; }
+  .nav-links { gap: 14px; flex-wrap: wrap; }
+  .nav-links a:not(.btn-gold):not(.nav-cta) { font-size: 12.5px; }
+
+  /* Hero adjustments */
+  .hero, .page-header { padding: 48px 20px; }
+  .hero { flex-direction: column; gap: 32px; }
+  .hero-content, .hero-graphic { width: 100%; max-width: 100%; }
+  .hero h1, .page-header h1 { font-size: 38px; line-height: 1.15; }
+  .hero-sub, .page-header-sub { font-size: 16px; }
+
+  /* Section padding universal */
+  section { padding-left: 20px !important; padding-right: 20px !important; }
+
+  /* Grids collapse */
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-strip { grid-template-columns: 1fr 1fr; }
+  .stats-strip { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .anchor-grid { grid-template-columns: 1fr; gap: 16px; }
+  .who-grid { grid-template-columns: 1fr 1fr; }
+  .symptoms-grid { grid-template-columns: 1fr 1fr; }
+  .credibility-band { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .testimonial-grid { grid-template-columns: 1fr; }
+  .articles-grid { grid-template-columns: 1fr; }
+  .what-grid { grid-template-columns: 1fr; }
+  .cta-split { grid-template-columns: 1fr; gap: 16px; }
+  .audience-section, .audience-grid { grid-template-columns: 1fr; }
+  .timeline-grid { grid-template-columns: 1fr; }
+  .credentials-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Hero booking card stacks */
+  .hero-booking-card { width: 100%; max-width: 100%; }
+
+  /* Two-path availability band — homepage */
+  section[style*="grid-template-columns:1fr 1fr"] > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 32px !important; }
+
+  /* Article header */
+  .article-header { padding: 48px 20px 32px; }
+  .article-header h1 { font-size: 36px; }
+  .article-body { padding: 48px 20px; }
+  .article-body-inner { font-size: 16px; }
+  .article-body-inner h2 { font-size: 26px; }
+  .data-stats { grid-template-columns: 1fr; }
+  .stat-num { font-size: 36px; }
+
+  /* CTA section */
+  .cta-section { padding: 60px 20px; }
+  .cta-section h2 { font-size: 32px; }
+
+  /* Footer */
+  footer { padding: 48px 20px 24px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+/* PHONE (under 640px) */
+@media (max-width: 640px) {
+  /* Navigation — keep brand + CTA only, hide intermediate links */
+  nav { padding: 14px 16px; }
+  .nav-links a:not(.btn-gold):not(.nav-cta) { display: none; }
+  .nav-logo-main { font-size: 17px; }
+  .nav-logo-sub { display: none; }
+  .btn-gold, .nav-cta { padding: 9px 16px; font-size: 12.5px; }
+
+  /* Section padding reduced further */
+  section { padding-left: 16px !important; padding-right: 16px !important; padding-top: 40px !important; padding-bottom: 40px !important; }
+
+  /* Hero / page header */
+  .hero, .page-header, .article-header { padding: 40px 16px 32px !important; }
+  .hero h1, .page-header h1, .article-header h1 { font-size: 32px !important; }
+  .hero-sub, .page-header-sub, .article-dek { font-size: 15px; }
+  .hero-credibility { font-size: 13px; }
+
+  /* All multi-column grids → single column on phone */
+  .services-grid, .gallery-grid, .who-grid, .symptoms-grid, .stat-strip, .stats-strip, .credibility-band, .footer-top, .testimonial-grid, .articles-grid, .what-grid, .cta-split, .anchor-grid, .timeline-grid, .credentials-grid, .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Headings scale */
+  h2 { font-size: 26px !important; line-height: 1.2 !important; }
+  h3 { font-size: 19px !important; }
+  .services-header h2, .who-header h2, .gallery-header h2, .urgency-header h2, .credibility-header h2 { font-size: 28px !important; }
+
+  /* Buttons full-width on phone */
+  .hero-actions { flex-direction: column; gap: 12px; }
+  .hero-actions a, .hero-actions .btn-gold, .hero-actions .btn-outline { width: 100%; text-align: center; padding: 13px 20px !important; }
+
+  /* Service / who / gallery cards reduce padding */
+  .service-card, .who-card, .gallery-card, .anchor-card, .testimonial-card { padding: 24px 20px !important; }
+
+  /* Symptom cards smaller padding */
+  .symptom-card { padding: 14px 16px !important; font-size: 14px !important; }
+
+  /* Trust strip phone */
+  .trust-strip { padding: 16px 16px !important; }
+  .trust-clients { flex-wrap: wrap; gap: 8px 14px !important; justify-content: center; }
+  .trust-divider { display: none; }
+  .trust-client { font-size: 11.5px !important; }
+  .trust-strip-human { padding: 16px 16px !important; }
+  .trust-strip-human p { font-size: 13px !important; }
+
+  /* Credibility band */
+  .credibility-band { padding: 32px 16px !important; }
+  .credibility-stat { font-size: 26px !important; }
+
+  /* Stat numbers */
+  .stat-num { font-size: 32px !important; }
+
+  /* Forms — full width, prevent iOS zoom */
+  .inquiry-form input, .inquiry-form select, .inquiry-form textarea { font-size: 16px !important; width: 100% !important; padding: 12px 14px !important; }
+  .inquiry-form .form-row { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .inquiry-form button[type="submit"] { width: 100% !important; }
+
+  /* Article body adjustments */
+  .article-body { padding: 32px 16px !important; }
+  .article-body-inner { font-size: 15.5px; line-height: 1.7; }
+  .article-body-inner h2 { font-size: 24px !important; margin-top: 32px !important; }
+  .article-body-inner h3 { font-size: 18px !important; }
+  .article-body-inner blockquote { font-size: 18px !important; padding: 4px 0 4px 18px !important; }
+  .article-body-inner li { font-size: 15px !important; }
+  .sources-list li { font-size: 12.5px !important; padding-left: 30px !important; }
+
+  /* CTA section phone */
+  .cta-section { padding: 48px 16px !important; }
+  .cta-section h2 { font-size: 26px !important; }
+  .cta-section p { font-size: 14.5px; }
+
+  /* Footer phone */
+  footer { padding: 36px 16px 20px !important; }
+  .footer-top { gap: 28px !important; }
+  .footer-logo-main { font-size: 19px; }
+  .footer-bottom { font-size: 10px !important; flex-direction: column; gap: 8px; }
+  .footer-contact { font-size: 12px !important; }
+}
+
+
+.nav-free-badge{display:inline-block;background:var(--gold);color:var(--ink);font-size:9px;font-weight:600;padding:2px 5px;margin-left:5px;letter-spacing:0.08em;text-transform:uppercase;border-radius:2px;vertical-align:middle;line-height:1}
+
+/* ============================================
+   MOBILE HAMBURGER MENU
+   ============================================ */
+.mobile-menu-toggle { display: none; background: transparent; border: none; color: #fff; cursor: pointer; padding: 6px; align-items: center; justify-content: center; }
+.mobile-menu-close { display: none; }
+
+@media (max-width: 640px) {
+  .mobile-menu-toggle { display: flex !important; order: 99; }
+  .mobile-menu-toggle svg { width: 26px; height: 26px; stroke: rgba(255,255,255,0.9); }
+  
+  /* Hide everything in nav-links by default on phone — overlay takes over */
+  .nav-links { display: none !important; }
+  
+  /* When mobile menu is open, transform nav-links into full-height slide-out panel */
+  .nav-links.mobile-open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 84% !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+    background: #1a2a3a !important;
+    padding: 68px 28px 32px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    z-index: 9999 !important;
+    overflow-y: auto !important;
+    box-shadow: -8px 0 30px rgba(0,0,0,0.3);
+  }
+  .nav-links.mobile-open li { list-style: none !important; }
+  .nav-links.mobile-open a {
+    display: block !important;
+    color: rgba(255,255,255,0.85) !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    background: transparent !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+  }
+  .nav-links.mobile-open a:hover, .nav-links.mobile-open a.current, .nav-links.mobile-open a.active { color: #ffa84c !important; }
+  .nav-links.mobile-open a.btn-gold, .nav-links.mobile-open a.nav-cta {
+    background: #f68916 !important;
+    color: #1a2a3a !important;
+    text-align: center;
+    padding: 14px 20px !important;
+    border-radius: 2px;
+    border-bottom: none !important;
+    margin-top: 20px;
+    font-weight: 500 !important;
+  }
+  .mobile-menu-close {
+    display: block !important;
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.9);
+    font-size: 32px;
+    cursor: pointer;
+    padding: 6px 12px;
+    line-height: 1;
+    z-index: 10000;
+  }
+  /* Dark backdrop behind the slide-out */
+  body.mobile-nav-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9998;
+  }
+  body.mobile-nav-open { overflow: hidden; }
+}
+
+
+/* ============================================
+   UNIVERSAL MOBILE GRID COLLAPSE — prevent horizontal overflow on phone
+   ============================================ */
+@media (max-width: 968px) {
+  .industries-grid, .gallery-grid, .symptoms-grid, .who-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+  .stat-strip-inner, .process-steps, .data-stats, .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+  }
+}
+@media (max-width: 540px) {
+  .industries-grid, .gallery-grid, .symptoms-grid, .who-grid,
+  .stat-strip-inner, .process-steps, .data-stats, .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+}
+
+/* Belt-and-braces: prevent horizontal scroll at the page level */
+html, body { overflow-x: hidden; max-width: 100vw; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-main">Tyler Ergonomics</span>
+    <span class="nav-logo-sub">Work safer · Work smarter · Work better</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="te-02-services.html">Services</a></li>
+    <li><a href="te-03-home-office.html">Home Office</a></li>
+    <li><a href="te-04-industries.html" class="active">Industries</a></li>
+    <li><a href="te-05-about.html">About</a></li>
+    <li><a href="te-06-insights.html">Insights</a></li>
+    <li><a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a></li>
+    <li><a href="te-02-services.html#contact" class="nav-cta">Book an assessment</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="eyebrow">Industries</p>
+  <h1>Twenty-plus years.<br><em>Across many industries.</em></h1>
+  <p class="page-header-sub">Cancer centers, film and television studios, oil and gas operations, athletic conferences, universities, architecture firms, restaurants, hospitals — and every kind of office environment in between. One standard, applied to many contexts.</p>
+</div>
+
+<!-- INDUSTRIES GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-header">
+    <p class="section-eyebrow">Industries served</p>
+    <h2>The work has gone where the work was needed.</h2>
+    <p>Tyler Ergonomics has served organizations across a wide range of sectors. The methodology stays the same — credentialed assessment, written findings, prioritized recommendations. The context changes; the standard doesn't.</p>
+  </div>
+  <div class="gallery-grid">
+    <!-- Healthcare (anchor — featured treatment) -->
+    <div class="gallery-card">
+      <h3>Healthcare</h3>
+      <p>Cancer center workstation design and facility layout consultation, operating room ergonomics developed with surgical teams, and workstation support for nursing, radiology, and administrative staff &mdash; across hospitals and specialty centers.</p>
+    </div>
+    <!-- Oil & Gas (anchor — featured treatment) -->
+    <div class="gallery-card">
+      <h3>Oil &amp; Gas</h3>
+      <p>Office and technical facility workstations, control room ergonomics, return-to-work ergonomic support for office staff, and remote evaluations for energy-sector staff across distributed operations. Tyler Ergonomics has anchored its energy-sector work in this industry since 2002.</p>
+    </div>
+    <!-- Universities -->
+    <div class="gallery-card">
+      <h3>Universities</h3>
+      <p>Workstation assessments for faculty, research, and administrative staff. Return-to-work support for academic personnel. Student ergonomics support through the Life|After&reg; Back to Class program. Engagement experience across multiple Louisiana institutions.</p>
+    </div>
+    <!-- K-12 / School Districts -->
+    <div class="gallery-card">
+      <h3>K-12 &amp; School Districts</h3>
+      <p>District-level workstation assessment, administrator and teacher RTW support, and ergonomic training for facility staff.</p>
+    </div>
+    <!-- Government / Municipal -->
+    <div class="gallery-card">
+      <h3>Government &amp; Municipal</h3>
+      <p>Office and field staff assessments, accommodation support, and return-to-work programs for state and local employers.</p>
+    </div>
+    <!-- Insurance Carriers -->
+    <div class="gallery-card">
+      <h3>Insurance Carriers</h3>
+      <p>Workplace ergonomic engagements for office-based insurance staff — claims processing, customer service, and administrative roles. Engagement experience includes Louisiana-based health plan administration.</p>
+    </div>
+    <!-- Film & Television -->
+    <div class="gallery-card">
+      <h3>Film &amp; Television</h3>
+      <p>Workstation ergonomics for post-production editors — long-duration seated work, multi-monitor setups, and the physical demands of editing schedules.</p>
+    </div>
+    <!-- Athletic Conferences -->
+    <div class="gallery-card">
+      <h3>Athletic Conferences</h3>
+      <p>Office ergonomics for conference administrative staff, coaches, and athletic department personnel.</p>
+    </div>
+    <!-- Architecture Firms -->
+    <div class="gallery-card">
+      <h3>Architecture Firms</h3>
+      <p>Drafting station and workstation design for design professionals — accommodating both digital and traditional drafting workflows.</p>
+    </div>
+    <!-- Restaurants -->
+    <div class="gallery-card">
+      <h3>Restaurants</h3>
+      <p>Front-of-house and back-of-house ergonomics, prep station design, and physical-demand accommodation for service industry staff.</p>
+    </div>
+    <!-- Technology / Remote Workforce -->
+    <div class="gallery-card">
+      <h3>Technology &amp; Remote Workforce</h3>
+      <p>Home office evaluations, distributed-workforce ergonomic programs, and virtual training for companies with hybrid or fully remote teams.</p>
+    </div>
+    <!-- Office Environments -->
+    <div class="gallery-card">
+      <h3>Office Environments</h3>
+      <p>The broad category that covers every other engagement — corporate, professional services, nonprofit, and small business workplaces where ergonomic risk meets daily productivity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANCHOR DEPTH -->
+<section class="anchor-section">
+  <div class="anchor-header">
+    <p class="section-eyebrow">Anchor experience</p>
+    <h2>Where the practice runs deepest.</h2>
+    <p>Healthcare and oil &amp; gas have been Tyler Ergonomics' two anchor sectors since the founding — sustained, large-employer engagements that shaped the methodology applied to every other industry served.</p>
+  </div>
+  <div class="anchor-grid">
+    <div class="anchor-card">
+      <p class="anchor-card-eyebrow">Healthcare</p>
+      <h3>Clinical environments, surgical teams, and cancer center design.</h3>
+      <p>Tyler Ergonomics has helped design cancer center workstations and facility layouts, worked with surgeons on operating room ergonomics, and supported nursing, radiology, and administrative staff across hospitals and specialty centers.</p>
+      <div class="anchor-tags">
+        <span class="anchor-tag">Cancer center design</span>
+        <span class="anchor-tag">Operating room ergonomics</span>
+        <span class="anchor-tag">RTW for clinical staff</span>
+      </div>
+    </div>
+    <div class="anchor-card">
+      <p class="anchor-card-eyebrow">Oil &amp; Gas</p>
+      <h3>From the founding engagement to the energy sector at large.</h3>
+      <p>Fortune 20 client Chevron was Tyler Ergonomics' founding client when the firm opened in May 2002 and anchored more than two decades of energy-sector practice. The work spanned office and technical facility workstations, control room ergonomics, return-to-work ergonomic support for office staff, and virtual assessments for staff working across distributed operations.</p>
+      <div class="anchor-tags">
+        <span class="anchor-tag">Fortune 20 founding client</span>
+        <span class="anchor-tag">Control room ergonomics</span>
+        <span class="anchor-tag">Distributed workforce evaluations</span>
+        <span class="anchor-tag">Office staff RTW</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="eyebrow">Get started</p>
+  <h2>Tell us your industry. We&rsquo;ll bring the expertise.</h2>
+  <p>Every sector engagement starts with a conversation about what&rsquo;s specific to your environment. Client references are kept confidential but available to qualified prospects on request.</p>
+  <div class="cta-actions">
+    <a href="te-02-services.html#contact" class="btn-primary">Request a consultation</a>
+    <a href="te-03-home-office.html" style="border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);padding:13px 26px;border-radius:2px;font-size:14px;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif">Home office evaluation — $175</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <p class="footer-logo-main">Tyler Ergonomics</p>
+      <p>Twenty-plus years of workplace ergonomics, productivity, and injury prevention practice across many industries — anchored in healthcare and oil &amp; gas.</p>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="te-03-home-office.html">Home Office Evaluation</a></li>
+        <li><a href="te-02-services.html">Workplace Assessment</a></li>
+        <li><a href="te-02-services.html">Return-to-Work</a></li>
+        <li><a href="te-02-services.html">Training & Education</a></li>
+        <li><a href="te-07-break-companion.html">Break Companion (Free)</a></li>
+      </ul>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="te-04-industries.html">Industries</a></li>
+        <li><a href="te-05-about.html">About</a></li>
+        <li><a href="te-06-insights.html">Insights</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">©2026 Tyler Ergonomics. All rights reserved.</span>
+    <span class="footer-contact"><a href="tel:8777523837" style="color:inherit;text-decoration:none;">(877) 752-3837</a> &nbsp;&middot;&nbsp; <strong><a href="mailto:info@tylerwork.com" style="color:inherit;text-decoration:none;">info@tylerwork.com</a></strong></span>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  const nav = document.querySelector('nav');
+  const navLinks = document.querySelector('.nav-links');
+  if (!nav || !navLinks) return;
+  
+  // Create hamburger button
+  const hamburger = document.createElement('button');
+  hamburger.className = 'mobile-menu-toggle';
+  hamburger.setAttribute('aria-label', 'Open menu');
+  hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+  nav.appendChild(hamburger);
+  
+  // Create close button inside nav-links (works for both ul and div parents)
+  const closer = document.createElement('button');
+  closer.className = 'mobile-menu-close';
+  closer.setAttribute('aria-label', 'Close menu');
+  closer.innerHTML = '&times;';
+  navLinks.insertBefore(closer, navLinks.firstChild);
+  
+  // Toggle behavior
+  hamburger.addEventListener('click', function() {
+    navLinks.classList.add('mobile-open');
+    document.body.classList.add('mobile-nav-open');
+  });
+  closer.addEventListener('click', function() {
+    navLinks.classList.remove('mobile-open');
+    document.body.classList.remove('mobile-nav-open');
+  });
+  // Note: don't close menu on link tap — let browser navigate naturally.
+  // On navigation, the new page loads fresh without .mobile-open class.
+  // (Same-page anchors will use the document click handler below to close.)
+  // Close on backdrop tap
+  document.addEventListener('click', function(e) {
+    if (document.body.classList.contains('mobile-nav-open') && 
+        !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+      navLinks.classList.remove('mobile-open');
+      document.body.classList.remove('mobile-nav-open');
+    }
+  });
+})();
+</script>
+</body>
+</html>
