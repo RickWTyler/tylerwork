@@ -346,6 +346,14 @@ footer{background:var(--ink);padding:64px 48px 32px;border-top:1px solid rgba(25
 /* Belt-and-braces: prevent horizontal scroll at the page level */
 html, body { overflow-x: hidden; max-width: 100vw; }
 
+
+/* NEW MOBILE MENU SYSTEM (replaces old hamburger) */
+@media (max-width: 640px) {
+  #rt-mobile-toggle { display: block !important; }
+  .nav-links { display: none !important; }
+  .nav { padding: 12px 16px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -364,7 +372,24 @@ html, body { overflow-x: hidden; max-width: 100vw; }
     <a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a>
     <a href="te-02-services.html#contact" class="btn-gold">Get in touch</a>
   </div>
+  <button id="rt-mobile-toggle" onclick="document.getElementById('rt-mobile-menu').style.display='block';document.getElementById('rt-mobile-backdrop').style.display='block';" style="display:none;background:transparent;border:none;color:white;cursor:pointer;padding:8px 12px;" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </button>
 </nav>
+<!-- BRAND NEW MOBILE MENU (separate from main nav for iOS reliability) -->
+<div id="rt-mobile-menu" style="display:none;position:fixed;top:0;right:0;bottom:0;width:84%;max-width:320px;background:#1a2a3a;z-index:99999;padding:60px 28px 32px;overflow-y:auto;box-shadow:-8px 0 30px rgba(0,0,0,0.3);box-sizing:border-box;">
+  <button onclick="document.getElementById('rt-mobile-menu').style.display='none';document.getElementById('rt-mobile-backdrop').style.display='none';" style="position:absolute;top:14px;right:16px;background:transparent;border:none;color:white;font-size:32px;cursor:pointer;padding:6px 12px;line-height:1;font-family:inherit;" aria-label="Close menu">&times;</button>
+  <button onclick="location.href='index.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Home</button>
+  <button onclick="location.href='te-02-services.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Services</button>
+  <button onclick="location.href='te-03-home-office.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Home Office</button>
+  <button onclick="location.href='te-04-industries.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Industries</button>
+  <button onclick="location.href='te-05-about.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">About</button>
+  <button onclick="location.href='te-06-insights.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Insights</button>
+  <button onclick="location.href='te-07-break-companion.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Break Companion <span style="background:#f68916;color:#1a2a3a;font-size:10px;padding:2px 6px;border-radius:2px;font-weight:600;margin-left:6px;">FREE</span></button>
+  <button onclick="location.href='te-02-services.html#book'" style="display:block;width:100%;text-align:center;background:#f68916;border:none;color:#1a2a3a;font-size:14px;padding:14px 20px;cursor:pointer;font-family:inherit;margin-top:20px;font-weight:500;border-radius:2px;">Book an Assessment</button>
+</div>
+<div id="rt-mobile-backdrop" onclick="document.getElementById('rt-mobile-menu').style.display='none';document.getElementById('rt-mobile-backdrop').style.display='none';" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99998;"></div>
+
 
 <!-- ARTICLE HEADER -->
 <div class="article-header">
