@@ -390,6 +390,13 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   .nav { padding: 12px 16px !important; }
 }
 
+
+/* Hide the OLD hamburger button (from previous JS code) — use only the new one */
+@media (max-width: 640px) {
+  .mobile-menu-toggle { display: none !important; }
+  .nav-links.mobile-open { display: none !important; }
+}
+
 </style>
 </head>
 <body>
