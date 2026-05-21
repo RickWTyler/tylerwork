@@ -532,6 +532,16 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   
   // Backdrop tap closes menu - dedicated handler, no document-level interference
   backdrop.addEventListener('click', closeMenu);
+  
+  // iOS Safari fix: programmatically navigate on link tap (default <a> behavior 
+  // sometimes fails inside position:fixed elements with high z-index)
+  navLinks.addEventListener('click', function(e) {
+    var link = e.target.closest('a');
+    if (link && link.href && !link.classList.contains('mobile-menu-close')) {
+      e.preventDefault();
+      window.location.href = link.href;
+    }
+  });
 })();
 </script>
 </body>
