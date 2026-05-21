@@ -229,13 +229,25 @@ footer{background:var(--ink);padding:64px 48px 32px;border-top:1px solid rgba(25
     line-height: 1;
     z-index: 10000;
   }
-  /* Dark backdrop behind the slide-out */
-  body.mobile-nav-open::before {
-    content: '';
+  /* Dedicated backdrop element (replaces ::before pseudo-element for iOS reliability) */
+  .mobile-menu-backdrop {
+    display: none;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
     z-index: 9998;
+  }
+  .mobile-menu-backdrop.show {
+    display: block;
+  }
+  /* Ensure links and buttons inside open menu are tappable on iOS */
+  .nav-links.mobile-open a,
+  .nav-links.mobile-open .mobile-menu-close {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
   }
   body.mobile-nav-open { overflow: hidden; }
 }
@@ -484,33 +496,42 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
   nav.appendChild(hamburger);
   
-  // Create close button inside nav-links (works for both ul and div parents)
+  // Create close button inside nav-links
   const closer = document.createElement('button');
   closer.className = 'mobile-menu-close';
   closer.setAttribute('aria-label', 'Close menu');
   closer.innerHTML = '&times;';
   navLinks.insertBefore(closer, navLinks.firstChild);
   
-  // Toggle behavior
-  hamburger.addEventListener('click', function() {
+  // Create dedicated backdrop element (more reliable than ::before pseudo-element on iOS)
+  const backdrop = document.createElement('div');
+  backdrop.className = 'mobile-menu-backdrop';
+  document.body.appendChild(backdrop);
+  
+  function openMenu() {
     navLinks.classList.add('mobile-open');
     document.body.classList.add('mobile-nav-open');
-  });
-  closer.addEventListener('click', function() {
+    backdrop.classList.add('show');
+  }
+  
+  function closeMenu() {
     navLinks.classList.remove('mobile-open');
     document.body.classList.remove('mobile-nav-open');
+    backdrop.classList.remove('show');
+  }
+  
+  hamburger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openMenu();
   });
-  // Note: don't close menu on link tap — let browser navigate naturally.
-  // On navigation, the new page loads fresh without .mobile-open class.
-  // (Same-page anchors will use the document click handler below to close.)
-  // Close on backdrop tap
-  document.addEventListener('click', function(e) {
-    if (document.body.classList.contains('mobile-nav-open') && 
-        !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-      navLinks.classList.remove('mobile-open');
-      document.body.classList.remove('mobile-nav-open');
-    }
+  
+  closer.addEventListener('click', function(e) {
+    e.stopPropagation();
+    closeMenu();
   });
+  
+  // Backdrop tap closes menu - dedicated handler, no document-level interference
+  backdrop.addEventListener('click', closeMenu);
 })();
 </script>
 </body>
