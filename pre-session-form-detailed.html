@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Session Form (Detailed) | Tyler Ergonomics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #16212d;
+    --navy-card-text: #1a2a3a;
+    --gold: #f68916;
+    --ink: #1a2a3a;
+    --paper: #fbfaf8;
+    --line: #e2ddd4;
+    --muted: #6b6f76;
+    --onnavy-muted: #9aa3ad;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  header .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.01em;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 36px;
+    margin: 0 0 12px;
+    color: #fff;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  header p {
+    color: var(--onnavy-muted);
+    font-size: 15px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  form {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 36px 32px;
+  }
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 32px;
+  }
+  fieldset:last-of-type { margin-bottom: 0; }
+  legend {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--navy-card-text);
+    padding: 0 0 6px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+  }
+  .legend-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin: -2px 0 16px;
+  }
+  .field { margin-bottom: 18px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy-card-text);
+    margin-bottom: 6px;
+  }
+  .qlabel {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--paper);
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #fff;
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .yn-question {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .yn-question:last-child { border-bottom: none; }
+  .yn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .yn-row .qlabel { margin-bottom: 0; flex: 1; }
+  .yn-toggle {
+    display: flex;
+    gap: 14px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .yn-toggle .radio-item { display: flex; align-items: center; gap: 5px; font-size: 13px; }
+  .yn-toggle input { accent-color: var(--gold); margin: 0; }
+  .yn-toggle label { margin: 0; font-weight: 400; }
+  .discomfort-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .discomfort-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--navy-card-text);
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .discomfort-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+  }
+  .discomfort-table select {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+  .discomfort-table td:first-child {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+  }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .check-item input { width: auto; margin: 0; accent-color: var(--gold); }
+  .check-item label { margin: 0; font-size: 14px; font-weight: 400; color: var(--ink); }
+  .consent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 24px 0 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .consent-row input { margin-top: 3px; accent-color: var(--gold); flex-shrink: 0; }
+  .consent-row label {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink);
+    margin: 0;
+  }
+  .consent-row a { color: var(--gold); text-decoration: underline; }
+  button[type="submit"] {
+    width: 100%;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  button[type="submit"]:hover { background: #de7a0d; }
+  .note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 14px;
+  }
+  @media (max-width: 500px) {
+    .row2, .check-grid { grid-template-columns: 1fr; }
+    form { padding: 28px 20px; }
+    .yn-row { flex-direction: column; }
+    .discomfort-table { font-size: 12px; }
+    .discomfort-table th, .discomfort-table td { padding: 6px 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Tyler Ergonomics</div>
+    <h1>A few details now, <em>a better session later.</em></h1>
+    <p>A detailed look at your workstation and any discomfort helps your evaluator prepare specific recommendations before the call, rather than spending session time on the basics. Takes about 8–10 minutes.</p>
+  </header>
+
+  <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
+    <fieldset>
+      <legend>Your information</legend>
+      <div class="row2">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="field">
+          <label for="employer">Employer (if applicable)</label>
+          <input type="text" id="employer" name="employer">
+        </div>
+      </div>
+      <div class="field">
+        <label for="jobtitle">Job title / role</label>
+        <input type="text" id="jobtitle" name="jobtitle">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Computer / phone use</legend>
+      <div class="field">
+        <label for="hours">How many hours daily (on average) do you spend on a computer (desktop and/or laptop)?</label>
+        <select id="hours" name="hours">
+          <option value="">Select one</option>
+          <option>Less than 2 hrs</option>
+          <option>2–4 hrs</option>
+          <option>4–6 hrs</option>
+          <option>6–8 hrs</option>
+          <option>More than 8 hrs</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ergosoftware">Do you currently use any ergonomic coaching software (e.g. break reminders, posture cues)?</label>
+        <select id="ergosoftware" name="ergosoftware">
+          <option value="">Select one</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Workstation layout</legend>
+      <div class="legend-sub">Functional space and working surface</div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Do you have adequate leg room at your workstation?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q1y" name="legroom" value="Yes"><label for="q1y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q1n" name="legroom" value="No"><label for="q1n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Are your primary work surfaces free from hard and/or sharp edges?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q2y" name="edges" value="Yes"><label for="q2y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q2n" name="edges" value="No"><label for="q2n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Are you able to position source documents for easy reference while using the computer?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q3y" name="documents" value="Yes"><label for="q3y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q3n" name="documents" value="No"><label for="q3n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">While performing non-computer tasks, does the height of your work surface allow your arms to form a 90-degree angle?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q4y" name="surfaceheight" value="Yes"><label for="q4y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q4n" name="surfaceheight" value="No"><label for="q4n">No</label></div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Keyboard / input device</legend>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Do your upper and lower arms form an approximate 90-degree angle while using the keyboard?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q5y" name="armangle" value="Yes"><label for="q5y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q5n" name="armangle" value="No"><label for="q5n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Are your wrists straight and in a comfortable position when using the keyboard?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q6y" name="wristposition" value="Yes"><label for="q6y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q6n" name="wristposition" value="No"><label for="q6n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <label for="inputdevice">What kind of input device do you use?</label>
+        <select id="inputdevice" name="inputdevice">
+          <option value="">Select one</option>
+          <option>Traditional mouse</option>
+          <option>Ergonomic mouse</option>
+          <option>Trackpad</option>
+          <option>Trackball</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Seating</legend>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Does the backrest tilt backward and forward?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q7y" name="backrest" value="Yes"><label for="q7y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q7n" name="backrest" value="No"><label for="q7n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Does the chair height adjust so you can work with your feet firmly on the floor or on a footrest?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q8y" name="chairheight" value="Yes"><label for="q8y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q8n" name="chairheight" value="No"><label for="q8n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Does the depth of your seat pan allow you to sit with your back against the backrest without pressure behind your knees?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q9y" name="seatdepth" value="Yes"><label for="q9y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q9n" name="seatdepth" value="No"><label for="q9n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Is the seat pan angle adjustable?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q10y" name="seatangle" value="Yes"><label for="q10y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q10n" name="seatangle" value="No"><label for="q10n">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">Does the chair covering provide enough padding?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q11y" name="padding" value="Yes"><label for="q11y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q11n" name="padding" value="No"><label for="q11n">No</label></div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Special considerations</legend>
+      <div class="yn-question">
+        <div class="yn-row">
+          <div class="qlabel">If phone use is one of your primary job tasks, do you have a phone headset available?</div>
+          <div class="yn-toggle">
+            <div class="radio-item"><input type="radio" id="q12y" name="headset" value="Yes"><label for="q12y">Yes</label></div>
+            <div class="radio-item"><input type="radio" id="q12n" name="headset" value="No"><label for="q12n">No</label></div>
+            <div class="radio-item"><input type="radio" id="q12na" name="headset" value="N/A"><label for="q12na">N/A</label></div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Discomfort</legend>
+      <div class="legend-sub">For each area, tell us how often it bothers you and how severe it typically feels. Leave blank if not applicable.</div>
+      <table class="discomfort-table">
+        <thead>
+          <tr><th>Area</th><th>Frequency</th><th>Severity</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Right forearm / wrist</td>
+            <td><select name="freq_r_forearm"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_r_forearm"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Left forearm / wrist</td>
+            <td><select name="freq_l_forearm"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_l_forearm"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Right elbow</td>
+            <td><select name="freq_r_elbow"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_r_elbow"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Left elbow</td>
+            <td><select name="freq_l_elbow"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_l_elbow"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Right shoulder</td>
+            <td><select name="freq_r_shoulder"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_r_shoulder"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Left shoulder</td>
+            <td><select name="freq_l_shoulder"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_l_shoulder"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Neck / upper back</td>
+            <td><select name="freq_neck"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_neck"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Lower back</td>
+            <td><select name="freq_lowback"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_lowback"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Legs</td>
+            <td><select name="freq_legs"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_legs"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+          <tr>
+            <td>Headache / eyestrain</td>
+            <td><select name="freq_headache"><option value=""></option><option>Never</option><option>Rarely</option><option>Often</option><option>Always</option></select></td>
+            <td><select name="sev_headache"><option value=""></option><option>Mild</option><option>Moderate</option><option>Severe</option></select></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+
+    <fieldset>
+      <legend>Anything else</legend>
+      <div class="field">
+        <label for="goals">What are you hoping to get out of this session?</label>
+        <textarea id="goals" name="goals" placeholder="e.g. reduce wrist pain, get equipment recommendations, feel more confident my setup isn't making things worse"></textarea>
+      </div>
+      <div class="field">
+        <label for="photos">Photos of your workstation</label>
+        <div class="hint" style="margin-bottom:8px;">
+          Please upload 3 photos taken while you're seated at your desk in your normal working position:
+          <br>1. Rear view — you and your full setup, seen from behind
+          <br>2. Side view — your profile, showing your posture from head to feet
+          <br>3. Close-up of your keyboard, mouse, and hand position
+          <br><br>Please upload photos here (JPEG or PNG), each under 20MB — these are required. A short video of you working can also be genuinely helpful for your evaluator to see, but it's optional and doesn't replace the photos above. If you'd like to include one, email it to info@tylerwork.com rather than uploading it here.
+        </div>
+        <input type="file" id="photos" name="photos" accept="image/*" multiple>
+      </div>
+    </fieldset>
+
+    <div class="consent-row">
+      <input type="checkbox" id="consent" name="consent" value="Agreed" required>
+      <label for="consent">I understand this evaluation is educational and not medical advice, and I consent to the information above being collected and used to prepare and deliver my session. I've read and agree to the <a href="https://tylerwork.com/terms-and-consent" target="_blank">Terms &amp; Consent</a>.</label>
+    </div>
+
+    <button type="submit">Submit and confirm my session</button>
+    <p class="note">Your responses go directly to your evaluator and are used only to prepare for your session.</p>
+  </form>
+</div>
+</body>
+</html>
