@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ergo Self Assessment | Tyler Ergonomics</title>
+<meta name="description" content="A free two-minute workstation self-assessment from Tyler Ergonomics. Answer 15 quick questions about your screen, chair, keyboard and movement and get a scored breakdown with specific fixes. No signup, no email.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a2a3a;--ink-lt:#1e3040;--blue:#2e6da4;--blue-dk:#1f5490;
+  --blue-lt:#bdd4ea;--ivory:#f4f6f9;--cream:#e8eef5;--warm:#d4dde8;
+  --gold:#f68916;--gold-lt:#ffa84c;--mid:#3a4e62;--soft:#6a8099;
+  --white:#ffffff;--border:rgba(46,109,164,0.15);
+  --ok:#2f8f6b;--warn:#c98200;--risk:#c4492b
+}
+body{font-family:'DM Sans',sans-serif;font-weight:400;color:var(--ink);background:var(--ivory);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+
+/* NAV (matches site) */
+nav{background:var(--ink);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:68px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;flex-direction:column;text-decoration:none;gap:2px}
+.nav-logo-main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold-lt);letter-spacing:0.02em;line-height:1}
+.nav-logo-sub{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35)}
+.nav-links{display:flex;gap:28px;align-items:center;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.58);text-decoration:none;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-lt)}
+.nav-cta{background:var(--blue-dk)!important;color:var(--white)!important;padding:8px 20px;border-radius:2px;opacity:1!important}
+.nav-cta:hover{background:var(--gold)!important}
+.nav-free-badge{display:inline-block;background:var(--gold);color:var(--ink);font-size:9px;font-weight:600;padding:2px 5px;margin-left:5px;letter-spacing:0.08em;text-transform:uppercase;border-radius:2px;vertical-align:middle;line-height:1}
+
+/* TOOL HEADER */
+.tool-hero{background:var(--ink);padding:64px 48px 56px;position:relative;overflow:hidden}
+.tool-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(46,109,164,0.12) 0%,transparent 60%)}
+.tool-hero-inner{position:relative;z-index:1;max-width:720px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px}
+.tool-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;color:var(--white);line-height:1.08;margin-bottom:18px}
+.tool-hero h1 em{font-style:italic;color:var(--gold-lt)}
+.tool-sub{font-size:16px;color:rgba(255,255,255,0.55);max-width:560px;line-height:1.75;font-weight:300}
+
+/* TOOL BODY */
+.tool-main{background:var(--ivory);padding:56px 48px 80px;scroll-margin-top:68px}
+.tool-wrap{max-width:720px;margin:0 auto}
+.hidden{display:none!important}
+
+.progress-rail{display:flex;gap:5px;margin-bottom:28px}
+.progress-rail .seg{flex:1;height:3px;background:var(--warm);border-radius:2px;overflow:hidden}
+.progress-rail .seg > i{display:block;height:100%;width:0%;background:var(--gold);transition:width .4s ease}
+.cat-label{font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.q-count{font-size:12.5px;color:var(--soft);margin-bottom:20px}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:2px;padding:36px 32px;min-height:340px}
+.q-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:28px;line-height:1.25;margin:0 0 26px;color:var(--ink)}
+.opt{display:flex;align-items:center;gap:14px;padding:15px 16px;border:1px solid var(--border);border-radius:2px;margin-bottom:10px;cursor:pointer;transition:border-color .15s ease,background .15s ease;background:var(--white)}
+.opt:hover{border-color:var(--gold);background:rgba(246,137,22,0.05)}
+.opt .dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--soft);flex:0 0 auto;position:relative}
+.opt.selected{border-color:var(--gold);background:rgba(246,137,22,0.09)}
+.opt.selected .dot{border-color:var(--gold)}
+.opt.selected .dot::after{content:"";position:absolute;inset:3px;background:var(--gold);border-radius:50%}
+.opt span.txt{font-size:15px;color:var(--ink);line-height:1.45;font-weight:400}
+
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
+.tbtn{background:var(--white);border:1px solid var(--border);color:var(--mid);padding:12px 22px;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.03em;cursor:pointer;transition:all .2s}
+.tbtn:hover{border-color:var(--blue);color:var(--blue-dk)}
+.tbtn.primary{background:var(--blue-dk);border-color:var(--blue-dk);color:var(--white)}
+.tbtn.primary:hover{background:var(--gold);border-color:var(--gold)}
+.tbtn.primary:disabled{opacity:.35;cursor:not-allowed}
+.tbtn.primary:disabled:hover{background:var(--blue-dk);border-color:var(--blue-dk)}
+
+/* RESULTS */
+.results-head{margin-bottom:28px}
+.risk-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:14px}
+.score-row{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.score-big{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:500;line-height:1;color:var(--ink)}
+.score-big small{font-size:22px;color:var(--soft);font-weight:400}
+.sub{color:var(--mid);font-size:15.5px;line-height:1.75;font-weight:300}
+
+.discomfort-note{border:1px solid rgba(196,73,43,0.35);background:rgba(196,73,43,0.06);border-radius:2px;padding:18px 20px;margin-bottom:28px;font-size:14px;line-height:1.65;color:#6e3426;font-weight:300}
+.discomfort-note b{color:var(--ink);display:block;margin-bottom:4px;font-size:13px;font-weight:500;letter-spacing:.02em}
+
+.priority-card{border:2px solid var(--gold);background:var(--white);border-radius:2px;padding:24px 26px;margin-bottom:28px}
+.priority-card .eyebrow{color:var(--gold);margin-bottom:8px}
+.priority-card h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;margin:0 0 12px;color:var(--ink)}
+.priority-card ul{margin:0;padding-left:18px}
+.priority-card li{font-size:14.5px;line-height:1.65;color:var(--mid);margin-bottom:6px;font-weight:300}
+
+.cat-breakdown{display:flex;flex-direction:column;gap:16px;margin:0 0 30px;background:var(--white);border:1px solid var(--border);border-radius:2px;padding:26px}
+.cat-row .top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:7px}
+.cat-row .top span:first-child{color:var(--ink);font-weight:500}
+.cat-row .top span:last-child{color:var(--soft);font-weight:300}
+.bar{height:6px;background:var(--cream);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px}
+
+.reco{border-left:3px solid var(--gold);padding:4px 0 4px 16px;margin-bottom:18px;font-size:14.5px;color:var(--mid);line-height:1.7;font-weight:300}
+.reco b{color:var(--ink);font-weight:500}
+.reco-link{display:inline-block;margin-top:6px;font-size:13px;font-weight:500;color:var(--blue-dk);text-decoration:none;border-bottom:1px solid rgba(31,84,144,0.35)}
+.reco-link:hover{color:var(--gold);border-bottom-color:var(--gold)}
+
+.cta-block{margin-top:36px;padding:32px;background:var(--ink);border-radius:2px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.cta-block h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--white);margin:0 0 8px;line-height:1.2}
+.cta-block p{margin:0;color:rgba(255,255,255,0.55);font-size:14px;max-width:44ch;line-height:1.7;font-weight:300}
+.cta-btn{background:var(--gold);color:var(--white);padding:14px 26px;border:none;border-radius:2px;font-weight:500;font-size:14px;letter-spacing:0.03em;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;font-family:'DM Sans',sans-serif;transition:background .2s}
+.cta-btn:hover{background:var(--gold-lt)}
+.employer-line{text-align:center;margin:20px 0 0;font-size:14px;color:var(--soft);font-weight:300}
+.employer-line a{color:var(--blue-dk);text-decoration:none;font-weight:500;border-bottom:1px solid rgba(31,84,144,0.35)}
+.employer-line a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.restart{margin-top:22px;text-align:center}
+.restart a{color:var(--soft);font-size:13px;cursor:pointer;text-decoration:underline}
+.tool-disclaimer{max-width:720px;margin:36px auto 0;text-align:center;font-size:12px;color:var(--soft);line-height:1.7;font-weight:300}
+
+/* FOOTER (matches site) */
+footer{background:var(--ink);padding:40px 48px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap;margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.footer-brand .footer-logo-main{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold-lt);margin-bottom:6px}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,0.35);font-weight:300;max-width:280px;line-height:1.65}
+.footer-nav-group h5{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-nav-group ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-nav-group a{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;font-weight:300}
+.footer-nav-group a:hover{color:var(--gold-lt)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.22)}
+.footer-contact{font-size:13px;color:rgba(255,255,255,0.4)}
+.footer-contact strong{color:var(--gold-lt);font-weight:400}
+
+/* RESPONSIVE */
+@media (max-width:968px){
+  nav{padding:16px 20px;gap:16px}
+  .nav-logo-main{font-size:18px}
+  .nav-logo-sub{font-size:9px}
+  .nav-links{gap:14px;flex-wrap:wrap}
+  .nav-links a{font-size:12.5px}
+  .tool-hero{padding:48px 20px 40px}
+  .tool-hero h1{font-size:38px}
+  .tool-main{padding:40px 20px 64px}
+  footer{padding:48px 20px 24px}
+}
+@media (max-width:640px){
+  nav{padding:14px 16px}
+  .nav-links{display:none!important}
+  #rt-mobile-toggle{display:block!important}
+  .nav-logo-main{font-size:17px}
+  .nav-logo-sub{display:none}
+  .tool-hero{padding:40px 16px 32px}
+  .tool-hero h1{font-size:32px}
+  .tool-sub{font-size:15px}
+  .tool-main{padding:32px 16px 56px}
+  .card{padding:26px 20px}
+  .q-title{font-size:24px}
+  .cat-breakdown{padding:20px}
+  .cta-block{padding:24px 20px}
+  .cta-btn{width:100%;text-align:center}
+  footer{padding:36px 16px 20px}
+  .footer-bottom{flex-direction:column;text-align:center;font-size:10px}
+  .footer-contact{font-size:12px}
+}
+html,body{overflow-x:hidden;max-width:100vw}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-main">Tyler Ergonomics</span>
+    <span class="nav-logo-sub">Work safer · Work smarter · Work better</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="te-02-services.html">Services</a></li>
+    <li><a href="te-03-home-office.html">Home Office</a></li>
+    <li><a href="te-04-industries.html">Industries</a></li>
+    <li><a href="te-05-about.html">About</a></li>
+    <li><a href="te-06-insights.html">Insights</a></li>
+    <li><a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a></li>
+    <li><a href="ergo-self-assessment.html" class="active">Ergo Self Assessment <span class="nav-free-badge">Free</span></a></li>
+    <li><a href="te-02-services.html#book" class="nav-cta">Book an assessment</a></li>
+  </ul>
+  <button id="rt-mobile-toggle" onclick="document.getElementById('rt-mobile-menu').style.display='block';document.getElementById('rt-mobile-backdrop').style.display='block';" style="display:none;background:transparent;border:none;color:white;cursor:pointer;padding:8px 12px;" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </button>
+</nav>
+<!-- MOBILE MENU (same system as the rest of the site) -->
+<div id="rt-mobile-menu" style="display:none;position:fixed;top:0;right:0;bottom:0;width:84%;max-width:320px;background:#1a2a3a;z-index:99999;padding:60px 28px 32px;overflow-y:auto;box-shadow:-8px 0 30px rgba(0,0,0,0.3);box-sizing:border-box;">
+  <button onclick="document.getElementById('rt-mobile-menu').style.display='none';document.getElementById('rt-mobile-backdrop').style.display='none';" style="position:absolute;top:14px;right:16px;background:transparent;border:none;color:white;font-size:32px;cursor:pointer;padding:6px 12px;line-height:1;font-family:inherit;" aria-label="Close menu">&times;</button>
+  <button onclick="location.href='index.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Home</button>
+  <button onclick="location.href='te-02-services.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Services</button>
+  <button onclick="location.href='te-03-home-office.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Home Office</button>
+  <button onclick="location.href='te-04-industries.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Industries</button>
+  <button onclick="location.href='te-05-about.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">About</button>
+  <button onclick="location.href='te-06-insights.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Insights</button>
+  <button onclick="location.href='te-07-break-companion.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Break Companion <span style="background:#f68916;color:#1a2a3a;font-size:10px;padding:2px 6px;border-radius:2px;font-weight:600;margin-left:6px;">FREE</span></button>
+  <button onclick="location.href='ergo-self-assessment.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:#ffa84c;font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Ergo Self Assessment <span style="background:#f68916;color:#1a2a3a;font-size:10px;padding:2px 6px;border-radius:2px;font-weight:600;margin-left:6px;">FREE</span></button>
+  <button onclick="location.href='te-02-services.html#book'" style="display:block;width:100%;text-align:center;background:#f68916;border:none;color:#1a2a3a;font-size:14px;padding:14px 20px;cursor:pointer;font-family:inherit;margin-top:20px;font-weight:500;border-radius:2px;">Book an Assessment</button>
+</div>
+<div id="rt-mobile-backdrop" onclick="document.getElementById('rt-mobile-menu').style.display='none';document.getElementById('rt-mobile-backdrop').style.display='none';" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99998;"></div>
+
+<!-- TOOL HEADER -->
+<div class="tool-hero">
+  <div class="tool-hero-inner">
+    <p class="eyebrow">Ergo Self Assessment &middot; Free &middot; No signup</p>
+    <h1>Check your workstation in <em>two minutes.</em></h1>
+    <p class="tool-sub">15 quick questions about your screen, chair, keyboard and movement, including a short symptom check. You&rsquo;ll get a scored breakdown and specific fixes for your setup. No email required.</p>
+  </div>
+</div>
+
+<!-- TOOL -->
+<section class="tool-main" id="toolTop">
+  <div class="tool-wrap">
+
+    <div id="quizPane">
+      <div class="progress-rail" id="progressRail"></div>
+      <div class="cat-label" id="catLabel"></div>
+      <div class="q-count" id="qCount"></div>
+
+      <div class="card">
+        <div class="q-title" id="qTitle"></div>
+        <div id="optionsWrap"></div>
+      </div>
+
+      <div class="nav-row">
+        <button class="tbtn" id="backBtn">&larr; Back</button>
+        <button class="tbtn primary" id="nextBtn" disabled>Next &rarr;</button>
+      </div>
+    </div>
+
+    <div id="resultsPane" class="hidden">
+      <div class="results-head">
+        <div class="risk-badge" id="riskBadge"></div>
+        <div class="score-row">
+          <div class="score-big" id="scoreBig">0<small>/100</small></div>
+        </div>
+        <p class="sub" id="riskSummary" style="max-width:60ch;"></p>
+      </div>
+
+      <div id="discomfortCallout"></div>
+
+      <div id="priorityCallout"></div>
+
+      <div class="cat-breakdown" id="catBreakdown"></div>
+
+      <div id="recoList"></div>
+
+      <div class="cta-block">
+        <div>
+          <h3 id="ctaTitle">Want a professional read on this?</h3>
+          <p id="ctaText">A remote evaluation adds a trained ergonomist's eye to what you just self-reported &mdash; camera walkthrough, written report, equipment recommendations.</p>
+        </div>
+        <a class="cta-btn" href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" target="_blank" rel="noopener">Book Remote Evaluation &mdash; $175</a>
+      </div>
+
+      <p class="employer-line">Evaluating a workplace or a team? <a href="te-02-services.html">See employer services &rarr;</a></p>
+
+      <div class="restart"><a id="restartLink">Retake the assessment</a></div>
+    </div>
+
+  </div>
+
+  <p class="tool-disclaimer">This self-assessment is educational and looks at workstation setup. It does not replace a professional evaluation or medical advice. Nothing you enter here is saved or sent anywhere.</p>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <p class="footer-logo-main">Tyler Ergonomics</p>
+      <p>Twenty-plus years of workplace ergonomics, productivity, and injury prevention practice &mdash; anchored in healthcare and oil &amp; gas, serving employers and individuals nationwide.</p>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="te-03-home-office.html">Home Office Evaluation</a></li>
+        <li><a href="te-02-services.html">Workplace Assessment</a></li>
+        <li><a href="te-02-services.html">Return-to-Work</a></li>
+        <li><a href="te-02-services.html">Training &amp; Education</a></li>
+        <li><a href="te-07-break-companion.html">Break Companion (Free)</a></li>
+        <li><a href="ergo-self-assessment.html">Ergo Self Assessment (Free)</a></li>
+      </ul>
+    </div>
+    <div class="footer-nav-group">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="te-04-industries.html">Industries</a></li>
+        <li><a href="te-05-about.html">About</a></li>
+        <li><a href="te-06-insights.html">Insights</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy;2026 Tyler Ergonomics. All rights reserved.</span>
+    <span class="footer-contact"><a href="tel:985-206-9231" style="color:inherit;text-decoration:none;">985-206-9231</a> &nbsp;&middot;&nbsp; <strong><a href="mailto:info@tylerwork.com" style="color:inherit;text-decoration:none;">info@tylerwork.com</a></strong></span>
+  </div>
+</footer>
+
+<script>
+
+const QUESTIONS = [
+  {cat:"discomfort", text:"Right now, are you dealing with any pain, numbness, or discomfort you're concerned about?",
+    opts:[["No, nothing I'm concerned about",0],["Mild — comes and goes, doesn't affect my day",1],["Noticeable — I feel it most days",2],["Significant — it's affecting my work, sleep, or daily activity",3]]},
+
+  // category: neck (screen), back (chair/posture), wrists (keyboard/mouse), legs (movement/circulation)
+  {cat:"neck", text:"When you're seated normally, where does the top third of your screen sit relative to your eyes?",
+    opts:[["At or just below eye level — I look slightly down at most",0],["Roughly at eye level",0],["Noticeably below, so I tilt my chin down a lot",2],["I use a laptop with no external monitor, screen is low",3]]},
+  {cat:"neck", text:"How far is your screen from your eyes?",
+    opts:[["About an arm's length (20–28 in)",0],["Closer than that — I lean in to read",2],["Farther than that — I lean in sometimes",1],["Not sure / varies a lot",1]]},
+  {cat:"neck", text:"Do you regularly cradle a phone between ear and shoulder, or turn your head sideways to a second monitor?",
+    opts:[["Rarely or never",0],["Occasionally",1],["Often, during calls",2],["Yes, both happen daily",3]]},
+  {cat:"neck", text:"By the end of a workday, how do your neck and shoulders usually feel?",
+    opts:[["No tension",0],["Mild tightness, gone by morning",1],["Noticeable ache most days",2],["Regular pain or stiffness",3]]},
+
+  {cat:"back", text:"What does your lower back rest against while working?",
+    opts:[["A chair with adjustable lumbar support I actually use",0],["A chair with lumbar support, rarely adjusted",1],["A basic chair with no lumbar support",2],["A couch, bed, or stool",3]]},
+  {cat:"back", text:"Can you adjust your chair height so your hips are level with or slightly above your knees?",
+    opts:[["Yes, and it's set that way",0],["Yes, but I haven't adjusted it",1],["Chair doesn't adjust",2],["I don't use a chair (standing/floor/couch)",3]]},
+  {cat:"back", text:"How often do you catch yourself slouched forward or leaning to one side while working?",
+    opts:[["Rarely — I sit upright most of the day",0],["A few times a day",1],["Most of the afternoon",2],["Constantly, it's my default posture",3]]},
+  {cat:"back", text:"Do your feet rest flat on the floor (or a footrest) when seated at your desk?",
+    opts:[["Yes, flat and supported",0],["Mostly, with minor dangling",1],["No, my chair's too high or too low",2],["I'm not sure / never checked",1]]},
+
+  {cat:"wrists", text:"When typing, what's the angle of your wrists relative to your forearms?",
+    opts:[["Straight / neutral, no bending",0],["Slight upward bend",1],["Noticeable upward bend (typing uphill)",2],["I rest my wrists heavily on a hard edge",3]]},
+  {cat:"wrists", text:"Where is your mouse relative to your keyboard and body?",
+    opts:[["Right beside the keyboard, close to my body",0],["A bit of a reach, but usable",1],["Far enough that I extend my arm regularly",2],["On a surface at a different height than the keyboard",2]]},
+  {cat:"wrists", text:"Any tingling, numbness, or ache in your hands, wrists, or forearms?",
+    opts:[["Never",0],["Very occasionally",1],["A few times a week",2],["Daily or it wakes me at night",3]]},
+
+  {cat:"legs", text:"On a typical work day, how often do you get up and move for at least a couple minutes?",
+    opts:[["Every 30–45 minutes",0],["Roughly hourly",1],["A couple times a day",2],["Rarely — I can go 3+ hours without standing",3]]},
+  {cat:"legs", text:"Do you alternate positions during the day (sit/stand desk, different chairs, walking meetings)?",
+    opts:[["Yes, regularly",0],["Occasionally",1],["Rarely",2],["No — one position, all day",3]]},
+  {cat:"legs", text:"By evening, do your legs, feet, or lower back feel stiff or swollen from sitting?",
+    opts:[["No",0],["Mild stiffness",1],["Regular stiffness",2],["Noticeable swelling or pain",3]]},
+];
+
+const CATS = {
+  discomfort:{label:"Current Symptoms", color:"--gold"},
+  neck:{label:"Screen & Neck", color:"--gold"},
+  back:{label:"Chair & Posture", color:"--gold"},
+  wrists:{label:"Keyboard & Wrists", color:"--gold"},
+  legs:{label:"Movement & Circulation", color:"--gold"}
+};
+
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+
+const progressRail = document.getElementById('progressRail');
+const catLabel = document.getElementById('catLabel');
+const qCount = document.getElementById('qCount');
+const qTitle = document.getElementById('qTitle');
+const optionsWrap = document.getElementById('optionsWrap');
+const backBtn = document.getElementById('backBtn');
+const nextBtn = document.getElementById('nextBtn');
+const quizPane = document.getElementById('quizPane');
+const resultsPane = document.getElementById('resultsPane');
+
+function buildRail(){
+  progressRail.innerHTML = '';
+  QUESTIONS.forEach((q,i)=>{
+    const seg = document.createElement('div');
+    seg.className='seg';
+    const bar = document.createElement('i');
+    seg.appendChild(bar);
+    progressRail.appendChild(seg);
+  });
+}
+buildRail();
+
+function render(){
+  const q = QUESTIONS[current];
+  catLabel.textContent = CATS[q.cat].label;
+  qCount.textContent = `Question ${current+1} of ${QUESTIONS.length}`;
+  qTitle.textContent = q.text;
+
+  // progress rail fill
+  Array.from(progressRail.children).forEach((seg,i)=>{
+    seg.querySelector('i').style.width = i<current ? '100%' : i===current ? '50%' : '0%';
+  });
+
+  optionsWrap.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const div = document.createElement('div');
+    div.className='opt' + (answers[current]===i ? ' selected':'');
+    div.innerHTML = `<div class="dot"></div><span class="txt">${opt[0]}</span>`;
+    div.onclick = ()=>{
+      answers[current]=i;
+      render();
+    };
+    optionsWrap.appendChild(div);
+  });
+
+  backBtn.style.visibility = current===0 ? 'hidden':'visible';
+  nextBtn.disabled = answers[current]===null;
+  nextBtn.textContent = current===QUESTIONS.length-1 ? 'See results →' : 'Next →';
+}
+
+backBtn.onclick = ()=>{ if(current>0){ current--; render(); } };
+nextBtn.onclick = ()=>{
+  if(current < QUESTIONS.length-1){ current++; render(); }
+  else { showResults(); }
+};
+
+function toolTop(){ const t=document.getElementById('toolTop'); if(t && t.scrollIntoView){ t.scrollIntoView({behavior:'smooth', block:'start'}); } }
+
+function showResults(){
+  quizPane.classList.add('hidden');
+  resultsPane.classList.remove('hidden');
+  toolTop();
+
+  const catScores = {neck:[0,0], back:[0,0], wrists:[0,0], legs:[0,0]}; // [earned, max]
+  let discomfortScore = 0;
+  QUESTIONS.forEach((q,i)=>{
+    if(q.cat==="discomfort"){ discomfortScore = q.opts[answers[i]][1]; return; }
+    const max = Math.max(...q.opts.map(o=>o[1])) || 3;
+    const earned = q.opts[answers[i]][1];
+    catScores[q.cat][0]+=earned;
+    catScores[q.cat][1]+= (max===0?3:max);
+  });
+
+  let totalEarned=0, totalMax=0;
+  Object.values(catScores).forEach(([e,m])=>{totalEarned+=e; totalMax+=m;});
+  const riskPct = Math.round((totalEarned/totalMax)*100); // higher = worse
+  const healthScore = 100-riskPct; // higher = better, shown to user
+
+  const badge = document.getElementById('riskBadge');
+  const scoreBig = document.getElementById('scoreBig');
+  const summary = document.getElementById('riskSummary');
+  scoreBig.innerHTML = `${healthScore}<small>/100</small>`;
+
+  let level, color, summaryText;
+  if(riskPct < 25){ level='Low Risk'; color='var(--ok)'; summaryText="Your setup is in solid shape. The notes below are refinements, not urgent fixes."; }
+  else if(riskPct < 50){ level='Moderate Risk'; color='var(--warn)'; summaryText="A few specific things in your setup are adding strain. None are emergencies, but worth fixing this week."; }
+  else { level='Elevated Risk'; color='var(--risk)'; summaryText="Several factors are compounding here. This is the profile where a professional eval tends to catch things a self-check misses."; }
+
+  badge.textContent = level;
+  badge.style.background = `color-mix(in srgb, ${color} 22%, transparent)`;
+  badge.style.color = color;
+  badge.style.border = `1px solid ${color}`;
+  summary.textContent = summaryText;
+
+  const callout = document.getElementById('discomfortCallout');
+  if(discomfortScore >= 2){
+    callout.innerHTML = `<div class="discomfort-note"><b>A note on what you shared</b>This assessment looks at workstation setup — it isn't a medical evaluation. Since you mentioned ongoing discomfort, it's worth having that checked by a physician or physical therapist alongside anything you fix here, especially if it's been persistent or is affecting your day.</div>`;
+  } else {
+    callout.innerHTML = '';
+  }
+
+  const breakdown = document.getElementById('catBreakdown');
+  breakdown.innerHTML='';
+  const recoList = document.getElementById('recoList');
+  recoList.innerHTML='';
+
+  const recoText = {
+    neck: {
+      low:"Screen height and distance are dialed in — keep it that way as your setup changes.",
+      mid:"Raise your screen so the top third sits at eye level (a stand or stacked books works), and pull it closer so you're not leaning in.",
+      high:"Your neck is carrying the most load in this assessment. Prioritize monitor height first — it's usually the single highest-leverage fix."
+    },
+    back:{
+      low:"Your seated base is solid — hips, knees, and lumbar support are working together.",
+      mid:"Get lumbar contact consistent and check that your hips sit level with or just above your knees. A rolled towel behind the lower back is a free fix.",
+      high:"Lack of back support is likely driving fatigue by afternoon. This is the category where chair setup (or a chair change) matters most."
+    },
+    wrists:{
+      low:"Wrist and mouse positioning look neutral — good habit to protect.",
+      mid:"Bring the mouse right next to the keyboard and check for any upward wrist bend while typing — a slight negative tilt on the keyboard often fixes this.",
+      high:"Recurring wrist or hand symptoms plus poor positioning is a combination worth addressing directly — this is a common precursor to repetitive strain injuries."
+    },
+    legs:{
+      low:"You're moving enough through the day to keep circulation healthy.",
+      mid:"Build in a stand-and-move break every 45–60 minutes — a phone timer is enough to start the habit.",
+      high:"Prolonged static sitting is the pattern here. Even short, frequent breaks (2 minutes, every 30–45 min) meaningfully reduce this risk."
+    }
+  };
+
+  const quickWins = {
+    neck:["Raise your screen until the top third is at eye level — a box or a stack of books works.","Sit about an arm's length from the screen so you're not leaning in."],
+    back:["Slide your hips to the back of the seat and let your lower back rest on the support.","Set the seat so your hips sit level with or slightly above your knees."],
+    wrists:["Move the mouse right next to the keyboard so you aren't reaching.","Keep your wrists straight — not bent upward and not resting on a hard edge."],
+    legs:["Set a timer to stand and move for two minutes about every 45 minutes.","Take calls standing or walking whenever you can."]
+  };
+
+  const relatedLinks = {
+    neck:{href:"te-06-insights.html", label:"More on the Insights page"},
+    back:{href:"te-06-insights-movement-not-equipment.html", label:"Read: Movement, not equipment"},
+    wrists:{href:"te-06-insights-msds-trending-younger.html", label:"Read: Why MSDs are trending younger"},
+    legs:{href:"te-07-break-companion.html", label:"Try the free Break Companion"}
+  };
+
+  let topCat = null, topPct = -1;
+
+  Object.keys(catScores).forEach(cat=>{
+    const [earned,max] = catScores[cat];
+    const pct = Math.round((earned/max)*100);
+    if(pct > topPct){ topPct = pct; topCat = cat; }
+    const barColor = pct<25?'var(--ok)':pct<50?'var(--warn)':'var(--risk)';
+    const row = document.createElement('div');
+    row.className='cat-row';
+    row.innerHTML = `
+      <div class="top"><span>${CATS[cat].label}</span><span>${pct<25?'Good':pct<50?'Moderate':'Needs attention'}</span></div>
+      <div class="bar"><i style="width:${pct}%; background:${barColor};"></i></div>
+    `;
+    breakdown.appendChild(row);
+
+    const tier = pct<25?'low':pct<50?'mid':'high';
+    const reco = document.createElement('div');
+    reco.className='reco';
+    reco.style.borderLeftColor = barColor;
+    const link = (tier!=='low') ? `<br><a class="reco-link" href="${relatedLinks[cat].href}" target="_blank" rel="noopener">${relatedLinks[cat].label} →</a>` : '';
+    reco.innerHTML = `<b>${CATS[cat].label}:</b> ${recoText[cat][tier]}${link}`;
+    recoList.appendChild(reco);
+  });
+
+  // Top-priority callout: only when the highest category is at least moderate
+  const priority = document.getElementById('priorityCallout');
+  if(topPct >= 25){
+    priority.innerHTML = `<div class="priority-card">
+      <div class="eyebrow">Start here</div>
+      <h3>${CATS[topCat].label}</h3>
+      <ul>${quickWins[topCat].map(t=>`<li>${t}</li>`).join('')}</ul>
+    </div>`;
+  } else {
+    priority.innerHTML = '';
+  }
+
+  // CTA wording follows the result
+  const ctaTitle = document.getElementById('ctaTitle');
+  const ctaText = document.getElementById('ctaText');
+  if(riskPct >= 50 || discomfortScore >= 2){
+    ctaTitle.textContent = "Your results point to a few things worth a closer look.";
+    ctaText.textContent = "A remote evaluation looks at your actual setup — camera walkthrough, written report, equipment recommendations — so the fixes fit you, not a generic checklist.";
+  } else if(riskPct >= 25){
+    ctaTitle.textContent = "Want a professional read on this?";
+    ctaText.textContent = "A remote evaluation adds a trained ergonomist's eye to what you just self-reported — camera walkthrough, written report, equipment recommendations.";
+  } else {
+    ctaTitle.textContent = "Want a second set of eyes?";
+    ctaText.textContent = "Your setup looks solid. If you'd like a professional to confirm it or fine-tune it, a remote evaluation covers that.";
+  }
+}
+
+document.getElementById('restartLink').onclick = ()=>{
+  current=0; answers = new Array(QUESTIONS.length).fill(null);
+  resultsPane.classList.add('hidden');
+  quizPane.classList.remove('hidden');
+  render();
+  toolTop();
+};
+
+render();
+
+</script>
+</body>
+</html>
