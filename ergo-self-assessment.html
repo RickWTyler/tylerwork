@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ergo Self Assessment | Tyler Ergonomics</title>
-<meta name="description" content="A free two-minute workstation self-assessment from Tyler Ergonomics. Answer 15 quick questions about your screen, chair, keyboard and movement and get a scored breakdown with specific fixes. No signup, no email.">
+<meta name="description" content="A free two-minute workstation self-assessment from Tyler Ergonomics. Answer 16 quick questions about your screen, chair, keyboard and movement and get a scored breakdown with specific fixes. No signup, no email.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -78,6 +78,9 @@ nav{background:var(--ink);padding:0 48px;display:flex;align-items:center;justify
 
 .discomfort-note{border:1px solid rgba(196,73,43,0.35);background:rgba(196,73,43,0.06);border-radius:2px;padding:18px 20px;margin-bottom:28px;font-size:14px;line-height:1.65;color:#6e3426;font-weight:300}
 .discomfort-note b{color:var(--ink);display:block;margin-bottom:4px;font-size:13px;font-weight:500;letter-spacing:.02em}
+.discomfort-note.strong{border:2px solid var(--risk);background:rgba(196,73,43,0.09)}
+.inline-note{margin-top:16px;border:1px solid rgba(196,73,43,0.35);background:rgba(196,73,43,0.06);border-radius:2px;padding:16px 18px;font-size:14px;line-height:1.65;color:#6e3426;font-weight:300}
+.inline-note b{color:var(--ink);display:block;margin-bottom:4px;font-size:13px;font-weight:500;letter-spacing:.02em}
 
 .priority-card{border:2px solid var(--gold);background:var(--white);border-radius:2px;padding:24px 26px;margin-bottom:28px}
 .priority-card .eyebrow{color:var(--gold);margin-bottom:8px}
@@ -198,7 +201,7 @@ html,body{overflow-x:hidden;max-width:100vw}
   <div class="tool-hero-inner">
     <p class="eyebrow">Ergo Self Assessment &middot; Free &middot; No signup</p>
     <h1>Check your workstation in <em>two minutes.</em></h1>
-    <p class="tool-sub">15 quick questions about your screen, chair, keyboard and movement, including a short symptom check. You&rsquo;ll get a scored breakdown and specific fixes for your setup. No email required.</p>
+    <p class="tool-sub">16 quick questions about your screen, chair, keyboard and movement, including a short symptom check. You&rsquo;ll get a scored breakdown and specific fixes for your setup. No email required.</p>
   </div>
 </div>
 
@@ -300,8 +303,10 @@ const QUESTIONS = [
     opts:[["At or just below eye level — I look slightly down at most",0],["Roughly at eye level",0],["Noticeably below, so I tilt my chin down a lot",2],["I use a laptop with no external monitor, screen is low",3]]},
   {cat:"neck", text:"How far is your screen from your eyes?",
     opts:[["About an arm's length (20–28 in)",0],["Closer than that — I lean in to read",2],["Farther than that — I lean in sometimes",1],["Not sure / varies a lot",1]]},
-  {cat:"neck", text:"Do you regularly cradle a phone between ear and shoulder, or turn your head sideways to a second monitor?",
-    opts:[["Rarely or never",0],["Occasionally",1],["Often, during calls",2],["Yes, both happen daily",3]]},
+  {cat:"neck", text:"Do you regularly cradle a phone between your ear and shoulder?",
+    opts:[["Rarely or never",0],["Occasionally",1],["Often, during calls",2],["Daily — it's my habit",3]]},
+  {cat:"neck", text:"Do you turn your head sideways to look at a second monitor or documents?",
+    opts:[["No second monitor or I'm centered between them",0],["Occasionally",1],["Often",2],["Daily — my main screen is off to one side",3]]},
   {cat:"neck", text:"By the end of a workday, how do your neck and shoulders usually feel?",
     opts:[["No tension",0],["Mild tightness, gone by morning",1],["Noticeable ache most days",2],["Regular pain or stiffness",3]]},
 
@@ -318,7 +323,7 @@ const QUESTIONS = [
     opts:[["Straight / neutral, no bending",0],["Slight upward bend",1],["Noticeable upward bend (typing uphill)",2],["I rest my wrists heavily on a hard edge",3]]},
   {cat:"wrists", text:"Where is your mouse relative to your keyboard and body?",
     opts:[["Right beside the keyboard, close to my body",0],["A bit of a reach, but usable",1],["Far enough that I extend my arm regularly",2],["On a surface at a different height than the keyboard",2]]},
-  {cat:"wrists", text:"Any tingling, numbness, or ache in your hands, wrists, or forearms?",
+  {cat:"wrists", symptom:true, text:"Any tingling, numbness, or ache in your hands, wrists, or forearms?",
     opts:[["Never",0],["Very occasionally",1],["A few times a week",2],["Daily or it wakes me at night",3]]},
 
   {cat:"legs", text:"On a typical work day, how often do you get up and move for at least a couple minutes?",
@@ -385,6 +390,15 @@ function render(){
     optionsWrap.appendChild(div);
   });
 
+  // Right away, if they pick the most serious symptom answer, point them to medical care
+  const picked = answers[current];
+  if((q.cat==='discomfort' || q.symptom) && picked!==null && q.opts[picked][1] >= 3){
+    const note = document.createElement('div');
+    note.className = 'inline-note';
+    note.innerHTML = `<b>Thank you for sharing that.</b>This assessment looks at workstation setup and can't evaluate pain or symptoms. Please consider seeing a physician or physical therapist, and seek care promptly if the pain is severe, getting worse, or comes with numbness or weakness. You're welcome to finish the assessment for ideas on your setup.`;
+    optionsWrap.appendChild(note);
+  }
+
   backBtn.style.visibility = current===0 ? 'hidden':'visible';
   nextBtn.disabled = answers[current]===null;
   nextBtn.textContent = current===QUESTIONS.length-1 ? 'See results →' : 'Next →';
@@ -409,6 +423,7 @@ function showResults(){
     if(q.cat==="discomfort"){ discomfortScore = q.opts[answers[i]][1]; return; }
     const max = Math.max(...q.opts.map(o=>o[1])) || 3;
     const earned = q.opts[answers[i]][1];
+    if(q.symptom){ discomfortScore = Math.max(discomfortScore, earned>=3 ? 3 : (earned>=2 ? 2 : 0)); }
     catScores[q.cat][0]+=earned;
     catScores[q.cat][1]+= (max===0?3:max);
   });
@@ -435,7 +450,9 @@ function showResults(){
   summary.textContent = summaryText;
 
   const callout = document.getElementById('discomfortCallout');
-  if(discomfortScore >= 2){
+  if(discomfortScore >= 3){
+    callout.innerHTML = `<div class="discomfort-note strong"><b>Please get this checked by a medical professional</b>The symptoms you described go beyond what a workstation assessment can address, so please see a physician or physical therapist. Seek care promptly if the pain is severe, getting worse, or comes with numbness or weakness. Improving your setup can help alongside medical care, but not in place of it.</div>`;
+  } else if(discomfortScore >= 2){
     callout.innerHTML = `<div class="discomfort-note"><b>A note on what you shared</b>This assessment looks at workstation setup — it isn't a medical evaluation. Since you mentioned ongoing discomfort, it's worth having that checked by a physician or physical therapist alongside anything you fix here, especially if it's been persistent or is affecting your day.</div>`;
   } else {
     callout.innerHTML = '';
@@ -522,7 +539,10 @@ function showResults(){
   // CTA wording follows the result
   const ctaTitle = document.getElementById('ctaTitle');
   const ctaText = document.getElementById('ctaText');
-  if(riskPct >= 50 || discomfortScore >= 2){
+  if(discomfortScore >= 3){
+    ctaTitle.textContent = "Your setup may be part of the picture.";
+    ctaText.textContent = "A remote evaluation looks at your workstation only. It can work alongside medical care, never in place of it.";
+  } else if(riskPct >= 50 || discomfortScore >= 2){
     ctaTitle.textContent = "Your results point to a few things worth a closer look.";
     ctaText.textContent = "A remote evaluation looks at your actual setup — camera walkthrough, written report, equipment recommendations — so the fixes fit you, not a generic checklist.";
   } else if(riskPct >= 25){
