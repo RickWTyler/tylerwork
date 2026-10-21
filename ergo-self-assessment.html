@@ -307,7 +307,7 @@ const QUESTIONS = [
     opts:[["Rarely or never",0],["Occasionally",1],["Often, during calls",2],["Daily — it's my habit",3]]},
   {cat:"neck", text:"Do you turn your head sideways to look at a second monitor or documents?",
     opts:[["No second monitor or I'm centered between them",0],["Occasionally",1],["Often",2],["Daily — my main screen is off to one side",3]]},
-  {cat:"neck", text:"By the end of a workday, how do your neck and shoulders usually feel?",
+  {cat:"neck", symptom:true, text:"By the end of a workday, how do your neck and shoulders usually feel?",
     opts:[["No tension",0],["Mild tightness, gone by morning",1],["Noticeable ache most days",2],["Regular pain or stiffness",3]]},
 
   {cat:"back", text:"What does your lower back rest against while working?",
@@ -330,7 +330,7 @@ const QUESTIONS = [
     opts:[["Every 30–45 minutes",0],["Roughly hourly",1],["A couple times a day",2],["Rarely — I can go 3+ hours without standing",3]]},
   {cat:"legs", text:"Do you alternate positions during the day (sit/stand desk, different chairs, walking meetings)?",
     opts:[["Yes, regularly",0],["Occasionally",1],["Rarely",2],["No — one position, all day",3]]},
-  {cat:"legs", text:"By evening, do your legs, feet, or lower back feel stiff or swollen from sitting?",
+  {cat:"legs", symptom:true, extra:" Leg swelling or pain, especially in one leg or the calf, is worth having checked soon.", text:"By evening, do your legs, feet, or lower back feel stiff or swollen from sitting?",
     opts:[["No",0],["Mild stiffness",1],["Regular stiffness",2],["Noticeable swelling or pain",3]]},
 ];
 
@@ -395,7 +395,7 @@ function render(){
   if((q.cat==='discomfort' || q.symptom) && picked!==null && q.opts[picked][1] >= 3){
     const note = document.createElement('div');
     note.className = 'inline-note';
-    note.innerHTML = `<b>Thank you for sharing that.</b>This assessment looks at workstation setup and can't evaluate pain or symptoms. Please consider seeing a physician or physical therapist, and seek care promptly if the pain is severe, getting worse, or comes with numbness or weakness. You're welcome to finish the assessment for ideas on your setup.`;
+    note.innerHTML = `<b>Thank you for sharing that.</b>This assessment looks at workstation setup and can't evaluate pain or symptoms. Please consider seeing a physician or physical therapist, and seek care promptly if the pain is severe, getting worse, or comes with numbness or weakness. ${q.extra||''} You're welcome to finish the assessment for ideas on your setup.`;
     optionsWrap.appendChild(note);
   }
 
@@ -442,6 +442,9 @@ function showResults(){
   if(riskPct < 25){ level='Low Risk'; color='var(--ok)'; summaryText="Your setup is in solid shape. The notes below are refinements, not urgent fixes."; }
   else if(riskPct < 50){ level='Moderate Risk'; color='var(--warn)'; summaryText="A few specific things in your setup are adding strain. None are emergencies, but worth fixing this week."; }
   else { level='Elevated Risk'; color='var(--risk)'; summaryText="Several factors are compounding here. This is the profile where a professional eval tends to catch things a self-check misses."; }
+
+  if(discomfortScore >= 3){ summaryText = "Your workstation score is only part of the picture. Because of the symptoms you reported, please read the note above and have them checked by a medical professional."; }
+  else if(discomfortScore >= 2){ summaryText = (riskPct < 25 ? "Your setup looks reasonable, but you reported symptoms that are worth having checked. See the note above." : summaryText + " You also reported symptoms worth having checked. See the note above."); }
 
   badge.textContent = level;
   badge.style.background = `color-mix(in srgb, ${color} 22%, transparent)`;
