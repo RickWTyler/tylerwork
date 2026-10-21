@@ -73,6 +73,7 @@ nav{background:var(--ink);padding:0 48px;display:flex;align-items:center;justify
 .risk-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:14px}
 .score-row{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
 .score-big{font-family:'Cormorant Garamond',serif;font-size:68px;font-weight:500;line-height:1;color:var(--ink)}
+.score-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:6px}
 .score-big small{font-size:22px;color:var(--soft);font-weight:400}
 .sub{color:var(--mid);font-size:15.5px;line-height:1.75;font-weight:300}
 
@@ -230,6 +231,7 @@ html,body{overflow-x:hidden;max-width:100vw}
         <div class="risk-badge" id="riskBadge"></div>
         <div class="score-row">
           <div class="score-big" id="scoreBig">0<small>/100</small></div>
+          <div class="score-label">Workstation score &middot; higher is better</div>
         </div>
         <p class="sub" id="riskSummary" style="max-width:60ch;"></p>
       </div>
@@ -446,7 +448,7 @@ function showResults(){
   if(discomfortScore >= 3){ summaryText = "Your workstation score is only part of the picture. Because of the symptoms you reported, please read the note above and have them checked by a medical professional."; }
   else if(discomfortScore >= 2){ summaryText = (riskPct < 25 ? "Your setup looks reasonable, but you reported symptoms that are worth having checked. See the note above." : summaryText + " You also reported symptoms worth having checked. See the note above."); }
 
-  badge.textContent = level;
+  badge.textContent = 'Workstation: ' + level;
   badge.style.background = `color-mix(in srgb, ${color} 22%, transparent)`;
   badge.style.color = color;
   badge.style.border = `1px solid ${color}`;
