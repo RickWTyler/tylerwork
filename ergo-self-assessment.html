@@ -445,8 +445,8 @@ function showResults(){
   else if(riskPct < 50){ level='Moderate Risk'; color='var(--warn)'; summaryText="A few specific things in your setup are adding strain. None are emergencies, but worth fixing this week."; }
   else { level='Elevated Risk'; color='var(--risk)'; summaryText="Several factors are compounding here. This is the profile where a professional eval tends to catch things a self-check misses."; }
 
-  if(discomfortScore >= 3){ summaryText = "Your workstation score is only part of the picture. Because of the symptoms you reported, please read the note above and have them checked by a medical professional."; }
-  else if(discomfortScore >= 2){ summaryText = (riskPct < 25 ? "Your setup looks reasonable, but you reported symptoms that are worth having checked. See the note above." : summaryText + " You also reported symptoms worth having checked. See the note above."); }
+  if(discomfortScore >= 3){ summaryText = "Your workstation score is only part of the picture. Because of the symptoms you reported, please read the note below and have them checked by a medical professional."; }
+  else if(discomfortScore >= 2){ summaryText = (riskPct < 25 ? "Your setup looks reasonable, but you reported symptoms that are worth having checked. See the note below." : summaryText + " You also reported symptoms worth having checked. See the note below."); }
 
   badge.textContent = 'Workstation: ' + level;
   badge.style.background = `color-mix(in srgb, ${color} 22%, transparent)`;
