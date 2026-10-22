@@ -304,7 +304,7 @@ const QUESTIONS = [
   {cat:"neck", text:"When you're seated normally, where does the top third of your screen sit relative to your eyes?",
     opts:[["At or just below eye level — I look slightly down at most",0],["Roughly at eye level",0],["Noticeably below, so I tilt my chin down a lot",2],["I use a laptop with no external monitor, screen is low",3]]},
   {cat:"neck", text:"How far is your screen from your eyes?",
-    opts:[["About an arm's length (20–28 in)",0],["Closer than that — I lean in to read",2],["Farther than that — I lean in sometimes",1],["Not sure / varies a lot",1]]},
+    opts:[["About an arm's length (20–28 in), and I can read it comfortably",0],["Closer than arm's length",1,"Your screen is closer than it needs to be, which makes your eyes work harder all day. Push it back to about arm's length, and bump up the text size or zoom if it gets hard to read."],["Farther than arm's length, and I lean in or squint to read",2,"Leaning in pulls your head forward and loads your neck. Bring the screen in to about arm's length, or increase the text size so you can sit back against your chair."],["Not sure, or it varies a lot",1,"Quick check: sit back and reach toward the screen. Your fingertips should just about touch it. Adjust from there."]]},
   {cat:"neck", text:"Do you regularly cradle a phone between your ear and shoulder?",
     opts:[["Rarely or never",0],["Occasionally",1],["Often, during calls",2],["Daily — it's my habit",3]]},
   {cat:"neck", text:"Do you turn your head sideways to look at a second monitor or documents?",
@@ -420,11 +420,13 @@ function showResults(){
   toolTop();
 
   const catScores = {neck:[0,0], back:[0,0], wrists:[0,0], legs:[0,0]}; // [earned, max]
+  const answerTips = {neck:[], back:[], wrists:[], legs:[]};
   let discomfortScore = 0;
   QUESTIONS.forEach((q,i)=>{
     if(q.cat==="discomfort"){ discomfortScore = q.opts[answers[i]][1]; return; }
     const max = Math.max(...q.opts.map(o=>o[1])) || 3;
     const earned = q.opts[answers[i]][1];
+    if(q.opts[answers[i]][2]){ answerTips[q.cat].push(q.opts[answers[i]][2]); }
     if(q.symptom){ discomfortScore = Math.max(discomfortScore, earned>=3 ? 3 : (earned>=2 ? 2 : 0)); }
     catScores[q.cat][0]+=earned;
     catScores[q.cat][1]+= (max===0?3:max);
@@ -470,8 +472,8 @@ function showResults(){
 
   const recoText = {
     neck: {
-      low:"Screen height and distance are dialed in — keep it that way as your setup changes.",
-      mid:"Raise your screen so the top third sits at eye level (a stand or stacked books works), and pull it closer so you're not leaning in.",
+      low:"Your screen position looks good overall — keep it that way as your setup changes.",
+      mid:"Raise your screen so the top third sits at eye level (a stand or stacked books works), and set it about an arm's length away.",
       high:"Your neck is carrying the most load in this assessment. Prioritize monitor height first — it's usually the single highest-leverage fix."
     },
     back:{
@@ -492,7 +494,7 @@ function showResults(){
   };
 
   const quickWins = {
-    neck:["Raise your screen until the top third is at eye level — a box or a stack of books works.","Sit about an arm's length from the screen so you're not leaning in."],
+    neck:["Raise your screen until the top third is at eye level — a box or a stack of books works.","Set your screen about an arm's length away, and adjust the text size rather than leaning in."],
     back:["Slide your hips to the back of the seat and let your lower back rest on the support.","Set the seat so your hips sit level with or slightly above your knees."],
     wrists:["Move the mouse right next to the keyboard so you aren't reaching.","Keep your wrists straight — not bent upward and not resting on a hard edge."],
     legs:["Set a timer to stand and move for two minutes about every 45 minutes.","Take calls standing or walking whenever you can."]
@@ -525,7 +527,8 @@ function showResults(){
     reco.className='reco';
     reco.style.borderLeftColor = barColor;
     const link = (tier!=='low') ? `<br><a class="reco-link" href="${relatedLinks[cat].href}" target="_blank" rel="noopener">${relatedLinks[cat].label} →</a>` : '';
-    reco.innerHTML = `<b>${CATS[cat].label}:</b> ${recoText[cat][tier]}${link}`;
+    const tips = answerTips[cat].map(t=>`<br><span style="display:block;margin-top:8px">${t}</span>`).join('');
+    reco.innerHTML = `<b>${CATS[cat].label}:</b> ${recoText[cat][tier]}${tips}${link}`;
     recoList.appendChild(reco);
   });
 
