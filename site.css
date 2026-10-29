@@ -1,0 +1,103 @@
+/* Desktop nav: one line, and one solid booking button.
+   Under 1280px the existing mobile menu is used instead of wrapping. */
+
+@media (min-width: 1280px) {
+  nav:has(.nav-links) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    padding: 0 24px;
+    gap: 16px;
+  }
+  nav:has(.nav-links) .nav-logo,
+  nav:has(.nav-links) .nav-logo-sub,
+  nav:has(.nav-links) .nav-logo-main {
+    white-space: nowrap;
+  }
+  nav:has(.nav-links) .nav-links {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  nav:has(.nav-links) .nav-links > li {
+    display: flex;
+    align-items: center;
+  }
+  nav:has(.nav-links) .nav-links a {
+    white-space: nowrap;
+  }
+  nav:has(.nav-links) .nav-links a.nav-cta,
+  nav:has(.nav-links) .nav-links a.btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    line-height: 1.2;
+    padding: 8px 12px;
+    border-radius: 2px;
+    text-decoration: none;
+  }
+  nav:has(.nav-links) .nav-links a.nav-cta {
+    background: #1f5490 !important;
+    color: #ffffff !important;
+  }
+  nav:has(.nav-links) .nav-links a.nav-cta:hover,
+  nav:has(.nav-links) .nav-links a.nav-cta:focus {
+    background: #f68916 !important;
+    color: #ffffff !important;
+  }
+  nav:has(.nav-links) .nav-links a.btn-gold,
+  nav:has(.nav-links) .nav-links a.btn-gold:hover,
+  nav:has(.nav-links) .nav-links a.btn-gold:focus {
+    background: #f68916 !important;
+    color: #1a2a3a !important;
+  }
+}
+
+/* 1280px windows are just short of the full row once a scrollbar is present. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  nav:has(.nav-links) {
+    padding: 0 16px;
+  }
+  nav:has(.nav-links) .nav-links {
+    gap: 8px;
+  }
+  nav:has(.nav-links) .nav-links a:not(.nav-cta):not(.btn-gold) {
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (max-width: 1279px) {
+  nav:has(#rt-mobile-toggle) #rt-mobile-toggle {
+    display: block !important;
+  }
+  nav:has(#rt-mobile-toggle) .nav-links,
+  nav:has(#rt-mobile-toggle) .mobile-menu-toggle,
+  nav:has(#rt-mobile-toggle) .nav-links.mobile-open {
+    display: none !important;
+  }
+  nav:has(#rt-mobile-toggle) {
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 68px;
+  }
+}
+
+#book,
+#contact {
+  scroll-margin-top: 84px;
+}
+
+.form-status {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.form-status.is-ok { color: #1f5490; }
+.form-status.is-error { color: #8d2b2b; }

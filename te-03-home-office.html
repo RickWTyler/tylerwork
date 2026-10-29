@@ -511,6 +511,12 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 }
 
 </style>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="site.css">
+<script src="booking-config.js"></script>
+<script src="site.js" defer></script>
 </head>
 <body>
 
@@ -527,7 +533,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
     <li><a href="te-06-insights.html">Insights</a></li>
     <li><a href="te-07-break-companion.html">Break Companion <span class="nav-free-badge">Free</span></a></li>
     <li><a href="ergo-self-assessment.html">Ergo Self Assessment <span class="nav-free-badge">Free</span></a></li>
-    <li><a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="nav-cta">Book now — $175</a></li>
+    <li><a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="nav-cta" data-booking>Book now — $175</a></li>
   </ul>
   <button id="rt-mobile-toggle" onclick="document.getElementById('rt-mobile-menu').style.display='block';document.getElementById('rt-mobile-backdrop').style.display='block';" style="display:none;background:transparent;border:none;color:white;cursor:pointer;padding:8px 12px;" aria-label="Open menu">
     <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -544,7 +550,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
   <button onclick="location.href='te-06-insights.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Insights</button>
   <button onclick="location.href='te-07-break-companion.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Break Companion <span style="background:#f68916;color:#1a2a3a;font-size:10px;padding:2px 6px;border-radius:2px;font-weight:600;margin-left:6px;">FREE</span></button>
   <button onclick="location.href='ergo-self-assessment.html'" style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);font-size:16px;padding:16px 0;cursor:pointer;font-family:inherit;">Ergo Self Assessment <span style="background:#f68916;color:#1a2a3a;font-size:10px;padding:2px 6px;border-radius:2px;font-weight:600;margin-left:6px;">FREE</span></button>
-  <button onclick="location.href='te-02-services.html#book'" style="display:block;width:100%;text-align:center;background:#f68916;border:none;color:#1a2a3a;font-size:14px;padding:14px 20px;cursor:pointer;font-family:inherit;margin-top:20px;font-weight:500;border-radius:2px;">Book an Assessment</button>
+  <button data-booking onclick="location.href='te-02-services.html#book'" style="display:block;width:100%;text-align:center;background:#f68916;border:none;color:#1a2a3a;font-size:14px;padding:14px 20px;cursor:pointer;font-family:inherit;margin-top:20px;font-weight:500;border-radius:2px;">Book an Assessment</button>
 </div>
 <div id="rt-mobile-backdrop" onclick="document.getElementById('rt-mobile-menu').style.display='none';document.getElementById('rt-mobile-backdrop').style.display='none';" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99998;"></div>
 
@@ -575,7 +581,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
       <span class="book-total-label">Total</span>
       <span class="book-total-price">$175</span>
     </div>
-    <a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="btn-gold" style="display:block;text-align:center;width:100%">Book now</a>
+    <a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="btn-gold" style="display:block;text-align:center;width:100%" data-booking>Book now</a>
     <div class="guarantee-badge">
       <span class="guarantee-check">✓</span>
       <p class="guarantee-text"><strong>Satisfaction guaranteed.</strong> If our evaluation doesn't deliver specific, actionable recommendations you can use, we'll refund your $175 — no questions asked.</p>
@@ -628,7 +634,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
     </div>
     <div class="urgency-footer">
       <p class="urgency-closing">These aren&rsquo;t always permanent. A workstation evaluation often catches what&rsquo;s causing them &mdash; before it turns into something that requires real medical care.</p>
-      <a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="btn-gold">Book your evaluation &mdash; $175</a>
+      <a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="btn-gold" data-booking>Book your evaluation &mdash; $175</a>
       <p class="urgency-disclaimer">Tyler Ergonomics is a workstation ergonomics practice, not a medical provider. A home office evaluation addresses what your workstation is contributing to your discomfort. If your symptoms are severe, persistent, or worsening, please see a qualified healthcare professional.</p>
     </div>
   </div>
@@ -807,7 +813,7 @@ html, body { overflow-x: hidden; max-width: 100vw; }
     <div class="deliverable-cta">
       <h4>Ready to fix your home office?</h4>
       <p>Book your evaluation now. The session is 60 minutes, the report arrives within 48 hours, and the follow-up is included in the price.</p>
-      <a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="btn-gold">Book now — $175</a>
+      <a href="https://calendly.com/rick-tylerwork/ergonomics-evaluation" class="btn-gold" data-booking>Book now — $175</a>
       <div class="guarantee-badge guarantee-badge-dark">
         <span class="guarantee-check">✓</span>
         <p class="guarantee-text"><strong>Satisfaction guaranteed.</strong> If our evaluation doesn't deliver specific, actionable recommendations you can use, we'll refund your $175 — no questions asked.</p>
