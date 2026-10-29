@@ -443,6 +443,12 @@
     .break-guidance, .break-cta { padding: 20px 22px; }
   }
 </style>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="site.css">
+<script src="booking-config.js"></script>
+<script src="site.js" defer></script>
 </head>
 <body data-mode="tyler">
 
@@ -581,7 +587,7 @@
           <div class="cta-eyebrow" id="breakCtaEyebrow">Want specific movements?</div>
           <p id="breakCtaText">For stretches <em>prescribed to your body</em> — book an assessment with Tyler Ergonomics.</p>
         </div>
-        <a href="te-03-home-office.html" class="btn btn-primary" id="breakCtaBtn">Book →</a>
+        <a href="te-03-home-office.html" class="btn btn-primary" id="breakCtaBtn" data-booking>Book →</a>
       </div>
     </div>
 
@@ -612,7 +618,7 @@
         <h4 id="sideCtaTitle">Need a <em>personalized</em> plan?</h4>
         <p id="sideCtaDesc">Generic timers can't tell you what your body needs. Tyler Ergonomics builds personalized movement protocols based on your real workstation.</p>
         <div class="card-action">
-          <a href="te-03-home-office.html" class="btn btn-primary" id="sideCtaBtn">Book an Assessment</a>
+          <a href="te-03-home-office.html" class="btn btn-primary" id="sideCtaBtn" data-booking>Book an Assessment</a>
         </div>
       </div>
       <div class="card-row-card">
@@ -868,8 +874,8 @@ const MODE_CONTENT = {
     footerLogo: 'Life|After®', footerSub: 'Cancer Survivor Return-to-Work Management',
     sideCtaTitle: 'Working with a <em>case manager?</em>',
     sideCtaDesc: 'Your Life|After® case manager can prescribe the session length that fits your recovery. Default is 30 minutes, but every survivor is different.',
-    sideCtaBtn: 'Talk to a Case Manager', sideCtaHref: '../lifeafter/01-homepage.html',
-    breakCtaEyebrow: 'Building your return-to-work plan?', breakCtaHref: '../lifeafter/01-homepage.html',
+    sideCtaBtn: 'Talk to a Case Manager', sideCtaHref: 'te-02-services.html#contact',
+    breakCtaEyebrow: 'Building your return-to-work plan?', breakCtaHref: 'te-02-services.html#contact',
     breakCtaText: 'Your Life|After® case manager builds the individualized plan — including the right movements <em>for your recovery</em>.',
     aboutPhilosophyTitle: 'Why no <em>specific movements.</em>',
     defaults: { session: 30, breakLength: 90 },
@@ -966,9 +972,9 @@ function applyMode() {
   document.getElementById('sideCtaDesc').textContent = c.sideCtaDesc;
   const sideCtaBtn = document.getElementById('sideCtaBtn');
   sideCtaBtn.textContent = c.sideCtaBtn;
-  sideCtaBtn.href = c.sideCtaHref;
+  sideCtaBtn.href = (typeof teBookingUrl === "function" && teBookingUrl()) || c.sideCtaHref;
   const breakCtaBtn = document.getElementById('breakCtaBtn');
-  if (breakCtaBtn) breakCtaBtn.href = c.breakCtaHref;
+  if (breakCtaBtn) breakCtaBtn.href = (typeof teBookingUrl === "function" && teBookingUrl()) || c.breakCtaHref;
   document.getElementById('switchCardTitle').textContent = c.switchCard.title;
   document.getElementById('switchCardDesc').textContent = c.switchCard.desc;
   document.getElementById('switchModeLink').textContent = c.switchCard.linkText;
