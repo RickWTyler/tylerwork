@@ -4,7 +4,7 @@
  * TE_BOOKING_URL is the only place the scheduler link is set.
  * Every element with data-booking uses this URL.
  */
-var TE_BOOKING_URL = "https://calendly.com/rick-lifeafter/free-ergonomic-discovery-call";
+var TE_BOOKING_URL = "https://calendly.com/rick-tylerwork/free-ergonomic-discovery-call";
 
 function teBookingUrl() {
   var url = (typeof TE_BOOKING_URL === "string" ? TE_BOOKING_URL : "").trim();
