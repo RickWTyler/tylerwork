@@ -53,11 +53,11 @@
         status.classList.add("is-error");
         status.textContent = serverMessage
           ? "Not sent. " + serverMessage
-          : "Not sent. Please try again, or email info@tylerwork.com.";
+          : "Not sent. Please try again, or email rick@tylerwork.com.";
       }).catch(function () {
         status.hidden = false;
         status.classList.add("is-error");
-        status.textContent = "Not sent. Please try again, or email info@tylerwork.com.";
+        status.textContent = "Not sent. Please try again, or email rick@tylerwork.com.";
       }).then(function () {
         if (button) button.disabled = false;
       });
